@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="ext-resource-dependency" content="assets/products/ane1-inicial-gravado.png">
+<meta name="ext-resource-dependency" content="assets/products/ane2-inicial-gema.png">
+<meta name="ext-resource-dependency" content="assets/products/ane3-gema-4x6.png">
+<meta name="ext-resource-dependency" content="assets/products/ane4-gema-central.png">
+<meta name="ext-resource-dependency" content="assets/products/bri1-gema-redonda.png">
+<meta name="ext-resource-dependency" content="assets/products/bri10-gems-correntinha.png">
+<meta name="ext-resource-dependency" content="assets/products/bri2-ponto-luz-3mm.png">
+<meta name="ext-resource-dependency" content="assets/products/bri3-gota-3x5mm.png">
+<meta name="ext-resource-dependency" content="assets/products/bri4-coracao-4mm.png">
+<meta name="ext-resource-dependency" content="assets/products/bri5-inicial.png">
+<meta name="ext-resource-dependency" content="assets/products/bri6-palito.png">
+<meta name="ext-resource-dependency" content="assets/products/bri7-corrente-pedra.png">
+<meta name="ext-resource-dependency" content="assets/products/bri8-anzol-inicial.png">
+<meta name="ext-resource-dependency" content="assets/products/bri9-alongador.png">
+<meta name="ext-resource-dependency" content="assets/products/col1-nome-palitinho.png">
+<meta name="ext-resource-dependency" content="assets/products/col10-escapulario.png">
+<meta name="ext-resource-dependency" content="assets/products/col11-ponto-luz.png">
+<meta name="ext-resource-dependency" content="assets/products/col2-inicial-personalizado.png">
+<meta name="ext-resource-dependency" content="assets/products/col3-monograma.png">
+<meta name="ext-resource-dependency" content="assets/products/col4-nome-cursivo.png">
+<meta name="ext-resource-dependency" content="assets/products/col5-tres-coracoes.png">
+<meta name="ext-resource-dependency" content="assets/products/col6-dois-coracoes.png">
+<meta name="ext-resource-dependency" content="assets/products/col7-coracao-10mm.png">
+<meta name="ext-resource-dependency" content="assets/products/col8-gravatinha.png">
+<meta name="ext-resource-dependency" content="assets/products/col9-gravatinha-gem.png">
+<meta name="ext-resource-dependency" content="assets/products/pin1-iniciais-10mm.png">
+<meta name="ext-resource-dependency" content="assets/products/pin2-calendario.png">
+<meta name="ext-resource-dependency" content="assets/products/pin3-plaquinha-gravacao.png">
+<meta name="ext-resource-dependency" content="assets/products/pin4-corrente-pingente-gem.png">
+<meta name="ext-resource-dependency" content="assets/products/pul1-inicial-1-caracter.png">
+<meta name="ext-resource-dependency" content="assets/products/pul2-plaquinha-redonda.png">
+<meta name="ext-resource-dependency" content="assets/products/pul3-gravada-plaquinhas.png">
+<meta name="ext-resource-dependency" content="assets/products/pul4-medalha-vazada.png">
+<meta name="ext-resource-dependency" content="assets/products/pul5-infantil.png">
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#14223d"/><path d="M60 130 L80 55 L120 55 L140 130" fill="none" stroke="#e3c77f" stroke-width="5"/><line x1="60" y1="90" x2="140" y2="90" stroke="#e3c77f" stroke-width="5"/></svg></template>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  body { margin: 0; background:#faf8f4; }
+  ::-webkit-scrollbar { width: 0; height: 0; }
+  .navlink:hover { opacity: .7; }
+  .pillar-img { transition: transform .6s ease; }
+  .pillar:hover .pillar-img { transform: scale(1.045); }
+  .buy-btn:hover { background:#0e1a30 !important; }
+  .cat-pill { transition: background-color .32s cubic-bezier(.16,.8,.24,1), color .32s cubic-bezier(.16,.8,.24,1), border-color .32s cubic-bezier(.16,.8,.24,1), transform .28s cubic-bezier(.34,1.56,.64,1); }
+  .cat-pill:hover { border-color:#14223d !important; transform: translateY(-1px); }
+  .cat-pill:active { transform: scale(.94); }
+  .cat-pill.is-active { animation: pillActivate .38s cubic-bezier(.34,1.56,.64,1); }
+  @keyframes pillActivate { 0% { transform: scale(.9); } 55% { transform: scale(1.05); } 100% { transform: scale(1); } }
+  @keyframes cardIn { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: none; } }
+  .prod-card:hover .prod-img-wrap { transform: scale(1.02); }
+  .prod-img-wrap { transition: transform .4s ease; }
+  .modal-close:hover { opacity:.6; }
+</style>
+</helmet>
+
+<div id="parallax-root" style="font-family:'Jost',system-ui,sans-serif;max-width:1440px;margin:0 auto;background:#faf8f4;overflow:hidden">
+
+  <!-- NAV -->
+  <div style="position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:26px 64px;background:rgba(250,248,244,.92);backdrop-filter:blur(6px);border-bottom:1px solid rgba(20,34,61,.08)">
+    <div style="display:flex;align-items:center;gap:10px">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14223d" stroke-width="1.1"><circle cx="12" cy="12" r="6.4"/><line x1="12" y1="5.6" x2="12" y2="12"/><circle cx="12" cy="4.4" r="1.15" fill="#14223d" stroke="none"/></svg>
+      <span style="font-family:'Marcellus',serif;font-size:20px;letter-spacing:2px;color:#14223d">HAUQUÍMIA</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:28px">
+      <span class="navlink" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Ateliê</span>
+      <span class="navlink" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Oficina</span>
+      <span class="navlink" onClick="{{ scrollToVitrine }}" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Catálogo</span>
+      <span class="navlink" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Contato</span>
+
+      <span onClick="{{ toggleSearch }}" style="cursor:pointer;display:flex;align-items:center">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#14223d" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+      </span>
+
+      <span onClick="{{ openFavorites }}" style="position:relative;cursor:pointer;display:flex;align-items:center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14223d" stroke-width="1.4"><path d="M12 20s-7-4.5-9.5-9A5.5 5.5 0 0112 5a5.5 5.5 0 019.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>
+        <sc-if value="{{ favoritesCount }}">
+          <span style="position:absolute;top:-8px;right:-9px;background:#14223d;color:#f5efe3;font-size:10px;font-weight:600;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px">{{ favoritesCount }}</span>
+        </sc-if>
+      </span>
+
+      <sc-if value="{{ isGuest }}" hint-placeholder-val="{{ true }}">
+        <span class="navlink" onClick="{{ openLogin }}" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Entrar</span>
+      </sc-if>
+      <sc-if value="{{ isAuthed }}" hint-placeholder-val="{{ false }}">
+        <span onClick="{{ logout }}" style="font-size:13px;letter-spacing:1px;color:#14223d;cursor:pointer;white-space:nowrap">Olá, {{ authedUser.name }}</span>
+      </sc-if>
+
+      <span onClick="{{ openCart }}" style="position:relative;cursor:pointer;display:flex;align-items:center">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#14223d" stroke-width="1.4"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
+        <sc-if value="{{ cartCount }}">
+          <span style="position:absolute;top:-8px;right:-9px;background:#14223d;color:#f5efe3;font-size:10px;font-weight:600;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px">{{ cartCount }}</span>
+        </sc-if>
+      </span>
+    </div>
+  </div>
+
+  <sc-if value="{{ searchOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:sticky;top:78px;z-index:19;background:#faf8f4;border-bottom:1px solid rgba(20,34,61,.08);padding:16px 64px">
+      <input value="{{ searchQuery }}" onChange="{{ setSearchQuery }}" type="text" placeholder="Buscar peças (ex: colar, anel, coração...)" autoFocus="{{ true }}" style="width:100%;max-width:520px;box-sizing:border-box;border:none;border-bottom:1px solid rgba(20,34,61,.3);background:transparent;padding:8px 2px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#14223d;outline:none" />
+    </div>
+  </sc-if>
+
+  <!-- HERO with video -->
+  <div style="position:relative;height:680px;overflow:hidden">
+    <video id="hero-parallax-img" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" src="assets/hero-video.mp4" style="position:absolute;top:-10%;left:0;width:100%;height:120%;object-fit:cover;will-change:transform"></video>
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,16,28,.72) 0%,rgba(10,16,28,.42) 45%,rgba(10,16,28,.08) 75%)"></div>
+    <div style="position:relative;height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 64px;max-width:640px">
+      <span data-reveal style="opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease;font-size:13px;letter-spacing:5px;text-transform:uppercase;color:#e3c77f;font-weight:500">Ateliê · Oficina · Transformação de joias · Desde 2010</span>
+      <div data-reveal style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .12s,transform .9s ease .12s;font-family:'Marcellus',serif;font-size:58px;line-height:1.12;color:#f5efe3;margin-top:18px;letter-spacing:.5px">Transformando<br>histórias em joias.</div>
+      <div data-reveal style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .24s,transform .9s ease .24s;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:#d8dbe4;margin-top:20px;line-height:1.5;max-width:480px">
+        <p style="margin:0 0 14px">Cada joia que chega até nossa bancada carrega mais do que ouro, prata ou pedras. Ela carrega uma história.</p>
+        <p style="margin:0 0 14px">Algumas histórias começam aqui. Outras encontram um novo significado.</p>
+        <p style="margin:0">Por meio da ourivesaria artesanal, criamos, restauramos e ressignificamos joias, preservando aquilo que o tempo jamais deveria apagar.</p>
+      </div>
+      <div data-reveal style="opacity:0;transform:translateY(20px);transition:opacity .9s ease .36s,transform .9s ease .36s;margin-top:34px">
+        <span class="buy-btn" style="display:inline-block;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:2px;text-transform:uppercase;padding:16px 34px;cursor:pointer;transition:background .2s">Conhecer o ateliê</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOSSA HISTÓRIA -->
+  <div style="display:flex;align-items:center;gap:72px;padding:110px 64px">
+    <div data-reveal style="flex:1;opacity:0;transform:translateX(-40px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);aspect-ratio:4/5;overflow:hidden;background:#f2eee6">
+      <video autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" src="assets/raizes-video.mp4" style="width:100%;height:100%;object-fit:cover;display:block"></video>
+    </div>
+    <div data-reveal style="flex:1;opacity:0;transform:translateX(40px);transition:opacity .9s cubic-bezier(.16,.8,.24,1) .1s,transform .9s cubic-bezier(.16,.8,.24,1) .1s">
+      <span style="font-size:13px;letter-spacing:4px;text-transform:uppercase;color:#9a7b34">Nossa história</span>
+      <div style="font-family:'Marcellus',serif;font-size:36px;color:#14223d;margin-top:12px">Toda história possui uma origem.</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:#5a6170;margin-top:22px;line-height:1.7;text-align:justify">
+        <p style="margin:0 0 18px">A nossa não começou com uma joia.<br>Começou com a vontade de criar algo que permanecesse.</p>
+        <p style="margin:0 0 18px">Com o tempo, entendemos que o verdadeiro valor da ourivesaria não está apenas na transformação dos metais, mas na capacidade de preservar aquilo que cada joia representa.</p>
+        <p style="margin:0 0 18px">Foi assim que nasceu a Hauquímia.<br>Um ateliê e oficina de ourivesaria onde cada criação começa pela escuta, continua pela técnica e encontra seu verdadeiro significado na história de quem a leva consigo.</p>
+        <p style="margin:0">Desde então, seguimos fazendo aquilo em que acreditamos:<br><span style="color:#9a7b34">ressignificar histórias por meio da ourivesaria artesanal.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILLARS INTRO -->
+  <div style="text-align:center;padding:96px 64px 0">
+    <span data-reveal style="opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:#9a7b34">Quatro pilares</span>
+    <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .1s,transform .8s ease .1s;font-family:'Marcellus',serif;font-size:38px;color:#14223d;margin-top:10px">Como trabalhamos</div>
+    <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .2s,transform .8s ease .2s;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:#5a6170;margin-top:12px;max-width:560px;margin-left:auto;margin-right:auto">Criação no ateliê, cuidado na oficina e a base de cada metal ressignificada.</div>
+  </div>
+
+  <!-- ATELIÊ -->
+  <div style="padding:80px 64px 110px;background:#faf8f4">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;gap:96px">
+      <div style="position:relative;flex-shrink:0">
+        <div data-reveal style="opacity:0;transform:translateY(50px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);width:380px;aspect-ratio:4/5;background:#f2eee6;overflow:hidden">
+          <video autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" src="assets/atelie-video.mp4" style="width:100%;height:100%;object-fit:cover;object-position:center 38%;display:block"></video>
+        </div>
+      </div>
+
+      <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .12s,transform .8s ease .12s;flex:1;padding-bottom:24px">
+        <span style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#9a7b34">Pilar 01</span>
+        <div style="font-family:'Marcellus',serif;font-size:34px;color:#14223d;margin-top:8px">Ateliê</div>
+        <span style="display:inline-block;margin-top:10px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;border:1px solid #9a7b34;padding:5px 12px">Arte feita à mão, peça única</span>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#5a6170;margin-top:16px;line-height:1.6">É aqui que cada história ganha forma. No ateliê, unimos técnica, sensibilidade e tempo para criar joias autorais que carregam significado e traduzem a essência de quem as usa.</div>
+        <div style="margin-top:26px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#14223d">O que fazemos no ateliê</div>
+        <div style="margin-top:18px;display:flex;flex-direction:column;gap:18px">
+          <div style="display:flex;align-items:flex-start;gap:16px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/></svg>
+            <div><div style="font-size:16px;color:#14223d;line-height:1.4;font-weight:500">Peças autorais desenhadas em prata e ouro</div><div style="font-size:14px;color:#5a6170;margin-top:3px">Criações exclusivas, do conceito ao acabamento.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:16px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="14.5" r="5.5"/><path d="M8.5 9.5L12 3l3.5 6.5"/></svg>
+            <div><div style="font-size:16px;color:#14223d;line-height:1.4;font-weight:500">Joias sob medida, a partir da ideia do cliente</div><div style="font-size:14px;color:#5a6170;margin-top:3px">Transformamos desejos em joias únicas e pessoais.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:16px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M7 3h10l4 6-9 12L2 9Z"/><path d="M2 9h18"/><path d="M10 3l2 6 2-6"/><path d="M12 9v12"/></svg>
+            <div><div style="font-size:16px;color:#14223d;line-height:1.4;font-weight:500">Anéis, colares, brincos e pulseiras</div><div style="font-size:14px;color:#5a6170;margin-top:3px">Peças que acompanham momentos e histórias.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OFICINA -->
+  <div style="padding:80px 64px 110px;background:#f2eee6">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;flex-direction:row-reverse;gap:96px">
+      <div style="position:relative;flex-shrink:0">
+        <div data-reveal style="opacity:0;transform:translateY(50px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);width:380px;aspect-ratio:816/1104;background:#faf8f4;overflow:hidden">
+          <video autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" src="assets/oficina-video.mp4" style="width:100%;height:100%;object-fit:cover;display:block"></video>
+        </div>
+      </div>
+
+      <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .12s,transform .8s ease .12s;flex:1;padding-bottom:24px">
+        <span style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#9a7b34">Pilar 02</span>
+        <div style="font-family:'Marcellus',serif;font-size:34px;color:#14223d;margin-top:8px">Oficina</div>
+        <span style="display:inline-block;margin-top:10px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;border:1px solid #9a7b34;padding:5px 12px">Cuidar também é ressignificar.</span>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#5a6170;margin-top:16px;line-height:1.6">Cada joia carrega uma história. E algumas precisam de cuidado para continuar fazendo parte dela. Na oficina, unimos técnica, experiência e atenção aos detalhes para devolver vida, segurança e beleza às peças que você ama.</div>
+        <div style="margin-top:26px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#14223d">O que fazemos na oficina</div>
+        <div style="margin-top:18px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:flex-start;gap:16px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="14.5" r="5.5"/><path d="M8.5 9.5L12 3l3.5 6.5"/></svg>
+            <div><div style="font-size:16px;color:#14223d;line-height:1.4;font-weight:500">Ajuste de tamanho de anéis</div><div style="font-size:14px;color:#5a6170;margin-top:3px">Mais conforto para acompanhar cada momento.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:16px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M12 22c4 0 6-2.5 6-6 0-3-2-5-3-7-.3 2-1.3 3-2.3 3C13 10 13.5 7 12 4c-1 3-4 5-4 9 0 1 .2 2 .6 2.8C7.6 15 7 16.4 7 18c0 2.5 2 4 5 4Z"/></svg>
+            <div><div style="font-size:16px;color:#14223d;line-height:1.4;font-weight:500">Solda de correntes e peças quebradas</div><div style="font-size:14px;color:#5a6170;margin-top:3px">Reparos precisos para restaurar o que tem valor.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:16px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M14.7 6.3a4 4 0 1 1-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 1 5.4-5.4L21 6l-3-3-3.3 3.3Z"/></svg>
+            <div><div style="font-size:16px;color:#14223d;line-height:1.4;font-weight:500">Troca ou reparo de fechos, travas e acessórios</div><div style="font-size:14px;color:#5a6170;margin-top:3px">Segurança e funcionalidade que você pode confiar.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:16px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M7 3h10l4 6-9 12L2 9Z"/><path d="M2 9h18"/><path d="M10 3l2 6 2-6"/><path d="M12 9v12"/></svg>
+            <div><div style="font-size:16px;color:#14223d;line-height:1.4;font-weight:500">Cravação e substituição de pedras</div><div style="font-size:14px;color:#5a6170;margin-top:3px">Reposição cuidadosa para manter o brilho da sua joia.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:16px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.4 5.4l1.4 1.4M17.2 17.2l1.4 1.4M18.6 5.4l-1.4 1.4M6.8 17.2l-1.4 1.4"/></svg>
+            <div><div style="font-size:16px;color:#14223d;line-height:1.4;font-weight:500">Polimento e banho</div><div style="font-size:14px;color:#5a6170;margin-top:3px">Recuperamos o brilho original e a beleza de cada peça.</div></div>
+          </div>
+        </div>
+        <div style="margin-top:18px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:#9a7b34">…e muito mais.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPCYCLING -->
+  <div style="padding:80px 64px 110px;background:#faf8f4">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;gap:96px">
+      <div style="position:relative;flex-shrink:0">
+        <div data-reveal style="opacity:0;transform:translateY(50px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);width:380px;aspect-ratio:768/1168;background:#f2eee6;overflow:hidden">
+          <video autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" src="assets/personalizacao-video.mp4" style="width:100%;height:100%;object-fit:cover;display:block"></video>
+        </div>
+      </div>
+
+      <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .12s,transform .8s ease .12s;flex:1;padding-bottom:24px">
+        <span style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#9a7b34">Pilar 03</span>
+        <div style="font-family:'Marcellus',serif;font-size:34px;color:#14223d;margin-top:8px">Personalização</div>
+        <span style="display:inline-block;margin-top:10px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;border:1px solid #9a7b34;padding:5px 12px">Sua história, desenhada em cada detalhe</span>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#5a6170;margin-top:16px;line-height:1.6">Ela começa quando alguém decide compartilhar uma história. Aqui, cada detalhe importa. Conte sua história e vamos juntos transformá-la em uma joia que carrega significado para toda a vida.</div>
+        <div style="margin-top:26px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Como funciona a personalização</div>
+        <div style="margin-top:18px;display:flex;flex-direction:column;gap:18px">
+          <div style="display:flex;align-items:flex-start;gap:16px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+            <div><div style="font-size:16px;color:#14223d;line-height:1.4;font-weight:500">Conte sua história</div><div style="font-size:14px;color:#5a6170;margin-top:3px">Queremos entender o que essa joia representa para você.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:16px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M21 11.5a8.38 8.38 0 0 1-4.5 7.5 8.5 8.5 0 0 1-8-.1L3 21l1.9-4.5a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 8-8.5h.5a8.48 8.48 0 0 1 8 8v.3Z"/></svg>
+            <div><div style="font-size:16px;color:#14223d;line-height:1.4;font-weight:500">Compreensão e conceito</div><div style="font-size:14px;color:#5a6170;margin-top:3px">Transformamos sua história em ideias e possibilidades.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:16px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/></svg>
+            <div><div style="font-size:16px;color:#14223d;line-height:1.4;font-weight:500">Desenvolvimento do projeto</div><div style="font-size:14px;color:#5a6170;margin-top:3px">Criamos o desenho e apresentamos cada detalhe para você.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:16px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="14.5" r="5.5"/><path d="M8.5 9.5L12 3l3.5 6.5"/></svg>
+            <div><div style="font-size:16px;color:#14223d;line-height:1.4;font-weight:500">Arte e produção</div><div style="font-size:14px;color:#5a6170;margin-top:3px">Com técnica e cuidado, damos vida à sua joia.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:16px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73Z"/><path d="M3.3 7 12 12l8.7-5"/><path d="M12 22V12"/></svg>
+            <div><div style="font-size:16px;color:#14223d;line-height:1.4;font-weight:500">Entrega e significado</div><div style="font-size:14px;color:#5a6170;margin-top:3px">Sua joia pronta para continuar a sua história.</div></div>
+          </div>
+        </div>
+        <div style="margin-top:32px;padding-top:26px;border-top:1px solid rgba(20,34,61,.12)">
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:#9a7b34;line-height:1.5">Toda grande joia começa muito antes do primeiro desenho — ela começa quando alguém decide compartilhar uma história.</div>
+          <span class="buy-btn" style="display:inline-block;margin-top:18px;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:2px;text-transform:uppercase;padding:15px 30px;cursor:pointer;transition:background .2s">Contar minha história</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPCYCLE -->
+  <div style="padding:80px 64px 110px;background:#f2eee6">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;flex-direction:row-reverse;gap:96px">
+      <div style="position:relative;flex-shrink:0">
+        <div data-reveal style="opacity:0;transform:translateY(50px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);width:380px;aspect-ratio:4/5;background:#faf8f4;overflow:hidden">
+          <image-slot id="upcycle-img" shape="rect" fit="cover" placeholder="Foto de peça em upcycle" style="width:100%;height:100%"></image-slot>
+        </div>
+      </div>
+
+      <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .12s,transform .8s ease .12s;flex:1;padding-bottom:24px">
+        <span style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#9a7b34">Pilar 04</span>
+        <div style="font-family:'Marcellus',serif;font-size:34px;color:#14223d;margin-top:8px">Upcycle</div>
+        <span style="display:inline-block;margin-top:10px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;border:1px solid #9a7b34;padding:5px 12px">Ressignificar para preservar o que importa.</span>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#5a6170;margin-top:16px;line-height:1.6">
+          <p style="margin:0 0 14px">Nem toda joia precisa ser nova para ter um novo significado.<br>Com o upcycle, transformamos peças antigas, quebradas ou fora de uso em algo único, atual e cheio de propósito.</p>
+          <p style="margin:0">Preservamos a história, os materiais e o valor afetivo,<br>dando a eles uma nova forma de continuar contigo.</p>
+        </div>
+
+        <div style="margin-top:30px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Como funciona o upcycle</div>
+        <div style="margin-top:20px;display:grid;grid-template-columns:repeat(5,1fr);gap:14px">
+          <div><div style="display:flex;align-items:center;gap:8px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h4l2 3h4l2-3h4"/><path d="M5.5 5h13l1.5 7v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6Z"/></svg><span style="font-family:'Marcellus',serif;font-size:14px;color:#9a7b34">1</span></div><div style="font-size:13px;color:#14223d;font-weight:500;margin-top:10px">Recebemos</div><div style="font-size:12px;color:#5a6170;margin-top:4px;line-height:1.4">Você nos envia suas joias e conta o que deseja transformar.</div></div>
+          <div><div style="display:flex;align-items:center;gap:8px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6"/><line x1="19" y1="19" x2="14.5" y2="14.5"/></svg><span style="font-family:'Marcellus',serif;font-size:14px;color:#9a7b34">2</span></div><div style="font-size:13px;color:#14223d;font-weight:500;margin-top:10px">Avaliamos</div><div style="font-size:12px;color:#5a6170;margin-top:4px;line-height:1.4">Analisamos cada peça, seus materiais e possibilidades.</div></div>
+          <div><div style="display:flex;align-items:center;gap:8px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/></svg><span style="font-family:'Marcellus',serif;font-size:14px;color:#9a7b34">3</span></div><div style="font-size:13px;color:#14223d;font-weight:500;margin-top:10px">Criamos</div><div style="font-size:12px;color:#5a6170;margin-top:4px;line-height:1.4">Desenvolvemos um novo projeto que honra a história e atende ao que você imagina.</div></div>
+          <div><div style="display:flex;align-items:center;gap:8px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-15.5 6.3L3 16"/><path d="M3 12a9 9 0 0 1 15.5-6.3L21 8"/><path d="M3 16v4h4"/><path d="M21 8V4h-4"/></svg><span style="font-family:'Marcellus',serif;font-size:14px;color:#9a7b34">4</span></div><div style="font-size:13px;color:#14223d;font-weight:500;margin-top:10px">Transformamos</div><div style="font-size:12px;color:#5a6170;margin-top:4px;line-height:1.4">Com técnica e cuidado artesanal, damos nova vida aos materiais.</div></div>
+          <div><div style="display:flex;align-items:center;gap:8px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73Z"/><path d="M3.3 7 12 12l8.7-5"/><path d="M12 22V12"/></svg><span style="font-family:'Marcellus',serif;font-size:14px;color:#9a7b34">5</span></div><div style="font-size:13px;color:#14223d;font-weight:500;margin-top:10px">Entregamos</div><div style="font-size:12px;color:#5a6170;margin-top:4px;line-height:1.4">Você recebe uma joia renovada, pronta para novos momentos.</div></div>
+        </div>
+
+        <div style="margin-top:30px;padding-top:22px;border-top:1px solid rgba(20,34,61,.12);display:flex;gap:32px;flex-wrap:wrap">
+          <div style="max-width:220px;display:flex;gap:12px;align-items:flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M5 21c0-9 6-15 15-15 0 9-6 15-15 15Z"/><path d="M5 21c3-4 6.5-7.5 12-13"/></svg><div><div style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;font-weight:500">Escolhas conscientes</div><div style="font-size:13px;color:#5a6170;margin-top:4px;line-height:1.4">Reduzimos o impacto ambiental ao aproveitar o que já existe.</div></div></div>
+          <div style="max-width:220px;display:flex;gap:12px;align-items:flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M12 20s-6-4-8-8a5 5 0 0 1 8-6 5 5 0 0 1 8 6c-2 4-8 8-8 8Z"/></svg><div><div style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;font-weight:500">Sentimento que permanece</div><div style="font-size:13px;color:#5a6170;margin-top:4px;line-height:1.4">Transformamos memórias em joias que continuam contando sua história.</div></div></div>
+          <div style="max-width:220px;display:flex;gap:12px;align-items:flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z"/></svg><div><div style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;font-weight:500">Peças únicas</div><div style="font-size:13px;color:#5a6170;margin-top:4px;line-height:1.4">Cada upcycle é exclusivo, feito para refletir quem você é e o que valoriza.</div></div></div>
+        </div>
+
+        <span class="buy-btn" style="display:inline-block;margin-top:28px;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:2px;text-transform:uppercase;padding:16px 30px;cursor:pointer;transition:background .2s">Ressignificar minha joia</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div style="background:#f2eee6;padding:100px 64px">
+    <div style="text-align:center;margin-bottom:60px">
+      <span data-reveal style="opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:#9a7b34">O processo da criação</span>
+      <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .1s,transform .8s ease .1s;font-family:'Marcellus',serif;font-size:36px;color:#14223d;margin-top:10px">Da ideia à entrega</div>
+    </div>
+    <div style="display:flex;gap:36px;max-width:1240px;margin:0 auto">
+      <div data-reveal style="flex:1;opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.16,.8,.24,1),transform .8s cubic-bezier(.16,.8,.24,1)">
+        <div style="font-family:'Marcellus',serif;font-size:15px;color:#9a7b34">01</div>
+        <div style="font-family:'Marcellus',serif;font-size:23px;color:#14223d;margin-top:10px">Contato</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:#5a6170;margin-top:10px;line-height:1.5">Você chama a gente e conta a sua ideia. Para orçar, cobramos uma taxa mínima de R$ 50,00 — ela garante que seu pedido seja avaliado com atenção de verdade, e o valor é abatido no total da peça quando fechamos o pedido.</div>
+      </div>
+      <div data-reveal style="flex:1;opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.16,.8,.24,1) .1s,transform .8s cubic-bezier(.16,.8,.24,1) .1s">
+        <div style="font-family:'Marcellus',serif;font-size:15px;color:#9a7b34">02</div>
+        <div style="font-family:'Marcellus',serif;font-size:23px;color:#14223d;margin-top:10px">Aprovação</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:#5a6170;margin-top:10px;line-height:1.5">Vemos o que é possível transformar em joia. Se aprovar, seguimos pra produção; se não for viável, devolvemos o valor pago na taxa de orçamento.</div>
+      </div>
+      <div data-reveal style="flex:1;opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.16,.8,.24,1) .2s,transform .8s cubic-bezier(.16,.8,.24,1) .2s">
+        <div style="font-family:'Marcellus',serif;font-size:15px;color:#9a7b34">03</div>
+        <div style="font-family:'Marcellus',serif;font-size:23px;color:#14223d;margin-top:10px">Produção acompanhada</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:#5a6170;margin-top:10px;line-height:1.5">Da impressão 3D à fundição e ao acabamento, você recebe fotos e descrições de cada etapa. Como toda joia é personalizada, pequenos ajustes — onde gravar, que detalhe entra — são decididos junto com você pelo WhatsApp.</div>
+      </div>
+      <div data-reveal style="flex:1;opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.16,.8,.24,1) .3s,transform .8s cubic-bezier(.16,.8,.24,1) .3s">
+        <div style="font-family:'Marcellus',serif;font-size:15px;color:#9a7b34">04</div>
+        <div style="font-family:'Marcellus',serif;font-size:23px;color:#14223d;margin-top:10px">Entrega</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:#5a6170;margin-top:10px;line-height:1.5">Alinhadas as últimas etapas, organizamos o envio até a sua casa — e desejamos que ela traga muitos bons momentos.</div>
+      </div>
+    </div>
+    <div data-reveal style="opacity:0;transform:translateY(16px);transition:opacity .8s ease .4s,transform .8s ease .4s;text-align:center;margin-top:52px">
+      <span onClick="{{ openProcessInfo }}" class="buy-btn" style="display:inline-block;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:2px;text-transform:uppercase;padding:16px 34px;cursor:pointer;transition:background .2s">Saiba mais</span>
+    </div>
+  </div>
+
+  <!-- VITRINE -->
+  <div id="vitrine-section" style="padding:100px 64px 110px">
+    <div style="text-align:center;margin-bottom:48px">
+      <span data-reveal style="opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:#9a7b34">Catálogo</span>
+      <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .1s,transform .8s ease .1s;font-family:'Marcellus',serif;font-size:38px;color:#14223d;margin-top:10px">Vitrine da coleção</div>
+      <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .2s,transform .8s ease .2s;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:#5a6170;margin-top:12px;max-width:560px;margin-left:auto;margin-right:auto">Filtre por tipo de peça e clique para ver fotos, valores e opções de personalização.</div>
+      <div style="margin-top:18px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#9a7b34">Cada peça, arte feito à mão</div>
+    </div>
+
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:52px">
+      <sc-for list="{{ categoryPills }}" as="cat" hint-placeholder-count="6">
+        <span class="{{ cat.className }}" onClick="{{ cat.onClick }}" style="{{ cat.style }}">{{ cat.name }}</span>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ productsEmpty }}" hint-placeholder-val="{{ false }}">
+      <div style="text-align:center;padding:60px 0;font-size:17px;color:#5a6170;font-family:'Cormorant Garamond',serif;font-style:italic">Nenhuma peça encontrada.</div>
+    </sc-if>
+    <div key="{{ gridKey }}" style="display:grid;grid-template-columns:repeat(4,1fr);gap:26px">
+      <sc-for list="{{ products }}" as="p">
+        <div class="prod-card" onClick="{{ p.onOpen }}" style="cursor:pointer;animation:cardIn .5s cubic-bezier(.16,.8,.24,1) both;animation-delay:{{ p.animDelay }}">
+          <div class="prod-img-wrap" style="position:relative;width:100%;aspect-ratio:1;overflow:hidden;background:#f2eee6">
+            <image-slot id="{{ p.slotId }}" shape="rect" fit="cover" src="{{ p.imgSrc }}" placeholder="{{ p.name }}" style="width:100%;height:100%;pointer-events:none"></image-slot>
+            <span onClick="{{ p.onToggleFavorite }}" style="position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(250,248,244,.9);display:flex;align-items:center;justify-content:center;cursor:pointer">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="{{ p.favFill }}" stroke="#14223d" stroke-width="1.6"><path d="M12 20s-7-4.5-9.5-9A5.5 5.5 0 0112 5a5.5 5.5 0 019.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>
+            </span>
+          </div>
+          <div style="margin-top:14px">
+            <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#9a7b34">{{ p.category }}</span>
+            <div style="font-family:'Marcellus',serif;font-size:18px;color:#14223d;margin-top:4px;line-height:1.3">{{ p.name }}</div>
+            <div style="font-size:15px;color:#14223d;margin-top:6px;font-weight:600">{{ p.priceLabel }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- PRODUCT MODAL -->
+  <sc-if value="{{ selected }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeProduct }}" style="position:fixed;inset:0;z-index:100;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box">
+      <div onClick="{{ stopClick }}" style="background:#faf8f4;max-width:860px;width:100%;height:min(90vh,720px);display:flex;position:relative;box-sizing:border-box;overflow:hidden">
+        <span class="modal-close" onClick="{{ closeProduct }}" style="position:absolute;top:16px;right:20px;font-size:24px;line-height:1;color:#14223d;cursor:pointer;font-family:'Jost',sans-serif;z-index:5">×</span>
+        <div style="width:34%;min-width:180px;max-width:300px;flex-shrink:0;background:#f2eee6">
+          <image-slot id="{{ selected.modalSlotId }}" shape="rect" fit="cover" src="{{ selected.imgSrc }}" placeholder="{{ selected.name }}" style="width:100%;height:100%"></image-slot>
+        </div>
+        <div style="flex:1;min-width:0;overflow-y:auto;padding:30px 32px 28px;box-sizing:border-box">
+          <span style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">{{ selected.category }}</span>
+          <div style="font-family:'Marcellus',serif;font-size:28px;color:#14223d;margin-top:8px">{{ selected.name }}</div>
+          <div style="font-size:22px;font-weight:600;color:#14223d;margin-top:14px">{{ selected.currentPriceLabel }}</div>
+          <sc-if value="{{ selected.hasPriceExtras }}">
+            <div style="font-size:13px;color:#9a7b34;margin-top:4px">Inclui {{ selected.priceExtrasLabel }}</div>
+          </sc-if>
+
+          <sc-if value="{{ selected.hasVariants }}">
+            <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(20,34,61,.12)">
+              <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Opções</span>
+              <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+                <sc-for list="{{ selected.variants }}" as="v" hint-placeholder-count="3">
+                  <span onClick="{{ v.onClick }}" style="{{ v.style }}">{{ v.label }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ selected.hasSpecs }}">
+            <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(20,34,61,.12)">
+              <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Especificações</span>
+              <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
+                <sc-for list="{{ selected.specs }}" as="s" hint-placeholder-count="2">
+                  <span style="font-size:16px;color:#5a6170;font-family:'Cormorant Garamond',serif;font-style:italic">{{ s }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(20,34,61,.12)">
+            <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Personalização</span>
+            <div style="font-size:13px;color:#5a6170;font-family:'Cormorant Garamond',serif;font-style:italic;margin-top:6px;line-height:1.5">Você pode acrescentar ou reduzir detalhes da personalização — o valor da peça é ajustado de acordo com o que for escolhido.</div>
+
+            <sc-if value="{{ selected.hasStructuredPersonalization }}" hint-placeholder-val="{{ false }}">
+              <sc-if value="{{ selected.tamanhoIsSlider }}">
+                <div style="margin-top:12px">
+                  <span style="font-size:13px;color:#5a6170">Tamanho <span style="color:#9a7b34">· regulador 1: {{ selected.tamanho1Value }}{{ selected.tamanhoUnit }} · regulador 2: {{ selected.tamanho2Value }}{{ selected.tamanhoUnit }}</span></span>
+
+                  <div ref="{{ selected.tamanhoTrackRef }}" onMouseDown="{{ selected.onTrackDown }}" onTouchStart="{{ selected.onTrackDown }}" style="position:relative;margin-top:14px;cursor:pointer;padding:10px 0">
+                    <div style="position:relative;height:4px;background:#e4dfd2;border-radius:2px">
+                      <div onMouseDown="{{ selected.onHandle1Down }}" onTouchStart="{{ selected.onHandle1Down }}" style="position:absolute;top:50%;left:{{ selected.tamanho1Pct }}%;width:18px;height:18px;border-radius:50%;background:#14223d;transform:translate(-50%,-50%);border:2px solid #faf8f4;box-shadow:0 0 0 1px rgba(20,34,61,.3);cursor:grab"></div>
+                      <div onMouseDown="{{ selected.onHandle2Down }}" onTouchStart="{{ selected.onHandle2Down }}" style="position:absolute;top:50%;left:{{ selected.tamanho2Pct }}%;width:18px;height:18px;border-radius:50%;background:#9a7b34;transform:translate(-50%,-50%);border:2px solid #faf8f4;box-shadow:0 0 0 1px rgba(154,123,52,.4);cursor:grab"></div>
+                    </div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font-size:11px;color:#9aa4b8;margin-top:6px">
+                    <span>{{ selected.tamanhoMin }}{{ selected.tamanhoUnit }}</span>
+                    <span>{{ selected.tamanhoMax }}{{ selected.tamanhoUnit }}</span>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ selected.tamanhoIsPMG }}">
+                <div style="margin-top:12px">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <span style="font-size:13px;color:#5a6170">Tamanho <span style="color:#9a7b34">· {{ selected.pmgRangeLabel }}</span></span>
+                    <span onClick="{{ selected.openSizeGuide }}" style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#9a7b34;cursor:pointer;text-decoration:underline">Guia de tamanhos</span>
+                  </div>
+                  <div style="margin-top:10px;display:flex;gap:8px">
+                    <sc-for list="{{ selected.pmgOptions }}" as="sz" hint-placeholder-count="3">
+                      <span onClick="{{ sz.onClick }}" style="{{ sz.style }}">{{ sz.label }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ selected.tamanhoIsAro }}">
+                <div style="margin-top:12px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid rgba(20,34,61,.12)">
+                    <span style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Aro</span>
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <span style="font-family:'Marcellus',serif;font-size:20px;color:#9a7b34">{{ selected.aroValue }}</span>
+                      <div style="display:flex;flex-direction:column;line-height:0">
+                        <span onClick="{{ selected.onAroUp }}" style="cursor:pointer;font-size:11px;color:#9a7b34">▲</span>
+                        <span onClick="{{ selected.onAroDown }}" style="cursor:pointer;font-size:11px;color:#9a7b34;margin-top:3px">▼</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
+                    <sc-for list="{{ selected.aroOptions }}" as="ar" hint-placeholder-count="9">
+                      <span onClick="{{ ar.onClick }}" style="{{ ar.style }}">{{ ar.label }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ selected.hasFieldCaractere }}">
+                <div style="margin-top:12px">
+                  <span style="font-size:13px;color:#5a6170">Caracteres <span style="color:#9a7b34">· {{ selected.caractereNote }}</span></span>
+                  <input value="{{ selected.caractereValue }}" onChange="{{ setCaractereValue }}" type="text" placeholder="Letras, bolinhas, estrelinhas..." style="margin-top:8px;width:100%;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:11px 13px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d" />
+                  <sc-if value="{{ selected.characterSetText }}">
+                    <div style="margin-top:6px;font-size:12px;color:#9aa4b8;line-height:1.5">{{ selected.characterSetText }}</div>
+                  </sc-if>
+                </div>
+              </sc-if>
+              <div style="margin-top:12px">
+                <span style="font-size:13px;color:#5a6170">Descrever ajuste na personalização</span>
+                <textarea value="{{ selected.detalhesExtrasValue }}" onChange="{{ setDetalhesExtras }}" placeholder="Descreva o que quer acrescentar ou reduzir (ex: mais uma letra, tirar a pedra, etc.)" rows="2" style="margin-top:8px;width:100%;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:11px 13px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d;resize:vertical"></textarea>
+              </div>
+              <sc-if value="{{ selected.hasFieldCorBanho }}">
+                <div style="margin-top:12px">
+                  <span style="font-size:13px;color:#5a6170">Cor de banho</span>
+                  <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+                    <sc-for list="{{ selected.corBanhoOptions }}" as="c" hint-placeholder-count="2">
+                      <span onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ selected.hasFieldPedra }}">
+                <div style="margin-top:12px">
+                  <div onClick="{{ selected.togglePedra }}" style="display:flex;align-items:center;gap:10px;cursor:pointer">
+                    <span style="{{ selected.pedraToggleStyle }}">✓</span>
+                    <span style="font-size:13px;color:#5a6170">Adicionar pedra natural <span style="color:#9a7b34">· {{ selected.pedraCostLabel }}</span></span>
+                  </div>
+                  <sc-if value="{{ selected.pedraEnabled }}">
+                    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+                      <sc-for list="{{ selected.pedraOptions }}" as="pd" hint-placeholder-count="4">
+                        <span onClick="{{ pd.onClick }}" style="{{ pd.style }}"><span style="{{ pd.swatchStyle }}"></span>{{ pd.label }}</span>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </sc-if>
+
+            <sc-if value="{{ selected.hasFreeformPersonalization }}" hint-placeholder-val="{{ false }}">
+              <sc-if value="{{ selected.hasCustomText }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:10px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;background:#f2eee6;padding:12px 14px">
+                  <span style="font-size:15px;color:#14223d;font-family:'Cormorant Garamond',serif;font-style:italic;line-height:1.4">“{{ selected.customText }}”</span>
+                  <span onClick="{{ openPersonalize }}" style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#9a7b34;cursor:pointer;white-space:nowrap">Editar</span>
+                </div>
+              </sc-if>
+              <sc-if value="{{ selected.noCustomText }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top:12px">
+                  <span onClick="{{ openPersonalize }}" style="display:inline-block;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#14223d;border:1px solid rgba(20,34,61,.3);padding:11px 20px;cursor:pointer">+ Adicionar personalização</span>
+                </div>
+              </sc-if>
+            </sc-if>
+
+            <div style="margin-top:14px;font-size:12px;color:#9aa4b8;font-family:'Cormorant Garamond',serif;font-style:italic;line-height:1.5">Peças personalizadas não são alteradas após a confirmação do pedido. Em caso de erro na personalização, é necessário produzir uma nova peça; ajustes pontuais podem ser avaliados sob consulta, com custo à parte.</div>
+            <div style="margin-top:8px;font-size:12px;color:#9aa4b8;font-family:'Cormorant Garamond',serif;font-style:italic;line-height:1.5">Em decorrência de cada monitor, a cor da pedra pode variar sutilmente da foto do site. Todas as medidas são aproximadas e podem variar de acordo com a produção.</div>
+          </div>
+
+          <div style="margin-top:18px;display:flex;align-items:center;gap:18px">
+            <div style="display:flex;align-items:center;border:1px solid rgba(20,34,61,.25)">
+              <span onClick="{{ decQty }}" style="width:38px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:#14223d">−</span>
+              <span style="width:32px;text-align:center;font-size:15px;color:#14223d">{{ selected.qty }}</span>
+              <span onClick="{{ incQty }}" style="width:38px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:#14223d">+</span>
+            </div>
+            <span style="font-size:13px;color:#5a6170;font-family:'Cormorant Garamond',serif;font-style:italic">Pagamento e envio direto pelo site</span>
+          </div>
+
+          <div style="margin-top:18px;display:flex;gap:12px">
+            <span onClick="{{ addToCartNow }}" style="flex:1;text-align:center;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px 20px;cursor:pointer;border:1px solid #14223d;color:#14223d">Adicionar à sacola</span>
+            <span onClick="{{ buyNow }}" class="buy-btn" style="flex:1;text-align:center;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px 20px;cursor:pointer;transition:background .2s">Comprar agora</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- PERSONALIZE MODAL -->
+  <sc-if value="{{ personalizeOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closePersonalize }}" style="position:fixed;inset:0;z-index:200;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
+      <div onClick="{{ stopClick }}" style="background:#faf8f4;max-width:460px;width:100%;padding:40px;box-sizing:border-box;position:relative">
+        <span class="modal-close" onClick="{{ closePersonalize }}" style="position:absolute;top:18px;right:20px;font-size:24px;line-height:1;color:#14223d;cursor:pointer">×</span>
+        <span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">Personalizar peça</span>
+        <div style="font-family:'Marcellus',serif;font-size:24px;color:#14223d;margin-top:8px">{{ selected.name }}</div>
+        <div style="font-size:16px;color:#5a6170;font-family:'Cormorant Garamond',serif;font-style:italic;margin-top:14px;line-height:1.5">{{ selected.customNote }}</div>
+        <textarea value="{{ selected.personalizeDraft }}" onChange="{{ setPersonalizeDraft }}" placeholder="Escreva aqui o nome, iniciais ou detalhe desejado" rows="3" style="margin-top:16px;width:100%;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:12px 14px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d;resize:vertical"></textarea>
+        <div style="margin-top:22px;display:flex;gap:12px">
+          <span onClick="{{ closePersonalize }}" style="flex:1;text-align:center;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:14px 16px;cursor:pointer;border:1px solid rgba(20,34,61,.3);color:#14223d">Cancelar</span>
+          <span onClick="{{ savePersonalize }}" class="buy-btn" style="flex:1;text-align:center;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:14px 16px;cursor:pointer">Salvar</span>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- SIZE GUIDE MODAL -->
+  <sc-if value="{{ sizeGuideOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeSizeGuide }}" style="position:fixed;inset:0;z-index:200;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
+      <div onClick="{{ stopClick }}" style="background:#faf8f4;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;padding:40px;box-sizing:border-box;position:relative">
+        <span class="modal-close" onClick="{{ closeSizeGuide }}" style="position:absolute;top:18px;right:20px;font-size:24px;line-height:1;color:#14223d;cursor:pointer">×</span>
+        <span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">Guia de tamanhos</span>
+        <div style="font-family:'Marcellus',serif;font-size:24px;color:#14223d;margin-top:8px">{{ selected.category }}</div>
+        <div style="margin-top:24px;display:flex;gap:18px">
+          <sc-for list="{{ selected.pmgOptions }}" as="sz" hint-placeholder-count="3">
+            <div style="flex:1;text-align:center">
+              <div style="width:100%;aspect-ratio:1;background:#f2eee6">
+                <image-slot id="{{ sz.guideSlotId }}" shape="rect" fit="cover" placeholder="Foto tamanho {{ sz.label }}" style="width:100%;height:100%"></image-slot>
+              </div>
+              <div style="font-family:'Marcellus',serif;font-size:20px;color:#14223d;margin-top:10px">{{ sz.label }}</div>
+              <div style="font-size:13px;color:#9a7b34;margin-top:2px">{{ sz.rangeLabel }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- PROCESS INFO MODAL -->
+  <sc-if value="{{ processInfoOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeProcessInfo }}" style="position:fixed;inset:0;z-index:200;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
+      <div onClick="{{ stopClick }}" style="background:#faf8f4;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;padding:44px;box-sizing:border-box;position:relative">
+        <span class="modal-close" onClick="{{ closeProcessInfo }}" style="position:absolute;top:18px;right:20px;font-size:24px;line-height:1;color:#14223d;cursor:pointer">×</span>
+        <span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">Criar uma joia</span>
+        <div style="font-family:'Marcellus',serif;font-size:26px;color:#14223d;margin-top:8px">Conte sua ideia pra gente</div>
+
+        <div style="display:flex;align-items:center;gap:8px;margin-top:22px">
+          <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:{{ leadStepContatoColor }}">1. Contato</span>
+          <span style="flex:1;height:1px;background:rgba(20,34,61,.15)"></span>
+          <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:{{ leadStepDescricaoColor }}">2. Descrição</span>
+          <span style="flex:1;height:1px;background:rgba(20,34,61,.15)"></span>
+          <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:{{ leadStepEnviarColor }}">3. Enviar</span>
+        </div>
+
+        <!-- STEP 1: CONTATO -->
+        <sc-if value="{{ isLeadStepContato }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top:26px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:#5a6170">Pra começar, como podemos te chamar de volta?</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <input value="{{ leadName }}" onChange="{{ setLeadName }}" type="text" placeholder="Nome" style="width:100%;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:12px 14px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d" />
+            <input value="{{ leadPhone }}" onChange="{{ setLeadPhone }}" type="text" placeholder="WhatsApp (com DDD)" style="width:100%;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:12px 14px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d" />
+            <input value="{{ leadEmail }}" onChange="{{ setLeadEmail }}" type="email" placeholder="E-mail (opcional)" style="width:100%;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:12px 14px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d" />
+          </div>
+          <span onClick="{{ goToLeadDescricao }}" class="buy-btn" style="display:block;text-align:center;margin-top:22px;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px;cursor:pointer">Continuar</span>
+        </sc-if>
+
+        <!-- STEP 2: DESCRIÇÃO -->
+        <sc-if value="{{ isLeadStepDescricao }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:26px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:#5a6170">Descreva a joia que você imagina — metal, tamanho, onde gravar, o que não pode faltar.</div>
+          <textarea value="{{ leadDescription }}" onChange="{{ setLeadDescription }}" placeholder="Ex: um anel em prata com o nome da minha filha gravado por dentro..." rows="4" style="margin-top:14px;width:100%;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:12px 14px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d;resize:vertical"></textarea>
+          <div style="margin-top:18px">
+            <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Inspiração ou desenho (opcional)</span>
+            <div style="margin-top:10px;width:100%;aspect-ratio:16/9;background:#f2eee6">
+              <image-slot id="lead-ref-img" shape="rect" fit="cover" placeholder="Solte uma foto de referência ou um desenho seu" style="width:100%;height:100%"></image-slot>
+            </div>
+          </div>
+          <div style="margin-top:22px;display:flex;gap:12px">
+            <span onClick="{{ backToLeadContato }}" style="border:1px solid rgba(20,34,61,.3);color:#14223d;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px 20px;cursor:pointer">Voltar</span>
+            <span onClick="{{ goToLeadEnviar }}" class="buy-btn" style="flex:1;text-align:center;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px;cursor:pointer">Continuar</span>
+          </div>
+        </sc-if>
+
+        <!-- STEP 3: ENVIAR -->
+        <sc-if value="{{ isLeadStepEnviar }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:26px;background:#f2eee6;padding:18px 20px;display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:14px;color:#14223d"><strong>{{ leadName }}</strong> · {{ leadPhone }}</div>
+            <sc-if value="{{ leadEmail }}">
+              <div style="font-size:13px;color:#5a6170">{{ leadEmail }}</div>
+            </sc-if>
+            <div style="font-size:14px;color:#5a6170;font-family:'Cormorant Garamond',serif;font-style:italic;margin-top:6px;line-height:1.5">“{{ leadDescription }}”</div>
+          </div>
+          <div style="margin-top:16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:#5a6170;line-height:1.6">Ao enviar, essas informações ficam registradas com a gente — quando você chamar no WhatsApp, já vamos ter tudo em mãos pra te responder.</div>
+          <div style="margin-top:22px;display:flex;gap:12px">
+            <span onClick="{{ backToLeadDescricao }}" style="border:1px solid rgba(20,34,61,.3);color:#14223d;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px 20px;cursor:pointer">Voltar</span>
+            <span onClick="{{ submitLeadAndOpenWhatsapp }}" class="buy-btn" style="flex:1;text-align:center;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px;cursor:pointer">Enviar e chamar no WhatsApp</span>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- CART DRAWER -->
+  <sc-if value="{{ cartOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeCart }}" style="position:fixed;inset:0;z-index:150;background:rgba(10,16,28,.55)">
+      <div onClick="{{ stopClick }}" style="position:absolute;top:0;right:0;bottom:0;width:420px;max-width:92vw;background:#faf8f4;display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:26px 28px;border-bottom:1px solid rgba(20,34,61,.12)">
+          <span style="font-family:'Marcellus',serif;font-size:20px;color:#14223d">Sua sacola</span>
+          <span class="modal-close" onClick="{{ closeCart }}" style="font-size:24px;line-height:1;color:#14223d;cursor:pointer">×</span>
+        </div>
+
+        <div style="flex:1;overflow-y:auto;padding:16px 28px">
+          <sc-if value="{{ cartEmpty }}">
+            <div style="padding:60px 0;text-align:center;font-size:16px;color:#5a6170;font-family:'Cormorant Garamond',serif;font-style:italic">Sua sacola está vazia.</div>
+          </sc-if>
+          <sc-for list="{{ cart }}" as="c">
+            <div style="display:flex;gap:14px;padding:18px 0;border-bottom:1px solid rgba(20,34,61,.08)">
+              <div style="width:76px;height:76px;flex-shrink:0;background:#f2eee6">
+                <img src="{{ c.imgSrc }}" style="width:100%;height:100%;object-fit:cover;display:block" />
+              </div>
+              <div style="flex:1;min-width:0">
+                <div style="font-family:'Marcellus',serif;font-size:15px;color:#14223d">{{ c.name }}</div>
+                <sc-if value="{{ c.variantLabel }}">
+                  <div style="font-size:13px;color:#5a6170;margin-top:2px">{{ c.variantLabel }}</div>
+                </sc-if>
+                <sc-if value="{{ c.hasSizeLabel }}">
+                  <div style="font-size:13px;color:#5a6170;margin-top:2px">{{ c.sizeLabel }}</div>
+                </sc-if>
+                <sc-if value="{{ c.customText }}">
+                  <div style="font-size:13px;color:#9a7b34;font-family:'Cormorant Garamond',serif;font-style:italic;margin-top:2px">“{{ c.customText }}”</div>
+                </sc-if>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px">
+                  <div style="display:flex;align-items:center;border:1px solid rgba(20,34,61,.25)">
+                    <span onClick="{{ c.onDec }}" style="width:26px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:#14223d">−</span>
+                    <span style="width:22px;text-align:center;font-size:13px;color:#14223d">{{ c.qty }}</span>
+                    <span onClick="{{ c.onInc }}" style="width:26px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:#14223d">+</span>
+                  </div>
+                  <span style="font-size:14px;font-weight:600;color:#14223d">{{ c.lineLabel }}</span>
+                </div>
+              </div>
+              <span onClick="{{ c.onRemove }}" style="font-size:18px;color:#9aa4b8;cursor:pointer;line-height:1;flex-shrink:0">×</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="padding:22px 28px;border-top:1px solid rgba(20,34,61,.12)">
+          <div style="display:flex;justify-content:space-between;font-size:15px;color:#14223d;margin-bottom:16px">
+            <span>Subtotal</span>
+            <span style="font-weight:600">{{ cartTotalLabel }}</span>
+          </div>
+          <span onClick="{{ goToCheckout }}" class="buy-btn" style="display:block;text-align:center;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:16px;cursor:pointer">Finalizar compra</span>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- FAVORITES DRAWER -->
+  <sc-if value="{{ favoritesOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeFavorites }}" style="position:fixed;inset:0;z-index:150;background:rgba(10,16,28,.55)">
+      <div onClick="{{ stopClick }}" style="position:absolute;top:0;right:0;bottom:0;width:420px;max-width:92vw;background:#faf8f4;display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:26px 28px;border-bottom:1px solid rgba(20,34,61,.12)">
+          <span style="font-family:'Marcellus',serif;font-size:20px;color:#14223d">Favoritos</span>
+          <span class="modal-close" onClick="{{ closeFavorites }}" style="font-size:24px;line-height:1;color:#14223d;cursor:pointer">×</span>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:16px 28px">
+          <sc-if value="{{ favoritesEmpty }}">
+            <div style="padding:60px 0;text-align:center;font-size:16px;color:#5a6170;font-family:'Cormorant Garamond',serif;font-style:italic">Você ainda não favoritou nenhuma peça.</div>
+          </sc-if>
+          <sc-for list="{{ favoriteProducts }}" as="f">
+            <div onClick="{{ f.onOpen }}" style="display:flex;gap:14px;padding:18px 0;border-bottom:1px solid rgba(20,34,61,.08);cursor:pointer">
+              <div style="width:76px;height:76px;flex-shrink:0;background:#f2eee6">
+                <img src="{{ f.imgSrc }}" style="width:100%;height:100%;object-fit:cover;display:block" />
+              </div>
+              <div style="flex:1;min-width:0">
+                <div style="font-family:'Marcellus',serif;font-size:15px;color:#14223d">{{ f.name }}</div>
+                <div style="font-size:14px;font-weight:600;color:#14223d;margin-top:6px">{{ f.priceLabel }}</div>
+              </div>
+              <span onClick="{{ f.onRemove }}" style="font-size:18px;color:#9aa4b8;cursor:pointer;line-height:1;flex-shrink:0">×</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- AUTH MODAL -->
+  <sc-if value="{{ authOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeAuth }}" style="position:fixed;inset:0;z-index:260;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
+      <div onClick="{{ stopClick }}" style="background:#faf8f4;max-width:400px;width:100%;padding:40px;box-sizing:border-box;position:relative">
+        <span class="modal-close" onClick="{{ closeAuth }}" style="position:absolute;top:18px;right:20px;font-size:24px;line-height:1;color:#14223d;cursor:pointer">×</span>
+        <div style="display:flex;margin-bottom:26px">
+          <sc-for list="{{ authTabs }}" as="t" hint-placeholder-count="2">
+            <span onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</span>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ isAuthCadastro }}" hint-placeholder-val="{{ false }}">
+          <input value="{{ authName }}" onChange="{{ setAuthName }}" type="text" placeholder="Nome completo" style="width:100%;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:12px 14px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d;margin-bottom:10px" />
+        </sc-if>
+        <input value="{{ authEmail }}" onChange="{{ setAuthEmail }}" type="email" placeholder="E-mail" style="width:100%;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:12px 14px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d;margin-bottom:10px" />
+        <input value="{{ authPassword }}" onChange="{{ setAuthPassword }}" type="password" placeholder="Senha" style="width:100%;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:12px 14px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d" />
+
+        <span onClick="{{ submitAuth }}" class="buy-btn" style="display:block;text-align:center;margin-top:22px;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px;cursor:pointer">
+          <sc-if value="{{ isAuthLogin }}" hint-placeholder-val="{{ true }}">Entrar</sc-if>
+          <sc-if value="{{ isAuthCadastro }}" hint-placeholder-val="{{ false }}">Criar conta</sc-if>
+        </span>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- CHECKOUT MODAL -->
+  <sc-if value="{{ checkoutOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:250;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
+      <div style="background:#faf8f4;max-width:840px;width:100%;max-height:90vh;overflow-y:auto;display:flex;position:relative">
+
+        <sc-if value="{{ orderPlaced }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:60px 44px;text-align:center;width:100%">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#14223d" stroke-width="1.3" style="margin:0 auto"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9"/></svg>
+            <div style="font-family:'Marcellus',serif;font-size:26px;color:#14223d;margin-top:18px">Pedido confirmado</div>
+            <div style="font-size:16px;color:#5a6170;font-family:'Cormorant Garamond',serif;font-style:italic;margin-top:12px;line-height:1.5;max-width:420px;margin-left:auto;margin-right:auto">Você vai acompanhar a produção em tempo real na sua conta — vamos enviar fotos do processo por lá.</div>
+            <div style="margin-top:26px;display:flex;gap:12px;justify-content:center">
+              <a href="Hauquimia - Conta e Pedidos.dc.html" class="buy-btn" style="display:inline-block;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px 30px;cursor:pointer;text-decoration:none">Acompanhar pedido</a>
+              <span onClick="{{ continueShopping }}" style="display:inline-block;border:1px solid #14223d;color:#14223d;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px 30px;cursor:pointer">Continuar comprando</span>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ checkoutFormVisible }}" hint-placeholder-val="{{ true }}">
+          <span class="modal-close" onClick="{{ closeCheckout }}" style="position:absolute;top:18px;right:20px;font-size:24px;line-height:1;color:#14223d;cursor:pointer;z-index:2">×</span>
+
+          <div style="flex:1;padding:44px;box-sizing:border-box;min-width:0">
+            <span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">Finalizar compra</span>
+            <div style="font-family:'Marcellus',serif;font-size:26px;color:#14223d;margin-top:8px">Entrega e pagamento</div>
+
+            <!-- STEP INDICATOR -->
+            <div style="display:flex;align-items:center;gap:8px;margin-top:24px">
+              <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:{{ stepAuthColor }}">1. Acesso</span>
+              <span style="flex:1;height:1px;background:rgba(20,34,61,.15)"></span>
+              <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:{{ stepEntregaColor }}">2. Entrega</span>
+              <span style="flex:1;height:1px;background:rgba(20,34,61,.15)"></span>
+              <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:{{ stepPagamentoColor }}">3. Pagamento</span>
+            </div>
+
+            <!-- STEP 1: AUTH -->
+            <sc-if value="{{ isStepAuth }}" hint-placeholder-val="{{ true }}">
+              <div style="margin-top:32px">
+                <div style="font-size:16px;color:#5a6170;font-family:'Cormorant Garamond',serif;font-style:italic;margin-bottom:18px">Entre na sua conta para acompanhar o pedido depois, ou continue sem cadastro.</div>
+                <span onClick="{{ openAuthFromCheckout }}" class="buy-btn" style="display:block;text-align:center;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px;cursor:pointer;margin-bottom:12px">Entrar ou criar conta</span>
+                <span onClick="{{ proceedAsGuest }}" style="display:block;text-align:center;border:1px solid rgba(20,34,61,.3);color:#14223d;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px;cursor:pointer">Continuar como visitante</span>
+              </div>
+            </sc-if>
+
+            <!-- STEP 2: ENTREGA -->
+            <sc-if value="{{ isStepEntrega }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:28px;display:flex;flex-direction:column;gap:10px">
+                <input value="{{ shipName }}" onChange="{{ setShipName }}" type="text" placeholder="Nome completo" style="width:100%;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:12px 14px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d" />
+                <input value="{{ shipAddress }}" onChange="{{ setShipAddress }}" type="text" placeholder="Endereço e número" style="width:100%;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:12px 14px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d" />
+                <div style="display:flex;gap:10px">
+                  <input value="{{ shipCity }}" onChange="{{ setShipCity }}" type="text" placeholder="Cidade" style="flex:1;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:12px 14px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d" />
+                  <input value="{{ shipCep }}" onChange="{{ setShipCep }}" type="text" placeholder="CEP" style="width:140px;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:12px 14px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d" />
+                  <span onClick="{{ calcFrete }}" style="white-space:nowrap;border:1px solid #14223d;color:#14223d;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:0 16px;display:flex;align-items:center;cursor:pointer">Calcular frete</span>
+                </div>
+                <sc-if value="{{ freteCalculated }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size:14px;color:#5a6170;font-family:'Cormorant Garamond',serif;font-style:italic">Frete: {{ freteLabel }}</div>
+                </sc-if>
+              </div>
+              <span onClick="{{ goToPaymentStep }}" class="buy-btn" style="display:block;text-align:center;margin-top:24px;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px;cursor:pointer">Continuar para pagamento</span>
+            </sc-if>
+
+            <!-- STEP 3: PAGAMENTO -->
+            <sc-if value="{{ isStepPagamento }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:28px">
+                <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Cupom de desconto</span>
+                <div style="display:flex;gap:10px;margin-top:8px">
+                  <input value="{{ couponCode }}" onChange="{{ setCouponCode }}" type="text" placeholder="Código do cupom" style="flex:1;box-sizing:border-box;border:1px solid rgba(20,34,61,.25);background:transparent;padding:12px 14px;font-family:'Jost',sans-serif;font-size:14px;color:#14223d" />
+                  <span onClick="{{ applyCoupon }}" style="white-space:nowrap;border:1px solid #14223d;color:#14223d;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:0 16px;display:flex;align-items:center;cursor:pointer">Aplicar</span>
+                </div>
+              </div>
+
+              <div style="margin-top:26px">
+                <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Forma de pagamento</span>
+                <div style="margin-top:10px;display:flex;gap:10px">
+                  <sc-for list="{{ paymentOptions }}" as="opt" hint-placeholder-count="2">
+                    <span onClick="{{ opt.onClick }}" style="{{ opt.style }}">{{ opt.label }}</span>
+                  </sc-for>
+                </div>
+              </div>
+
+              <div style="margin-top:14px;font-size:12px;color:#9aa4b8;font-family:'Cormorant Garamond',serif;font-style:italic;line-height:1.5">Ao confirmar, a produção começa com as personalizações definidas — não fazemos alterações depois. Erros de personalização exigem uma nova peça; ajustes pontuais podem ter custo à parte.</div>
+              <div style="margin-top:16px;display:flex;gap:12px">
+                <span onClick="{{ backToEntrega }}" style="border:1px solid rgba(20,34,61,.3);color:#14223d;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px 20px;cursor:pointer">Voltar</span>
+                <span onClick="{{ confirmOrder }}" class="buy-btn" style="flex:1;text-align:center;background:#14223d;color:#f5efe3;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;padding:15px;cursor:pointer">Confirmar pedido</span>
+              </div>
+            </sc-if>
+          </div>
+
+          <!-- ORDER SUMMARY SIDEBAR -->
+          <div style="width:300px;flex-shrink:0;background:#f2eee6;padding:44px 30px;box-sizing:border-box">
+            <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Resumo do pedido</span>
+            <div style="margin-top:16px;display:flex;flex-direction:column;gap:14px;max-height:280px;overflow-y:auto">
+              <sc-for list="{{ cart }}" as="c">
+                <div style="display:flex;gap:10px">
+                  <div style="width:48px;height:48px;flex-shrink:0;background:#e9e3d6">
+                    <img src="{{ c.imgSrc }}" style="width:100%;height:100%;object-fit:cover;display:block" />
+                  </div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:13px;color:#14223d;line-height:1.3">{{ c.name }} {{ c.variantLabel }} × {{ c.qty }}</div>
+                  </div>
+                  <span style="font-size:13px;color:#14223d;white-space:nowrap">{{ c.lineLabel }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(20,34,61,.15);display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;justify-content:space-between;font-size:14px;color:#5a6170"><span>Subtotal</span><span>{{ cartTotalLabel }}</span></div>
+              <sc-if value="{{ freteCalculated }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;justify-content:space-between;font-size:14px;color:#5a6170"><span>Frete</span><span>{{ freteLabel }}</span></div>
+              </sc-if>
+              <sc-if value="{{ couponApplied }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;justify-content:space-between;font-size:14px;color:#5a6170"><span>Cupom</span><span>{{ discountLabel }}</span></div>
+              </sc-if>
+              <div style="display:flex;justify-content:space-between;font-size:17px;color:#14223d;font-weight:600;margin-top:8px">
+                <span>Total</span><span>{{ finalTotalLabel }}</span>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- FOOTER -->
+  <div style="background:#14223d;padding:56px 64px;display:flex;justify-content:space-between;align-items:center">
+    <span style="font-family:'Marcellus',serif;font-size:18px;letter-spacing:2px;color:#e3c77f">HAUQUÍMIA</span>
+    <span style="font-size:13px;color:#cdd4df">Belo Horizonte, MG · @hauquimia</span>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CATEGORIES = ['Todos', 'Colares', 'Pulseiras', 'Anéis', 'Brincos', 'Pingentes'];
+
+const PRODUCTS = [
+  { id: 'col1', category: 'Colares', name: 'Colar Nome Palitinho', priceLabel: 'R$ 399,00', value: 399, specs: ['Ajustável até 45cm', 'Até 6 letras'], customNote: 'Escreva o nome ou palavra que quer ver na peça (até 6 letras).', imgSrc: 'assets/products/col1-nome-palitinho.png' },
+  { id: 'col2', category: 'Colares', name: 'Colar Inicial Personalizado', priceLabel: 'R$ 290,00', value: 290, specs: ['Ajustável até 45cm', '1 letra personalizada'], customNote: 'Diga qual inicial você quer gravada.', imgSrc: 'assets/products/col2-inicial-personalizado.png' },
+  { id: 'col3', category: 'Colares', name: 'Colar Monograma', priceLabel: 'R$ 550,00', value: 550, specs: ['Ajustável até 45cm + grossinho', '2 letras de 18mm'], customNote: 'Informe as duas iniciais do monograma.', imgSrc: 'assets/products/col3-monograma.png' },
+  { id: 'col4', category: 'Colares', name: 'Colar Nome Cursivo', priceLabel: 'R$ 650,00', value: 650, specs: ['Ajustável até 45cm + grossinho', 'Nome até 7 letras'], customNote: 'Escreva o nome (até 7 letras) que será escrito em cursivo.', imgSrc: 'assets/products/col4-nome-cursivo.png' },
+  { id: 'col5', category: 'Colares', name: 'Colar Três Corações 10mm', priceLabel: 'R$ 880,00', value: 880, specs: ['+ grossinho'], customNote: 'Peça pronta, sem gravação.', imgSrc: 'assets/products/col5-tres-coracoes.png' },
+  { id: 'col6', category: 'Colares', name: 'Colar Dois Corações Gravados', priceLabel: 'R$ 380,00', value: 380, specs: ['Dois corações com inicial gravada'], customNote: 'Informe as duas iniciais, uma para cada coração.', imgSrc: 'assets/products/col6-dois-coracoes.png' },
+  { id: 'col7', category: 'Colares', name: 'Colar Coração 10mm Gravado', priceLabel: 'R$ 380,00', value: 380, specs: ['+ grossinho', 'Gravação personalizada no coração'], customNote: 'Diga o que quer gravado no coração — iniciais, data ou palavra curta.', imgSrc: 'assets/products/col7-coracao-10mm.png' },
+  { id: 'col8', category: 'Colares', name: 'Colar Gravatinha', priceLabel: 'R$ 490,00', value: 490, specs: ['Coração + coração menor gravado, em Y'], customNote: 'Informe as iniciais do coração menor.', imgSrc: 'assets/products/col8-gravatinha.png' },
+  { id: 'col9', category: 'Colares', name: 'Colar Gravatinha Gem Personalizado', priceLabel: 'R$ 525,00', value: 525, specs: ['Rilon, oval, navete ou redonda — 4x6mm ou 5mm'], customNote: 'Escolha o formato e a cor da pedra.', imgSrc: 'assets/products/col9-gravatinha-gem.png' },
+  { id: 'col10', category: 'Colares', name: 'Escapulário 60cm', priceLabel: 'R$ 590,00', value: 590, specs: ['+ grossinho', 'Par de correntes com pombinha'], customNote: 'Peça pronta, sem personalização.', imgSrc: 'assets/products/col10-escapulario.png' },
+  { id: 'col11', category: 'Colares', name: 'Colar Ponto Luz Gem Redonda', priceLabel: 'A partir de R$ 360,00', value: 360, hasVariants: true, variants: [{ label: '5mm', price: 'R$ 360,00', value: 360 }, { label: '7mm', price: 'R$ 430,00', value: 430 }, { label: '9mm', price: 'R$ 550,00', value: 550 }], customNote: 'Escolha a pedra e o tamanho da gema.', imgSrc: 'assets/products/col11-ponto-luz.png' },
+
+  { id: 'pul1', category: 'Pulseiras', name: 'Pulseira Inicial 1 Caracter', priceLabel: 'R$ 180,00', value: 180, specs: ['Adicional caracter: R$ 40,00', 'Adicional pedra: + metade do valor do brinco'], customNote: 'Informe o caracter desejado e se quer adicionar pedra.', imgSrc: 'assets/products/pul1-inicial-1-caracter.png' },
+  { id: 'pul2', category: 'Pulseiras', name: 'Pulseira Plaquinha Redonda 8mm', priceLabel: 'R$ 199,00', value: 199, specs: ['Adicional placa: R$ 50,00', 'Adicional pedra: + metade do valor do brinco'], customNote: 'Diga se quer placa adicional e/ou pedra.', imgSrc: 'assets/products/pul2-plaquinha-redonda.png' },
+  { id: 'pul3', category: 'Pulseiras', name: 'Pulseira Gravada Plaquinhas 30mm', priceLabel: 'R$ 225,00', value: 225, specs: ['Gravação personalizada'], customNote: 'Escreva o texto que deseja gravado (ex: nome e data).', imgSrc: 'assets/products/pul3-gravada-plaquinhas.png' },
+  { id: 'pul4', category: 'Pulseiras', name: 'Pulseira Medalha Vazada c/ Penduricalho', priceLabel: 'R$ 290,00', value: 290, specs: ['Medalha vazada + penduricalho'], customNote: 'Escolha o símbolo da medalha vazada.', imgSrc: 'assets/products/pul4-medalha-vazada.png' },
+  { id: 'pul5', category: 'Pulseiras', name: 'Pulseira Infantil Gravada', priceLabel: 'R$ 240,00', value: 240, specs: ['Placa gravada em fonte cursiva'], customNote: 'Informe o nome a ser gravado.', imgSrc: 'assets/products/pul5-infantil.png' },
+
+  { id: 'ane1', category: 'Anéis', name: 'Anel Inicial / Gravado', priceLabel: 'R$ 180,00', value: 180, specs: ['Aro liso com inicial ou gravação'], customNote: 'Informe a inicial ou texto e o aro.', imgSrc: 'assets/products/ane1-inicial-gravado.png' },
+  { id: 'ane2', category: 'Anéis', name: 'Anel Inicial + Gema', priceLabel: 'R$ 260,00', value: 260, specs: ['Aro aberto com inicial e pedra'], customNote: 'Escolha a inicial, a pedra e o aro.', imgSrc: 'assets/products/ane2-inicial-gema.png' },
+  { id: 'ane3', category: 'Anéis', name: 'Anel Gema 4x6mm', priceLabel: 'A partir de R$ 320,00', value: 320, hasVariants: true, variants: [{ label: 'Oval / Navete / Gota / Redonda 5mm', price: 'R$ 320,00', value: 320 }, { label: 'Retangular', price: 'R$ 360,00', value: 360 }], customNote: 'Escolha o formato e a cor da pedra.', imgSrc: 'assets/products/ane3-gema-4x6.png' },
+  { id: 'ane4', category: 'Anéis', name: 'Anel Gema Central', priceLabel: 'R$ 810,00', value: 810, specs: ['Pedra central com laterais em zircônia'], customNote: 'Escolha a pedra central e o aro.', imgSrc: 'assets/products/ane4-gema-central.png' },
+
+  { id: 'bri1', category: 'Brincos', name: 'Par Brinco Gema Redonda', priceLabel: 'A partir de R$ 399,00', value: 399, hasVariants: true, variants: [{ label: '5mm', price: 'R$ 399,00', value: 399 }, { label: '7mm', price: 'R$ 599,00', value: 599 }, { label: '9mm', price: 'R$ 799,00', value: 799 }], customNote: 'Escolha a pedra e o tamanho.', imgSrc: 'assets/products/bri1-gema-redonda.png' },
+  { id: 'bri2', category: 'Brincos', name: 'Par Brinco Ponto Luz 3mm', priceLabel: 'R$ 250,00', value: 250, specs: ['Pedra redonda 3mm'], customNote: 'Escolha a cor da pedra.', imgSrc: 'assets/products/bri2-ponto-luz-3mm.png' },
+  { id: 'bri3', category: 'Brincos', name: 'Par Brinco Gota 3x5mm', priceLabel: 'R$ 350,00', value: 350, specs: ['Pedra em formato gota'], customNote: 'Escolha a cor da pedra.', imgSrc: 'assets/products/bri3-gota-3x5mm.png' },
+  { id: 'bri4', category: 'Brincos', name: 'Par Brinco Coração 4mm', priceLabel: 'R$ 155,00', value: 155, specs: ['+ grossinho'], customNote: 'Peça pronta, sem personalização.', imgSrc: 'assets/products/bri4-coracao-4mm.png' },
+  { id: 'bri5', category: 'Brincos', name: 'Brinco Inicial', priceLabel: 'R$ 210,00', value: 210, specs: ['Par com iniciais à escolha'], customNote: 'Informe as iniciais para cada brinco.', imgSrc: 'assets/products/bri5-inicial.png' },
+  { id: 'bri6', category: 'Brincos', name: 'Brinco Palito', priceLabel: 'A partir de R$ 139,00', value: 139, hasVariants: true, variants: [{ label: 'P', price: 'R$ 139,00', value: 139 }, { label: 'M', price: 'R$ 179,00', value: 179 }, { label: 'G', price: 'R$ 218,00', value: 218 }], customNote: 'Escolha o tamanho do palito.', imgSrc: 'assets/products/bri6-palito.png' },
+  { id: 'bri7', category: 'Brincos', name: 'Brinco Corrente com Pedra 3mm', priceLabel: 'R$ 250,00', value: 250, specs: ['Pedra colorida à escolha'], customNote: 'Escolha a cor da pedra.', imgSrc: 'assets/products/bri7-corrente-pedra.png' },
+  { id: 'bri8', category: 'Brincos', name: 'Brinco Anzol Inicial', priceLabel: 'R$ 238,00', value: 238, specs: ['Corrente com inicial pendente'], customNote: 'Informe as iniciais para cada brinco.', imgSrc: 'assets/products/bri8-anzol-inicial.png' },
+  { id: 'bri9', category: 'Brincos', name: 'Par Alongador', priceLabel: 'R$ 129,00', value: 129, specs: ['Corrente lisa, sem pingente'], customNote: 'Peça pronta, sem personalização.', imgSrc: 'assets/products/bri9-alongador.png' },
+  { id: 'bri10', category: 'Brincos', name: 'Par Brinco Gems Correntinha', priceLabel: 'A partir de R$ 798,00', value: 798, specs: ['Valor = soma de dois pares de brinco gem', 'Gema 4x6mm: R$ 399,00', 'Gema retangular 4x6mm: R$ 460,00', 'Gema 5x7mm: R$ 620,00 (consultar formato)'], customNote: 'Escolha as duas cores de pedra.', imgSrc: 'assets/products/bri10-gems-correntinha.png' },
+
+  { id: 'pin1', category: 'Pingentes', name: 'Pingente Iniciais 10mm', priceLabel: 'R$ 155,00', value: 155, specs: ['Vendido avulso, sem corrente'], customNote: 'Informe a inicial desejada.', imgSrc: 'assets/products/pin1-iniciais-10mm.png' },
+  { id: 'pin2', category: 'Pingentes', name: 'Pingente Calendário', priceLabel: 'R$ 399,00', value: 399, specs: ['Data gravada com marcação especial'], customNote: 'Informe o mês, ano e dia a marcar.', imgSrc: 'assets/products/pin2-calendario.png' },
+  { id: 'pin3', category: 'Pingentes', name: 'Pingente Plaquinha p/ Gravação', priceLabel: 'R$ 235,00', value: 235, specs: ['Opção fotogravação: + R$ 60,00'], customNote: 'Envie o texto ou foto que deseja gravado.', imgSrc: 'assets/products/pin3-plaquinha-gravacao.png' },
+  { id: 'pin4', category: 'Pingentes', name: 'Corrente 45cm + Pingente Gem Gravada', priceLabel: 'R$ 960,00', value: 960, specs: ['+ grossinho', 'Pingente 18mm ou 30x8mm'], customNote: 'Informe a inicial gravada e a cor da pedra.', imgSrc: 'assets/products/pin4-corrente-pingente-gem.png' },
+];
+
+const PERSONALIZATION_FIELD_DEFS = {
+  tamanho: { label: 'Tamanho', maxLength: 6 },
+  caractere: { label: 'Caracteres', note: 'Até 9 caracteres inclusos — cada caractere a mais tem valor adicional de R$ 40,00', maxLength: 9, includedChars: 9, extraCharPrice: 40 },
+  corBanho: { label: 'Cor de banho', options: ['Ouro branco', 'Ouro amarelo'] },
+  pedra: { label: 'Pedra natural' },
+};
+const TAMANHO_RANGES = {
+  Colares: { min: 30, max: 45, unit: 'cm' },
+  Pulseiras: { min: 10, max: 25, unit: 'cm' },
+  Anéis: { min: 3, max: 30, unit: '' },
+};
+const SIZE_GUIDE_PMG = {
+  Colares: { unit: 'cm', options: [
+    { label: 'P', min: 35, max: 38 },
+    { label: 'M', min: 38, max: 42 },
+    { label: 'G', min: 40, max: 45 },
+  ]},
+  Pulseiras: { unit: 'cm', options: [
+    { label: 'P', min: 14, max: 15 },
+    { label: 'M', min: 15, max: 17 },
+    { label: 'G', min: 17, max: 18 },
+  ]},
+};
+const ARO_SIZES = [10, 12, 14, 16, 18, 20, 22, 24, 26];
+const PEDRA_OPTIONS = [
+  { color: 'Azul claro', stone: 'Topázio Sky', swatch: '#8fc4e8' },
+  { color: 'Verde claro', stone: 'Peridoto', swatch: '#a8d36a' },
+  { color: 'Verde escuro', stone: 'Crisóprazio', swatch: '#4c8f5e' },
+  { color: 'Branco', stone: 'Topázio branco', swatch: '#f2f0ea' },
+  { color: 'Vermelho', stone: 'Granada', swatch: '#a52439' },
+  { color: 'Amarelo', stone: 'Citrino', swatch: '#e8b93a' },
+  { color: 'Roxo', stone: 'Ametista', swatch: '#8a5fb0' },
+];
+const GEM_PRODUCT_IDS = ['col9', 'col11', 'ane2', 'ane3', 'ane4', 'bri1', 'bri2', 'bri3', 'bri7', 'bri10', 'pin4'];
+const CHARACTER_SETS = {
+  Colares: 'Letras de A a Z (números limitados) e símbolos: coração vazado, coração cheio, trevo, arvorezinha, meia-lua, estrela-de-davi, estrela, passarinho, folha, borboleta, mão de hamsa, infinito, flor e olho grego.',
+  Pulseiras: 'Letras de A a Z e símbolos: coração vazado, coração cheio, meia-lua, estrela, estrela-de-davi, infinito, trevo, pomba, gato, coruja, concha e os 12 signos do zodíaco.',
+  'Anéis': 'Letras de A a Z e símbolos: mão de hamsa, coração, meia-lua, estrela, estrela-de-davi, infinito, pomba, gato, cruz, borboleta e os 12 signos do zodíaco.',
+  Brincos: 'Letras de A a Z e símbolos: estrela, coração vazado, coração cheio, infinito, pomba, cruz, trevo, sapinho, ursinho, elefante, borboleta, flor e os 12 signos do zodíaco.',
+  Pingentes: 'Letras de A a Z e símbolos disponíveis sob consulta — semelhantes aos usados em colares e pingentes.',
+};
+PRODUCTS.forEach((p) => {
+  if (p.category === 'Colares') p.personalizationFields = ['tamanho', 'caractere', 'corBanho'];
+  if (p.category === 'Pulseiras') p.personalizationFields = ['tamanho', 'caractere'];
+  if (p.category === 'Anéis') p.personalizationFields = ['tamanho', 'caractere'];
+  if (GEM_PRODUCT_IDS.includes(p.id)) {
+    p.personalizationFields = [...(p.personalizationFields || []), 'pedra'];
+  }
+});
+
+function formatBRL(n) {
+  return 'R$ ' + n.toFixed(2).replace('.', ',').replace(/\d(?=(\d{3})+,)/g, '$&.');
+}
+
+class Component extends DCLogic {
+  state = {
+    activeCategory: 'Todos',
+    selectedId: null,
+    selectedVariantIndex: 0,
+    qty: 1,
+    customText: '',
+    personalizeOpen: false,
+    personalizeDraft: '',
+    pTamanho: '',
+    pTamanho1: '',
+    pTamanho2: '',
+    pTamanhoPMG: '',
+    pAro: '',
+    sizeGuideOpen: false,
+    pCaractere: '',
+    pCorBanho: '',
+    pPedraEnabled: false,
+    pPedraColor: '',
+    pDetalhesExtras: '',
+    cart: [],
+    cartOpen: false,
+    checkoutOpen: false,
+    orderPlaced: false,
+    paymentMethod: 'pix',
+    shipName: '',
+    shipAddress: '',
+    shipCity: '',
+    shipCep: '',
+    checkoutStep: 'auth',
+    freteCalculated: false,
+    couponCode: '',
+    couponApplied: false,
+    searchOpen: false,
+    searchQuery: '',
+    favorites: [],
+    favoritesOpen: false,
+    authOpen: false,
+    authTab: 'login',
+    authName: '',
+    authEmail: '',
+    authPassword: '',
+    authedUser: null,
+    processInfoOpen: false,
+    leadStep: 'contato',
+    leadName: '',
+    leadPhone: '',
+    leadEmail: '',
+    leadDescription: '',
+  };
+
+  scrollToVitrine = () => {
+    const el = document.getElementById('vitrine-section');
+    if (!el) return;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
+  };
+
+  closeProduct = () => this.setState({ selectedId: null, personalizeOpen: false });
+  openProcessInfo = () => this.setState({ processInfoOpen: true, leadStep: 'contato' });
+  closeProcessInfo = () => this.setState({ processInfoOpen: false });
+  setLeadName = (e) => this.setState({ leadName: e.target.value });
+  setLeadPhone = (e) => this.setState({ leadPhone: e.target.value });
+  setLeadEmail = (e) => this.setState({ leadEmail: e.target.value });
+  setLeadDescription = (e) => this.setState({ leadDescription: e.target.value });
+  goToLeadDescricao = () => this.setState({ leadStep: 'descricao' });
+  backToLeadContato = () => this.setState({ leadStep: 'contato' });
+  goToLeadEnviar = () => this.setState({ leadStep: 'enviar' });
+  backToLeadDescricao = () => this.setState({ leadStep: 'descricao' });
+
+  submitLeadAndOpenWhatsapp = () => {
+    const lead = {
+      id: 'lead-' + Date.now(),
+      name: this.state.leadName || 'Sem nome',
+      phone: this.state.leadPhone || '',
+      email: this.state.leadEmail || '',
+      description: this.state.leadDescription || '',
+      createdAt: new Date().toISOString(),
+    };
+    try {
+      const existing = JSON.parse(localStorage.getItem('hauquimia_leads') || '[]');
+      existing.unshift(lead);
+      localStorage.setItem('hauquimia_leads', JSON.stringify(existing));
+    } catch (e) {}
+
+    const msgParts = [
+      'Olá, vim através do site, eu quero criar uma joia.',
+      'Nome: ' + lead.name,
+      lead.description ? 'Ideia: ' + lead.description : null,
+    ].filter(Boolean);
+    const url = 'https://wa.me/5531990621354?text=' + encodeURIComponent(msgParts.join('\n'));
+    window.open(url, '_blank');
+
+    this.setState({
+      processInfoOpen: false,
+      leadStep: 'contato',
+      leadName: '',
+      leadPhone: '',
+      leadEmail: '',
+      leadDescription: '',
+    });
+  };
+  stopClick = (e) => e.stopPropagation();
+
+  selectVariant = (i) => this.setState({ selectedVariantIndex: i });
+  incQty = () => this.setState((s) => ({ qty: Math.min(9, s.qty + 1) }));
+  decQty = () => this.setState((s) => ({ qty: Math.max(1, s.qty - 1) }));
+
+  openPersonalize = () => this.setState((s) => ({ personalizeOpen: true, personalizeDraft: s.customText }));
+  closePersonalize = () => this.setState({ personalizeOpen: false });
+  setPersonalizeDraft = (e) => this.setState({ personalizeDraft: e.target.value });
+  savePersonalize = () => this.setState((s) => ({ customText: s.personalizeDraft, personalizeOpen: false }));
+  clearPersonalize = () => this.setState({ customText: '', personalizeDraft: '', personalizeOpen: false });
+
+  selectTamanho = (v) => this.setState({ pTamanho: v });
+  selectTamanhoPMG = (v) => this.setState({ pTamanhoPMG: v });
+  selectAro = (v) => this.setState({ pAro: v });
+  stepAro = (dir) => this.setState((s) => {
+    const cur = s.pAro || ARO_SIZES[0];
+    const idx = ARO_SIZES.indexOf(cur);
+    const next = ARO_SIZES[Math.max(0, Math.min(ARO_SIZES.length - 1, idx + dir))];
+    return { pAro: next };
+  });
+  openSizeGuide = () => this.setState({ sizeGuideOpen: true });
+  closeSizeGuide = () => this.setState({ sizeGuideOpen: false });
+  selectCorBanho = (v) => this.setState({ pCorBanho: v });
+  setCaractereValue = (e) => this.setState({ pCaractere: e.target.value.slice(0, 24) });
+  setTamanhoValue = (e) => this.setState({ pTamanho: e.target.value });
+
+  tamanhoTrackRef = (el) => { this.tamanhoTrackEl = el; };
+
+  valueFromClientX = (clientX) => {
+    const track = this.tamanhoTrackEl;
+    const p = this.getCurrentProduct();
+    if (!track || !p) return 0;
+    const range = TAMANHO_RANGES[p.category];
+    if (!range) return 0;
+    const rect = track.getBoundingClientRect();
+    let pct = rect.width ? (clientX - rect.left) / rect.width : 0;
+    pct = Math.max(0, Math.min(1, pct));
+    return Math.round(range.min + pct * (range.max - range.min));
+  };
+
+  dragTamanhoHandle = (which, startEvent) => {
+    startEvent.preventDefault();
+    startEvent.stopPropagation();
+    const move = (ev) => {
+      const clientX = ev.touches ? ev.touches[0].clientX : ev.clientX;
+      const val = this.valueFromClientX(clientX);
+      if (which === 1) this.setState({ pTamanho1: val });
+      else this.setState({ pTamanho2: val });
+    };
+    const up = () => {
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseup', up);
+      window.removeEventListener('touchmove', move);
+      window.removeEventListener('touchend', up);
+    };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+    window.addEventListener('touchmove', move);
+    window.addEventListener('touchend', up);
+    move(startEvent);
+  };
+
+  onHandle1Down = (e) => this.dragTamanhoHandle(1, e);
+  onHandle2Down = (e) => this.dragTamanhoHandle(2, e);
+
+  onTrackDown = (e) => {
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const val = this.valueFromClientX(clientX);
+    const v1 = this.state.pTamanho1 !== '' ? Number(this.state.pTamanho1) : val;
+    const v2 = this.state.pTamanho2 !== '' ? Number(this.state.pTamanho2) : val;
+    const which = Math.abs(val - v1) <= Math.abs(val - v2) ? 1 : 2;
+    this.dragTamanhoHandle(which, e);
+  };
+  togglePedra = () => this.setState((s) => ({ pPedraEnabled: !s.pPedraEnabled, pPedraColor: !s.pPedraEnabled ? (s.pPedraColor || PEDRA_OPTIONS[0].color) : s.pPedraColor }));
+  selectPedraColor = (v) => this.setState({ pPedraColor: v });
+  setDetalhesExtras = (e) => this.setState({ pDetalhesExtras: e.target.value });
+
+  getCurrentProduct = () => PRODUCTS.find((p) => p.id === this.state.selectedId);
+
+  addToCart = (buyNow) => {
+    const p = this.getCurrentProduct();
+    if (!p) return;
+    const variant = p.hasVariants ? p.variants[this.state.selectedVariantIndex] : null;
+    const unitValue = variant ? variant.value : p.value;
+    const pmgGuide = SIZE_GUIDE_PMG[p.category];
+    const pmgLabel = pmgGuide ? (this.state.pTamanhoPMG || 'M') : null;
+    const pmgOpt = pmgGuide ? pmgGuide.options.find((o) => o.label === pmgLabel) : null;
+    const isAro = p.category === 'Anéis';
+    const aroValue = isAro ? (this.state.pAro || ARO_SIZES[0]) : null;
+    const sizeLabel = pmgOpt ? `Tamanho ${pmgOpt.label} (${pmgOpt.min}–${pmgOpt.max}${pmgGuide.unit})` : (isAro ? `Aro ${aroValue}` : null);
+    const item = {
+      key: p.id + '|' + (variant ? variant.label : '') + '|' + (sizeLabel || '') + '|' + this.state.customText,
+      id: p.id,
+      name: p.name,
+      category: p.category,
+      imgSrc: p.imgSrc,
+      variantLabel: variant ? variant.label : null,
+      sizeLabel,
+      customText: this.state.customText,
+      unitValue,
+      qty: this.state.qty,
+    };
+    this.setState((s) => {
+      const existing = s.cart.find((c) => c.key === item.key);
+      let cart;
+      if (existing) {
+        cart = s.cart.map((c) => (c.key === item.key ? { ...c, qty: c.qty + item.qty } : c));
+      } else {
+        cart = [...s.cart, item];
+      }
+      return {
+        cart,
+        selectedId: null,
+        personalizeOpen: false,
+        qty: 1,
+        customText: '',
+        cartOpen: !buyNow,
+        checkoutOpen: !!buyNow,
+      };
+    });
+  };
+
+  removeFromCart = (key) => this.setState((s) => ({ cart: s.cart.filter((c) => c.key !== key) }));
+  changeCartQty = (key, delta) =>
+    this.setState((s) => ({
+      cart: s.cart.map((c) => (c.key === key ? { ...c, qty: Math.max(1, Math.min(9, c.qty + delta)) } : c)),
+    }));
+
+  openCart = () => this.setState({ cartOpen: true });
+  closeCart = () => this.setState({ cartOpen: false });
+  closeCheckout = () => this.setState({ checkoutOpen: false });
+  setPaymentMethod = (m) => this.setState({ paymentMethod: m });
+  setShipField = (field) => (e) => this.setState({ [field]: e.target.value });
+
+  confirmOrder = () => this.setState({ orderPlaced: true });
+  continueShopping = () =>
+    this.setState({
+      orderPlaced: false,
+      checkoutOpen: false,
+      cartOpen: false,
+      cart: [],
+      checkoutStep: 'auth',
+      freteCalculated: false,
+      couponApplied: false,
+      couponCode: '',
+    });
+
+  goToCheckout = () =>
+    this.setState({ cartOpen: false, checkoutOpen: true, checkoutStep: this.state.authedUser ? 'entrega' : 'auth' });
+  proceedAsGuest = () => this.setState({ checkoutStep: 'entrega' });
+  proceedAsAuthed = () => this.setState({ checkoutStep: 'entrega' });
+  goToPaymentStep = () => this.setState({ checkoutStep: 'pagamento' });
+  backToEntrega = () => this.setState({ checkoutStep: 'entrega' });
+  calcFrete = () => this.setState({ freteCalculated: true });
+  setCouponCode = (e) => this.setState({ couponCode: e.target.value });
+  applyCoupon = () => this.setState({ couponApplied: !!this.state.couponCode.trim() });
+
+  toggleSearch = () => this.setState((s) => ({ searchOpen: !s.searchOpen, searchQuery: '' }));
+  setSearchQuery = (e) => this.setState({ searchQuery: e.target.value });
+
+  toggleFavorite = (id) =>
+    this.setState((s) => ({
+      favorites: s.favorites.includes(id) ? s.favorites.filter((f) => f !== id) : [...s.favorites, id],
+    }));
+  openFavorites = () => this.setState({ favoritesOpen: true });
+  closeFavorites = () => this.setState({ favoritesOpen: false });
+
+  openAuth = (tab) => this.setState({ authOpen: true, authTab: tab || 'login' });
+  closeAuth = () => this.setState({ authOpen: false });
+  setAuthTab = (tab) => this.setState({ authTab: tab });
+  setAuthField = (field) => (e) => this.setState({ [field]: e.target.value });
+  submitAuth = () => {
+    const name = this.state.authTab === 'cadastro' ? this.state.authName || 'Cliente' : (this.state.authEmail || 'cliente').split('@')[0];
+    this.setState({ authedUser: { name }, authOpen: false, authName: '', authEmail: '', authPassword: '' });
+  };
+  logout = () => this.setState({ authedUser: null });
+
+  componentDidMount() {
+    const heroVideo = document.getElementById('hero-parallax-img');
+    if (heroVideo) {
+      heroVideo.muted = true;
+      heroVideo.volume = 0;
+      heroVideo.defaultMuted = true;
+    }
+    const check = () => {
+      document.querySelectorAll('[data-reveal]').forEach((el) => {
+        if (el.dataset.revealed) return;
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.92 && r.bottom > 0) {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+          el.dataset.revealed = '1';
+        }
+      });
+    };
+
+    const parallax = () => {
+      const img = document.getElementById('hero-parallax-img');
+      if (!img) return;
+      const hero = img.parentElement;
+      const rect = hero.getBoundingClientRect();
+      const p = Math.max(-1, Math.min(1, -rect.top / (rect.height || 1)));
+      img.style.transform = `translateY(${p * 60}px)`;
+    };
+
+    this._raf = null;
+    this._onScroll = () => {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => {
+        this._raf = null;
+        check();
+        parallax();
+      });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll);
+    check();
+    parallax();
+    setTimeout(check, 60);
+    setTimeout(check, 350);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onScroll);
+    if (this._raf) cancelAnimationFrame(this._raf);
+  }
+  renderVals() {
+    const activeCategory = this.state.activeCategory;
+    const categoryPills = CATEGORIES.map((cat) => {
+      const active = cat === activeCategory;
+      return {
+        name: cat,
+        onClick: () => this.setState({ activeCategory: cat }),
+        className: active ? 'cat-pill is-active' : 'cat-pill',
+        style: `font-size:12px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 20px;border-radius:999px;cursor:pointer;border:1px solid ${active ? '#14223d' : 'rgba(20,34,61,.25)'};background:${active ? '#14223d' : 'transparent'};color:${active ? '#f5efe3' : '#14223d'}`,
+      };
+    });
+
+    const q = this.state.searchQuery.trim().toLowerCase();
+    const filtered = PRODUCTS.filter((p) => {
+      const inCat = activeCategory === 'Todos' || p.category === activeCategory;
+      const inSearch = !q || p.name.toLowerCase().includes(q);
+      return inCat && inSearch;
+    });
+    const products = filtered.map((p, idx) => ({
+      ...p,
+      slotId: `slot-${p.id}`,
+      isFavorite: this.state.favorites.includes(p.id),
+      favFill: this.state.favorites.includes(p.id) ? '#14223d' : 'none',
+      animDelay: `${Math.min(idx, 11) * 35}ms`,
+      onOpen: () => this.setState({ selectedId: p.id, selectedVariantIndex: 0, qty: 1, customText: '', personalizeOpen: false, pTamanho: '', pTamanho1: '', pTamanho2: '', pTamanhoPMG: '', pAro: '', pCaractere: '', pCorBanho: '', pPedraEnabled: false, pPedraColor: '', pDetalhesExtras: '' }),
+      onToggleFavorite: (e) => { e.stopPropagation(); this.toggleFavorite(p.id); },
+    }));
+    const gridKey = activeCategory + '|' + q;
+
+    let selected = null;
+    if (this.state.selectedId) {
+      const p = PRODUCTS.find((x) => x.id === this.state.selectedId);
+      if (p) {
+        const variants = p.hasVariants
+          ? p.variants.map((v, i) => ({
+              ...v,
+              active: i === this.state.selectedVariantIndex,
+              onClick: () => this.selectVariant(i),
+              style: `font-size:13px;padding:9px 14px;border-radius:6px;cursor:pointer;border:1px solid ${i === this.state.selectedVariantIndex ? '#14223d' : 'rgba(20,34,61,.25)'};background:${i === this.state.selectedVariantIndex ? '#14223d' : 'transparent'};color:${i === this.state.selectedVariantIndex ? '#f5efe3' : '#14223d'}`,
+            }))
+          : [];
+        const unitValue = p.hasVariants ? p.variants[this.state.selectedVariantIndex].value : p.value;
+        const fields = p.personalizationFields || [];
+        const hasFieldPedra = fields.includes('pedra');
+        const range = TAMANHO_RANGES[p.category];
+        const pmgGuide = SIZE_GUIDE_PMG[p.category];
+        const tamanhoIsPMG = !!pmgGuide;
+        const tamanhoIsAro = p.category === 'Anéis';
+        const aroValue = tamanhoIsAro ? (this.state.pAro || ARO_SIZES[0]) : null;
+        const pmgSelected = pmgGuide ? (this.state.pTamanhoPMG || 'M') : null;
+        const pmgSelectedOpt = pmgGuide ? pmgGuide.options.find((o) => o.label === pmgSelected) : null;
+        const tamanhoValue = this.state.pTamanho !== '' ? Number(this.state.pTamanho) : (range ? range.min : 0);
+        const rMin = range ? range.min : 0;
+        const rMax = range ? range.max : 1;
+        const tamanho1Value = this.state.pTamanho1 !== '' ? Number(this.state.pTamanho1) : rMin;
+        const tamanho2Value = this.state.pTamanho2 !== '' ? Number(this.state.pTamanho2) : rMax;
+        const pct = (v) => rMax > rMin ? ((v - rMin) / (rMax - rMin)) * 100 : 0;
+        const extraCharCount = Math.max(0, this.state.pCaractere.length - PERSONALIZATION_FIELD_DEFS.caractere.includedChars);
+        const extraCharCost = extraCharCount * PERSONALIZATION_FIELD_DEFS.caractere.extraCharPrice;
+        const pedraCost = hasFieldPedra && this.state.pPedraEnabled ? unitValue / 2 : 0;
+        const totalValue = unitValue + extraCharCost + pedraCost;
+        const priceExtras = [];
+        if (extraCharCost > 0) priceExtras.push('+' + extraCharCount + ' caractere' + (extraCharCount > 1 ? 's' : '') + ' (' + formatBRL(extraCharCost) + ')');
+        if (pedraCost > 0) priceExtras.push('pedra natural (' + formatBRL(pedraCost) + ')');
+
+        selected = {
+          ...p,
+          slotId: `slot-${p.id}`,
+          modalSlotId: `slot-${p.id}-modal`,
+          hasVariants: !!p.hasVariants,
+          variants,
+          currentPriceLabel: formatBRL(totalValue),
+          hasPriceExtras: priceExtras.length > 0,
+          priceExtrasLabel: priceExtras.join(' · '),
+          hasSpecs: !!(p.specs && p.specs.length),
+          qty: this.state.qty,
+          customText: this.state.customText,
+          hasCustomText: !!this.state.customText,
+          noCustomText: !this.state.customText,
+          personalizeOpen: this.state.personalizeOpen,
+          personalizeDraft: this.state.personalizeDraft,
+          hasStructuredPersonalization: !!(fields && fields.length),
+          hasFreeformPersonalization: !(fields && fields.length),
+          hasFieldTamanho: fields.includes('tamanho'),
+          tamanhoIsPMG,
+          tamanhoIsSlider: fields.includes('tamanho') && !tamanhoIsPMG && !tamanhoIsAro,
+          tamanhoIsAro,
+          aroValue,
+          onAroUp: () => this.stepAro(1),
+          onAroDown: () => this.stepAro(-1),
+          aroOptions: tamanhoIsAro ? ARO_SIZES.map((n) => ({
+            label: n,
+            onClick: () => this.selectAro(n),
+            style: `width:52px;height:44px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;border:1px solid ${aroValue === n ? '#14223d' : 'rgba(20,34,61,.25)'};background:${aroValue === n ? '#14223d' : '#faf8f4'};color:${aroValue === n ? '#f5efe3' : '#9a7b34'}`,
+          })) : [],
+          pmgOptions: pmgGuide ? pmgGuide.options.map((o) => ({
+            label: o.label,
+            onClick: () => this.selectTamanhoPMG(o.label),
+            style: `font-size:14px;font-family:'Marcellus',serif;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid ${pmgSelected === o.label ? '#14223d' : 'rgba(20,34,61,.25)'};background:${pmgSelected === o.label ? '#14223d' : 'transparent'};color:${pmgSelected === o.label ? '#f5efe3' : '#14223d'}`,
+            guideSlotId: 'size-guide-' + p.category + '-' + o.label,
+            rangeLabel: o.min + '\u2013' + o.max + pmgGuide.unit,
+          })) : [],
+          pmgSelectedLabel: pmgSelected,
+          pmgRangeLabel: pmgSelectedOpt ? `${pmgSelectedOpt.min}–${pmgSelectedOpt.max}${pmgGuide.unit}` : '',
+          openSizeGuide: this.openSizeGuide,
+          hasFieldCaractere: fields.includes('caractere'),
+          hasFieldCorBanho: fields.includes('corBanho'),
+          hasFieldPedra,
+          tamanhoMin: range ? range.min : 0,
+          tamanhoMax: range ? range.max : 0,
+          tamanhoUnit: range ? range.unit : '',
+          tamanhoValue,
+          setTamanhoValue: this.setTamanhoValue,
+          tamanho1Value,
+          tamanho2Value,
+          tamanho1Pct: pct(tamanho1Value),
+          tamanho2Pct: pct(tamanho2Value),
+          tamanhoTrackRef: this.tamanhoTrackRef,
+          onHandle1Down: this.onHandle1Down,
+          onHandle2Down: this.onHandle2Down,
+          onTrackDown: this.onTrackDown,
+          caractereNote: PERSONALIZATION_FIELD_DEFS.caractere.note,
+          characterSetText: CHARACTER_SETS[p.category] || '',
+          corBanhoOptions: PERSONALIZATION_FIELD_DEFS.corBanho.options.map((opt) => ({
+            label: opt,
+            onClick: () => this.selectCorBanho(opt),
+            style: `font-size:13px;padding:9px 14px;border-radius:6px;cursor:pointer;border:1px solid ${this.state.pCorBanho === opt ? '#14223d' : 'rgba(20,34,61,.25)'};background:${this.state.pCorBanho === opt ? '#14223d' : 'transparent'};color:${this.state.pCorBanho === opt ? '#f5efe3' : '#14223d'}`,
+          })),
+          caractereValue: this.state.pCaractere,
+          detalhesExtrasValue: this.state.pDetalhesExtras,
+          pedraEnabled: this.state.pPedraEnabled,
+          togglePedra: this.togglePedra,
+          pedraToggleStyle: `width:22px;height:22px;flex-shrink:0;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;line-height:1;border:1px solid ${this.state.pPedraEnabled ? '#14223d' : 'rgba(20,34,61,.3)'};background:${this.state.pPedraEnabled ? '#14223d' : 'transparent'};color:${this.state.pPedraEnabled ? '#f5efe3' : 'transparent'}`,
+          pedraCostLabel: '+ ' + formatBRL(unitValue / 2),
+          pedraOptions: PEDRA_OPTIONS.map((opt) => ({
+            label: opt.color + ' · ' + opt.stone,
+            swatch: opt.swatch,
+            onClick: () => this.selectPedraColor(opt.color),
+            style: `display:flex;align-items:center;gap:8px;font-size:13px;padding:8px 12px;border-radius:6px;cursor:pointer;border:1px solid ${this.state.pPedraColor === opt.color ? '#14223d' : 'rgba(20,34,61,.25)'};background:${this.state.pPedraColor === opt.color ? '#14223d' : 'transparent'};color:${this.state.pPedraColor === opt.color ? '#f5efe3' : '#14223d'}`,
+            swatchStyle: `width:14px;height:14px;border-radius:50%;background:${opt.swatch};flex-shrink:0;border:1px solid rgba(20,34,61,.2)`,
+          })),
+        };
+      }
+    }
+
+    const cart = this.state.cart.map((c) => ({
+      ...c,
+      hasSizeLabel: !!c.sizeLabel,
+      lineLabel: formatBRL(c.unitValue * c.qty),
+      unitLabel: formatBRL(c.unitValue),
+      onInc: () => this.changeCartQty(c.key, 1),
+      onDec: () => this.changeCartQty(c.key, -1),
+      onRemove: () => this.removeFromCart(c.key),
+    }));
+    const cartCount = this.state.cart.reduce((sum, c) => sum + c.qty, 0);
+    const cartTotalValue = this.state.cart.reduce((sum, c) => sum + c.unitValue * c.qty, 0);
+    const cartTotalLabel = formatBRL(cartTotalValue);
+    const cartEmpty = cart.length === 0;
+
+    const paymentOptions = [
+      { id: 'pix', label: 'Pix' },
+      { id: 'cartao', label: 'Cartão de crédito' },
+    ].map((opt) => ({
+      ...opt,
+      active: this.state.paymentMethod === opt.id,
+      onClick: () => this.setPaymentMethod(opt.id),
+      style: `flex:1;text-align:center;font-size:13px;letter-spacing:1px;padding:14px 10px;border-radius:6px;cursor:pointer;border:1px solid ${this.state.paymentMethod === opt.id ? '#14223d' : 'rgba(20,34,61,.25)'};background:${this.state.paymentMethod === opt.id ? '#14223d' : 'transparent'};color:${this.state.paymentMethod === opt.id ? '#f5efe3' : '#14223d'}`,
+    }));
+
+    const freteValue = this.state.freteCalculated ? 24.9 : 0;
+    const discountValue = this.state.couponApplied ? cartTotalValue * 0.1 : 0;
+    const finalTotalLabel = formatBRL(Math.max(0, cartTotalValue - discountValue + freteValue));
+    const freteLabel = this.state.freteCalculated ? formatBRL(freteValue) + ' · 5 a 8 dias úteis' : null;
+    const discountLabel = this.state.couponApplied ? '- ' + formatBRL(discountValue) : null;
+
+    const favoriteProducts = PRODUCTS.filter((p) => this.state.favorites.includes(p.id)).map((p) => ({
+      ...p,
+      slotId: `slot-${p.id}`,
+      onOpen: () => this.setState({ selectedId: p.id, selectedVariantIndex: 0, qty: 1, customText: '', personalizeOpen: false, favoritesOpen: false, pTamanho: '', pTamanho1: '', pTamanho2: '', pTamanhoPMG: '', pAro: '', pCaractere: '', pCorBanho: '', pPedraEnabled: false, pPedraColor: '', pDetalhesExtras: '' }),
+      onRemove: () => this.toggleFavorite(p.id),
+    }));
+
+    const authTabs = [
+      { id: 'login', label: 'Entrar' },
+      { id: 'cadastro', label: 'Criar conta' },
+    ].map((t) => ({
+      ...t,
+      active: this.state.authTab === t.id,
+      onClick: () => this.setAuthTab(t.id),
+      style: `flex:1;text-align:center;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:12px;cursor:pointer;border-bottom:2px solid ${this.state.authTab === t.id ? '#14223d' : 'transparent'};color:${this.state.authTab === t.id ? '#14223d' : '#9aa4b8'}`,
+    }));
+
+    return {
+      categoryPills,
+      products,
+      gridKey,
+      selected,
+      scrollToVitrine: this.scrollToVitrine,
+      closeProduct: this.closeProduct,
+      stopClick: this.stopClick,
+      incQty: this.incQty,
+      decQty: this.decQty,
+      openPersonalize: this.openPersonalize,
+      closePersonalize: this.closePersonalize,
+      setPersonalizeDraft: this.setPersonalizeDraft,
+      savePersonalize: this.savePersonalize,
+      clearPersonalize: this.clearPersonalize,
+      setCaractereValue: this.setCaractereValue,
+      setDetalhesExtras: this.setDetalhesExtras,
+      addToCartNow: () => this.addToCart(false),
+      buyNow: () => this.addToCart(true),
+      personalizeOpen: this.state.personalizeOpen,
+      cart,
+      cartCount,
+      cartTotalLabel,
+      cartEmpty,
+      cartOpen: this.state.cartOpen,
+      openCart: this.openCart,
+      closeCart: this.closeCart,
+      goToCheckout: this.goToCheckout,
+      checkoutOpen: this.state.checkoutOpen,
+      closeCheckout: this.closeCheckout,
+      orderPlaced: this.state.orderPlaced,
+      checkoutFormVisible: !this.state.orderPlaced,
+      paymentOptions,
+      shipName: this.state.shipName,
+      shipAddress: this.state.shipAddress,
+      shipCity: this.state.shipCity,
+      shipCep: this.state.shipCep,
+      setShipName: this.setShipField('shipName'),
+      setShipAddress: this.setShipField('shipAddress'),
+      setShipCity: this.setShipField('shipCity'),
+      setShipCep: this.setShipField('shipCep'),
+      confirmOrder: this.confirmOrder,
+      continueShopping: this.continueShopping,
+
+      isStepAuth: this.state.checkoutStep === 'auth',
+      isStepEntrega: this.state.checkoutStep === 'entrega',
+      isStepPagamento: this.state.checkoutStep === 'pagamento',
+      stepAuthColor: this.state.checkoutStep === 'auth' ? '#14223d' : '#9aa4b8',
+      stepEntregaColor: this.state.checkoutStep === 'entrega' ? '#14223d' : '#9aa4b8',
+      stepPagamentoColor: this.state.checkoutStep === 'pagamento' ? '#14223d' : '#9aa4b8',
+      proceedAsGuest: this.proceedAsGuest,
+      proceedAsAuthed: this.proceedAsAuthed,
+      goToPaymentStep: this.goToPaymentStep,
+      backToEntrega: this.backToEntrega,
+      calcFrete: this.calcFrete,
+      freteCalculated: this.state.freteCalculated,
+      freteLabel,
+      couponCode: this.state.couponCode,
+      setCouponCode: this.setCouponCode,
+      applyCoupon: this.applyCoupon,
+      couponApplied: this.state.couponApplied,
+      discountLabel,
+      finalTotalLabel,
+      openAuthFromCheckout: () => this.openAuth('login'),
+
+      searchOpen: this.state.searchOpen,
+      searchQuery: this.state.searchQuery,
+      toggleSearch: this.toggleSearch,
+      setSearchQuery: this.setSearchQuery,
+
+      favoritesCount: this.state.favorites.length,
+      favoriteProducts,
+      favoritesEmpty: favoriteProducts.length === 0,
+      favoritesOpen: this.state.favoritesOpen,
+      openFavorites: this.openFavorites,
+      closeFavorites: this.closeFavorites,
+
+      authOpen: this.state.authOpen,
+      authTabs,
+      isAuthLogin: this.state.authTab === 'login',
+      isAuthCadastro: this.state.authTab === 'cadastro',
+      authName: this.state.authName,
+      authEmail: this.state.authEmail,
+      authPassword: this.state.authPassword,
+      setAuthName: this.setAuthField('authName'),
+      setAuthEmail: this.setAuthField('authEmail'),
+      setAuthPassword: this.setAuthField('authPassword'),
+      openLogin: () => this.openAuth('login'),
+      closeAuth: this.closeAuth,
+      submitAuth: this.submitAuth,
+      authedUser: this.state.authedUser,
+      isAuthed: !!this.state.authedUser,
+      isGuest: !this.state.authedUser,
+      logout: this.logout,
+
+      processInfoOpen: this.state.processInfoOpen,
+      openProcessInfo: this.openProcessInfo,
+      closeProcessInfo: this.closeProcessInfo,
+      sizeGuideOpen: this.state.sizeGuideOpen,
+      closeSizeGuide: this.closeSizeGuide,
+
+      isLeadStepContato: this.state.leadStep === 'contato',
+      isLeadStepDescricao: this.state.leadStep === 'descricao',
+      isLeadStepEnviar: this.state.leadStep === 'enviar',
+      leadStepContatoColor: this.state.leadStep === 'contato' ? '#14223d' : '#9aa4b8',
+      leadStepDescricaoColor: this.state.leadStep === 'descricao' ? '#14223d' : '#9aa4b8',
+      leadStepEnviarColor: this.state.leadStep === 'enviar' ? '#14223d' : '#9aa4b8',
+      leadName: this.state.leadName,
+      leadPhone: this.state.leadPhone,
+      leadEmail: this.state.leadEmail,
+      leadDescription: this.state.leadDescription,
+      setLeadName: this.setLeadName,
+      setLeadPhone: this.setLeadPhone,
+      setLeadEmail: this.setLeadEmail,
+      setLeadDescription: this.setLeadDescription,
+      goToLeadDescricao: this.goToLeadDescricao,
+      backToLeadContato: this.backToLeadContato,
+      goToLeadEnviar: this.goToLeadEnviar,
+      backToLeadDescricao: this.backToLeadDescricao,
+      submitLeadAndOpenWhatsapp: this.submitLeadAndOpenWhatsapp,
+    };
+  }
+}
+</script>
+</body>
+</html>
