@@ -8,6 +8,12 @@
 <body>
 <x-dc>
 <helmet>
+<title>Hauquímia — Ateliê e Oficina de Ourivesaria Artesanal</title>
+<meta name="description" content="Ateliê e oficina de ourivesaria em Belo Horizonte. Criamos, restauramos e ressignificamos joias em prata e ouro — peças autorais, ajustes, upcycle e personalização sob medida.">
+<meta name="theme-color" content="#14223d">
+<meta property="og:title" content="Hauquímia — Transformando histórias em joias">
+<meta property="og:description" content="Ateliê e oficina de ourivesaria artesanal. Criação, restauro, personalização e upcycle de joias em prata e ouro.">
+<meta property="og:type" content="website">
 <meta name="ext-resource-dependency" content="assets/products/ane1-inicial-gravado.png">
 <meta name="ext-resource-dependency" content="assets/products/ane2-inicial-gema.png">
 <meta name="ext-resource-dependency" content="assets/products/ane3-gema-4x6.png">
@@ -63,22 +69,114 @@
   .prod-card:hover .prod-img-wrap { transform: scale(1.02); }
   .prod-img-wrap { transition: transform .4s ease; }
   .modal-close:hover { opacity:.6; }
+
+  /* ============ RESPONSIVE SYSTEM ============ */
+  html { -webkit-text-size-adjust: 100%; }
+  * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+  img, video { max-width: 100%; }
+
+  /* Horizontal section padding: 64px desktop -> 40px tablet -> 20px mobile */
+  .pad-h { padding-left: 64px; padding-right: 64px; }
+  @media (max-width: 1024px) { .pad-h { padding-left: 40px !important; padding-right: 40px !important; } }
+  @media (max-width: 640px) { .pad-h { padding-left: 20px !important; padding-right: 20px !important; } }
+
+  /* Two-column rows (history, pillars) stack under 900px */
+  @media (max-width: 900px) {
+    .stack-md { flex-direction: column !important; gap: 40px !important; }
+    .stack-md > * { width: 100% !important; }
+    .pillar-media { width: 100% !important; max-width: 440px !important; margin: 0 auto; }
+  }
+
+  /* Nav */
+  .nav-links-text { display: flex; align-items: center; gap: 28px; }
+  .nav-hamburger { display: none; cursor: pointer; align-items: center; justify-content: center; }
+  @media (max-width: 900px) {
+    .nav-links-text { display: none !important; }
+    .nav-hamburger { display: flex !important; }
+  }
+  .mobile-menu-panel { display: none; }
+  @media (max-width: 900px) {
+    .mobile-menu-panel { display: flex !important; }
+  }
+
+  /* Grids */
+  @media (max-width: 1024px) { .grid-vitrine { grid-template-columns: repeat(2,1fr) !important; gap: 20px !important; } }
+  @media (max-width: 560px) { .grid-vitrine { grid-template-columns: repeat(1,1fr) !important; } }
+
+  @media (max-width: 900px) { .grid-upcycle { grid-template-columns: repeat(3,1fr) !important; row-gap: 28px !important; } }
+  @media (max-width: 560px) { .grid-upcycle { grid-template-columns: repeat(2,1fr) !important; } }
+
+  @media (max-width: 900px) {
+    .process-row { flex-wrap: wrap !important; row-gap: 36px !important; }
+    .process-row > div { flex: 1 1 45% !important; min-width: 220px !important; }
+  }
+  @media (max-width: 560px) {
+    .process-row > div { flex: 1 1 100% !important; }
+  }
+
+  /* Modals: side-by-side -> stacked */
+  @media (max-width: 768px) {
+    .modal-stack { flex-direction: column !important; height: auto !important; max-height: 92vh !important; overflow-y: auto !important; }
+    .modal-stack .modal-media { width: 100% !important; max-width: none !important; min-width: 0 !important; height: 240px !important; }
+  }
+  .modal-pad-40 { padding: 40px; }
+  .modal-pad-44 { padding: 44px; }
+  @media (max-width: 640px) {
+    .modal-pad-40 { padding: 24px !important; }
+    .modal-pad-44 { padding: 24px !important; }
+  }
+  @media (max-width: 480px) {
+    .modal-outer-pad { padding: 16px !important; }
+  }
+
+  @media (max-width: 768px) {
+    .checkout-stack { flex-direction: column !important; }
+    .checkout-stack .order-sidebar { width: 100% !important; }
+  }
+
+  @media (max-width: 900px) {
+    .hero-wrap { height: auto !important; min-height: 620px !important; padding-top: 130px !important; padding-bottom: 70px !important; }
+  }
+  @media (max-width: 560px) {
+    .hero-wrap { min-height: 580px !important; padding-top: 110px !important; padding-bottom: 50px !important; }
+  }
+
+  @media (max-width: 560px) {
+    .footer-row { flex-direction: column !important; gap: 10px !important; text-align: center !important; }
+  }
+
+  @media (max-width: 640px) {
+    .cat-pills-row { gap: 8px !important; }
+  }
+
+  @media (max-width: 480px) {
+    .size-guide-row { flex-direction: column !important; }
+  }
 </style>
 </helmet>
 
 <div id="parallax-root" style="font-family:'Jost',system-ui,sans-serif;max-width:1440px;margin:0 auto;background:#faf8f4;overflow:hidden">
 
   <!-- NAV -->
-  <div style="position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:26px 64px;background:rgba(250,248,244,.92);backdrop-filter:blur(6px);border-bottom:1px solid rgba(20,34,61,.08)">
+  <div class="pad-h" style="position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:26px 64px;background:rgba(250,248,244,.92);backdrop-filter:blur(6px);border-bottom:1px solid rgba(20,34,61,.08)">
     <div style="display:flex;align-items:center;gap:10px">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14223d" stroke-width="1.1"><circle cx="12" cy="12" r="6.4"/><line x1="12" y1="5.6" x2="12" y2="12"/><circle cx="12" cy="4.4" r="1.15" fill="#14223d" stroke="none"/></svg>
       <span style="font-family:'Marcellus',serif;font-size:20px;letter-spacing:2px;color:#14223d">HAUQUÍMIA</span>
     </div>
-    <div style="display:flex;align-items:center;gap:28px">
-      <span class="navlink" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Ateliê</span>
-      <span class="navlink" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Oficina</span>
-      <span class="navlink" onClick="{{ scrollToVitrine }}" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Catálogo</span>
-      <span class="navlink" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Contato</span>
+    <div style="display:flex;align-items:center;gap:20px">
+      <div class="nav-links-text">
+        <span class="navlink" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Ateliê</span>
+        <span class="navlink" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Oficina</span>
+        <span class="navlink" onClick="{{ scrollToVitrine }}" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Catálogo</span>
+        <span class="navlink" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Contato</span>
+
+        <sc-if value="{{ isGuest }}" hint-placeholder-val="{{ true }}">
+          <span class="navlink" onClick="{{ openLogin }}" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Entrar</span>
+        </sc-if>
+        <sc-if value="{{ isAuthed }}" hint-placeholder-val="{{ false }}">
+          <span onClick="{{ logout }}" style="font-size:13px;letter-spacing:1px;color:#14223d;cursor:pointer;white-space:nowrap">Olá, {{ authedUser.name }}</span>
+        </sc-if>
+      </div>
 
       <span onClick="{{ toggleSearch }}" style="cursor:pointer;display:flex;align-items:center">
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#14223d" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
@@ -91,35 +189,46 @@
         </sc-if>
       </span>
 
-      <sc-if value="{{ isGuest }}" hint-placeholder-val="{{ true }}">
-        <span class="navlink" onClick="{{ openLogin }}" style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Entrar</span>
-      </sc-if>
-      <sc-if value="{{ isAuthed }}" hint-placeholder-val="{{ false }}">
-        <span onClick="{{ logout }}" style="font-size:13px;letter-spacing:1px;color:#14223d;cursor:pointer;white-space:nowrap">Olá, {{ authedUser.name }}</span>
-      </sc-if>
-
       <span onClick="{{ openCart }}" style="position:relative;cursor:pointer;display:flex;align-items:center">
         <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#14223d" stroke-width="1.4"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
         <sc-if value="{{ cartCount }}">
           <span style="position:absolute;top:-8px;right:-9px;background:#14223d;color:#f5efe3;font-size:10px;font-weight:600;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px">{{ cartCount }}</span>
         </sc-if>
       </span>
+
+      <span class="nav-hamburger" onClick="{{ toggleMenu }}" style="width:26px;height:26px">
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14223d" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </sc-if>
+        <sc-if value="{{ isMenuClosed }}" hint-placeholder-val="{{ true }}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14223d" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </sc-if>
+      </span>
     </div>
   </div>
 
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="mobile-menu-panel pad-h" style="position:sticky;top:74px;z-index:19;flex-direction:column;gap:2px;padding-top:18px;padding-bottom:22px;background:#faf8f4;border-bottom:1px solid rgba(20,34,61,.08)">
+      <span class="navlink" onClick="{{ closeMenu }}" style="padding:12px 0;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer;border-bottom:1px solid rgba(20,34,61,.06)">Ateliê</span>
+      <span class="navlink" onClick="{{ closeMenu }}" style="padding:12px 0;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer;border-bottom:1px solid rgba(20,34,61,.06)">Oficina</span>
+      <span class="navlink" onClick="{{ scrollToVitrineAndCloseMenu }}" style="padding:12px 0;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer;border-bottom:1px solid rgba(20,34,61,.06)">Catálogo</span>
+      <span class="navlink" onClick="{{ closeMenu }}" style="padding:12px 0;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;cursor:pointer">Contato</span>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ searchOpen }}" hint-placeholder-val="{{ false }}">
-    <div style="position:sticky;top:78px;z-index:19;background:#faf8f4;border-bottom:1px solid rgba(20,34,61,.08);padding:16px 64px">
+    <div class="pad-h" style="position:sticky;top:0;z-index:19;background:#faf8f4;border-bottom:1px solid rgba(20,34,61,.08);padding:16px 64px">
       <input value="{{ searchQuery }}" onChange="{{ setSearchQuery }}" type="text" placeholder="Buscar peças (ex: colar, anel, coração...)" autoFocus="{{ true }}" style="width:100%;max-width:520px;box-sizing:border-box;border:none;border-bottom:1px solid rgba(20,34,61,.3);background:transparent;padding:8px 2px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#14223d;outline:none" />
     </div>
   </sc-if>
 
   <!-- HERO with video -->
-  <div style="position:relative;height:680px;overflow:hidden">
+  <div class="hero-wrap" style="position:relative;height:680px;overflow:hidden">
     <video id="hero-parallax-img" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" src="assets/hero-video.mp4" style="position:absolute;top:-10%;left:0;width:100%;height:120%;object-fit:cover;will-change:transform"></video>
     <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,16,28,.72) 0%,rgba(10,16,28,.42) 45%,rgba(10,16,28,.08) 75%)"></div>
-    <div style="position:relative;height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 64px;max-width:640px">
+    <div class="pad-h" style="position:relative;height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 64px;max-width:640px">
       <span data-reveal style="opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease;font-size:13px;letter-spacing:5px;text-transform:uppercase;color:#e3c77f;font-weight:500">Ateliê · Oficina · Transformação de joias · Desde 2010</span>
-      <div data-reveal style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .12s,transform .9s ease .12s;font-family:'Marcellus',serif;font-size:58px;line-height:1.12;color:#f5efe3;margin-top:18px;letter-spacing:.5px">Transformando<br>histórias em joias.</div>
+      <div data-reveal style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .12s,transform .9s ease .12s;font-family:'Marcellus',serif;font-size:clamp(34px,6.5vw,58px);line-height:1.12;color:#f5efe3;margin-top:18px;letter-spacing:.5px">Transformando<br>histórias em joias.</div>
       <div data-reveal style="opacity:0;transform:translateY(26px);transition:opacity .9s ease .24s,transform .9s ease .24s;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:#d8dbe4;margin-top:20px;line-height:1.5;max-width:480px">
         <p style="margin:0 0 14px">Cada joia que chega até nossa bancada carrega mais do que ouro, prata ou pedras. Ela carrega uma história.</p>
         <p style="margin:0 0 14px">Algumas histórias começam aqui. Outras encontram um novo significado.</p>
@@ -132,7 +241,7 @@
   </div>
 
   <!-- NOSSA HISTÓRIA -->
-  <div style="display:flex;align-items:center;gap:72px;padding:110px 64px">
+  <div class="stack-md pad-h" style="display:flex;align-items:center;gap:72px;padding:110px 64px">
     <div data-reveal style="flex:1;opacity:0;transform:translateX(-40px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);aspect-ratio:4/5;overflow:hidden;background:#f2eee6">
       <video autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" src="assets/raizes-video.mp4" style="width:100%;height:100%;object-fit:cover;display:block"></video>
     </div>
@@ -149,24 +258,24 @@
   </div>
 
   <!-- PILLARS INTRO -->
-  <div style="text-align:center;padding:96px 64px 0">
+  <div class="pad-h" style="text-align:center;padding:96px 64px 0">
     <span data-reveal style="opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:#9a7b34">Quatro pilares</span>
-    <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .1s,transform .8s ease .1s;font-family:'Marcellus',serif;font-size:38px;color:#14223d;margin-top:10px">Como trabalhamos</div>
+    <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .1s,transform .8s ease .1s;font-family:'Marcellus',serif;font-size:clamp(28px,5vw,38px);color:#14223d;margin-top:10px">Como trabalhamos</div>
     <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .2s,transform .8s ease .2s;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:#5a6170;margin-top:12px;max-width:560px;margin-left:auto;margin-right:auto">Criação no ateliê, cuidado na oficina e a base de cada metal ressignificada.</div>
   </div>
 
   <!-- ATELIÊ -->
-  <div style="padding:80px 64px 110px;background:#faf8f4">
-    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;gap:96px">
+  <div class="pad-h" style="padding:80px 64px 110px;background:#faf8f4">
+    <div class="stack-md" style="max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;gap:96px">
       <div style="position:relative;flex-shrink:0">
-        <div data-reveal style="opacity:0;transform:translateY(50px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);width:380px;aspect-ratio:4/5;background:#f2eee6;overflow:hidden">
+        <div data-reveal class="pillar-media" style="opacity:0;transform:translateY(50px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);width:380px;aspect-ratio:4/5;background:#f2eee6;overflow:hidden">
           <video autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" src="assets/atelie-video.mp4" style="width:100%;height:100%;object-fit:cover;object-position:center 38%;display:block"></video>
         </div>
       </div>
 
       <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .12s,transform .8s ease .12s;flex:1;padding-bottom:24px">
         <span style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#9a7b34">Pilar 01</span>
-        <div style="font-family:'Marcellus',serif;font-size:34px;color:#14223d;margin-top:8px">Ateliê</div>
+        <div style="font-family:'Marcellus',serif;font-size:clamp(28px,4.5vw,34px);color:#14223d;margin-top:8px">Ateliê</div>
         <span style="display:inline-block;margin-top:10px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;border:1px solid #9a7b34;padding:5px 12px">Arte feita à mão, peça única</span>
         <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#5a6170;margin-top:16px;line-height:1.6">É aqui que cada história ganha forma. No ateliê, unimos técnica, sensibilidade e tempo para criar joias autorais que carregam significado e traduzem a essência de quem as usa.</div>
         <div style="margin-top:26px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#14223d">O que fazemos no ateliê</div>
@@ -189,17 +298,17 @@
   </div>
 
   <!-- OFICINA -->
-  <div style="padding:80px 64px 110px;background:#f2eee6">
-    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;flex-direction:row-reverse;gap:96px">
+  <div class="pad-h" style="padding:80px 64px 110px;background:#f2eee6">
+    <div class="stack-md" style="max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;flex-direction:row-reverse;gap:96px">
       <div style="position:relative;flex-shrink:0">
-        <div data-reveal style="opacity:0;transform:translateY(50px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);width:380px;aspect-ratio:816/1104;background:#faf8f4;overflow:hidden">
+        <div data-reveal class="pillar-media" style="opacity:0;transform:translateY(50px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);width:380px;aspect-ratio:816/1104;background:#faf8f4;overflow:hidden">
           <video autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" src="assets/oficina-video.mp4" style="width:100%;height:100%;object-fit:cover;display:block"></video>
         </div>
       </div>
 
       <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .12s,transform .8s ease .12s;flex:1;padding-bottom:24px">
         <span style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#9a7b34">Pilar 02</span>
-        <div style="font-family:'Marcellus',serif;font-size:34px;color:#14223d;margin-top:8px">Oficina</div>
+        <div style="font-family:'Marcellus',serif;font-size:clamp(28px,4.5vw,34px);color:#14223d;margin-top:8px">Oficina</div>
         <span style="display:inline-block;margin-top:10px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;border:1px solid #9a7b34;padding:5px 12px">Cuidar também é ressignificar.</span>
         <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#5a6170;margin-top:16px;line-height:1.6">Cada joia carrega uma história. E algumas precisam de cuidado para continuar fazendo parte dela. Na oficina, unimos técnica, experiência e atenção aos detalhes para devolver vida, segurança e beleza às peças que você ama.</div>
         <div style="margin-top:26px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#14223d">O que fazemos na oficina</div>
@@ -231,17 +340,17 @@
   </div>
 
   <!-- UPCYCLING -->
-  <div style="padding:80px 64px 110px;background:#faf8f4">
-    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;gap:96px">
+  <div class="pad-h" style="padding:80px 64px 110px;background:#faf8f4">
+    <div class="stack-md" style="max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;gap:96px">
       <div style="position:relative;flex-shrink:0">
-        <div data-reveal style="opacity:0;transform:translateY(50px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);width:380px;aspect-ratio:768/1168;background:#f2eee6;overflow:hidden">
+        <div data-reveal class="pillar-media" style="opacity:0;transform:translateY(50px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);width:380px;aspect-ratio:768/1168;background:#f2eee6;overflow:hidden">
           <video autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" src="assets/personalizacao-video.mp4" style="width:100%;height:100%;object-fit:cover;display:block"></video>
         </div>
       </div>
 
       <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .12s,transform .8s ease .12s;flex:1;padding-bottom:24px">
         <span style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#9a7b34">Pilar 03</span>
-        <div style="font-family:'Marcellus',serif;font-size:34px;color:#14223d;margin-top:8px">Personalização</div>
+        <div style="font-family:'Marcellus',serif;font-size:clamp(28px,4.5vw,34px);color:#14223d;margin-top:8px">Personalização</div>
         <span style="display:inline-block;margin-top:10px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;border:1px solid #9a7b34;padding:5px 12px">Sua história, desenhada em cada detalhe</span>
         <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#5a6170;margin-top:16px;line-height:1.6">Ela começa quando alguém decide compartilhar uma história. Aqui, cada detalhe importa. Conte sua história e vamos juntos transformá-la em uma joia que carrega significado para toda a vida.</div>
         <div style="margin-top:26px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Como funciona a personalização</div>
@@ -276,17 +385,17 @@
   </div>
 
   <!-- UPCYCLE -->
-  <div style="padding:80px 64px 110px;background:#f2eee6">
-    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;flex-direction:row-reverse;gap:96px">
+  <div class="pad-h" style="padding:80px 64px 110px;background:#f2eee6">
+    <div class="stack-md" style="max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;flex-direction:row-reverse;gap:96px">
       <div style="position:relative;flex-shrink:0">
-        <div data-reveal style="opacity:0;transform:translateY(50px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);width:380px;aspect-ratio:4/5;background:#faf8f4;overflow:hidden">
+        <div data-reveal class="pillar-media" style="opacity:0;transform:translateY(50px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);width:380px;aspect-ratio:4/5;background:#faf8f4;overflow:hidden">
           <image-slot id="upcycle-img" shape="rect" fit="cover" placeholder="Foto de peça em upcycle" style="width:100%;height:100%"></image-slot>
         </div>
       </div>
 
       <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .12s,transform .8s ease .12s;flex:1;padding-bottom:24px">
         <span style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#9a7b34">Pilar 04</span>
-        <div style="font-family:'Marcellus',serif;font-size:34px;color:#14223d;margin-top:8px">Upcycle</div>
+        <div style="font-family:'Marcellus',serif;font-size:clamp(28px,4.5vw,34px);color:#14223d;margin-top:8px">Upcycle</div>
         <span style="display:inline-block;margin-top:10px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#14223d;border:1px solid #9a7b34;padding:5px 12px">Ressignificar para preservar o que importa.</span>
         <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#5a6170;margin-top:16px;line-height:1.6">
           <p style="margin:0 0 14px">Nem toda joia precisa ser nova para ter um novo significado.<br>Com o upcycle, transformamos peças antigas, quebradas ou fora de uso em algo único, atual e cheio de propósito.</p>
@@ -294,7 +403,7 @@
         </div>
 
         <div style="margin-top:30px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Como funciona o upcycle</div>
-        <div style="margin-top:20px;display:grid;grid-template-columns:repeat(5,1fr);gap:14px">
+        <div class="grid-upcycle" style="margin-top:20px;display:grid;grid-template-columns:repeat(5,1fr);gap:14px">
           <div><div style="display:flex;align-items:center;gap:8px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h4l2 3h4l2-3h4"/><path d="M5.5 5h13l1.5 7v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6Z"/></svg><span style="font-family:'Marcellus',serif;font-size:14px;color:#9a7b34">1</span></div><div style="font-size:13px;color:#14223d;font-weight:500;margin-top:10px">Recebemos</div><div style="font-size:12px;color:#5a6170;margin-top:4px;line-height:1.4">Você nos envia suas joias e conta o que deseja transformar.</div></div>
           <div><div style="display:flex;align-items:center;gap:8px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6"/><line x1="19" y1="19" x2="14.5" y2="14.5"/></svg><span style="font-family:'Marcellus',serif;font-size:14px;color:#9a7b34">2</span></div><div style="font-size:13px;color:#14223d;font-weight:500;margin-top:10px">Avaliamos</div><div style="font-size:12px;color:#5a6170;margin-top:4px;line-height:1.4">Analisamos cada peça, seus materiais e possibilidades.</div></div>
           <div><div style="display:flex;align-items:center;gap:8px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9a7b34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/></svg><span style="font-family:'Marcellus',serif;font-size:14px;color:#9a7b34">3</span></div><div style="font-size:13px;color:#14223d;font-weight:500;margin-top:10px">Criamos</div><div style="font-size:12px;color:#5a6170;margin-top:4px;line-height:1.4">Desenvolvemos um novo projeto que honra a história e atende ao que você imagina.</div></div>
@@ -314,12 +423,12 @@
   </div>
 
   <!-- PROCESS -->
-  <div style="background:#f2eee6;padding:100px 64px">
+  <div class="pad-h" style="background:#f2eee6;padding:100px 64px">
     <div style="text-align:center;margin-bottom:60px">
       <span data-reveal style="opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:#9a7b34">O processo da criação</span>
       <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .1s,transform .8s ease .1s;font-family:'Marcellus',serif;font-size:36px;color:#14223d;margin-top:10px">Da ideia à entrega</div>
     </div>
-    <div style="display:flex;gap:36px;max-width:1240px;margin:0 auto">
+    <div class="process-row" style="display:flex;gap:36px;max-width:1240px;margin:0 auto">
       <div data-reveal style="flex:1;opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.16,.8,.24,1),transform .8s cubic-bezier(.16,.8,.24,1)">
         <div style="font-family:'Marcellus',serif;font-size:15px;color:#9a7b34">01</div>
         <div style="font-family:'Marcellus',serif;font-size:23px;color:#14223d;margin-top:10px">Contato</div>
@@ -347,15 +456,15 @@
   </div>
 
   <!-- VITRINE -->
-  <div id="vitrine-section" style="padding:100px 64px 110px">
+  <div id="vitrine-section" class="pad-h" style="padding:100px 64px 110px">
     <div style="text-align:center;margin-bottom:48px">
       <span data-reveal style="opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:#9a7b34">Catálogo</span>
-      <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .1s,transform .8s ease .1s;font-family:'Marcellus',serif;font-size:38px;color:#14223d;margin-top:10px">Vitrine da coleção</div>
+      <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .1s,transform .8s ease .1s;font-family:'Marcellus',serif;font-size:clamp(28px,5vw,38px);color:#14223d;margin-top:10px">Vitrine da coleção</div>
       <div data-reveal style="opacity:0;transform:translateY(18px);transition:opacity .8s ease .2s,transform .8s ease .2s;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:#5a6170;margin-top:12px;max-width:560px;margin-left:auto;margin-right:auto">Filtre por tipo de peça e clique para ver fotos, valores e opções de personalização.</div>
       <div style="margin-top:18px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#9a7b34">Cada peça, arte feito à mão</div>
     </div>
 
-    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:52px">
+    <div class="cat-pills-row" style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:52px">
       <sc-for list="{{ categoryPills }}" as="cat" hint-placeholder-count="6">
         <span class="{{ cat.className }}" onClick="{{ cat.onClick }}" style="{{ cat.style }}">{{ cat.name }}</span>
       </sc-for>
@@ -364,7 +473,7 @@
     <sc-if value="{{ productsEmpty }}" hint-placeholder-val="{{ false }}">
       <div style="text-align:center;padding:60px 0;font-size:17px;color:#5a6170;font-family:'Cormorant Garamond',serif;font-style:italic">Nenhuma peça encontrada.</div>
     </sc-if>
-    <div key="{{ gridKey }}" style="display:grid;grid-template-columns:repeat(4,1fr);gap:26px">
+    <div key="{{ gridKey }}" class="grid-vitrine" style="display:grid;grid-template-columns:repeat(4,1fr);gap:26px">
       <sc-for list="{{ products }}" as="p">
         <div class="prod-card" onClick="{{ p.onOpen }}" style="cursor:pointer;animation:cardIn .5s cubic-bezier(.16,.8,.24,1) both;animation-delay:{{ p.animDelay }}">
           <div class="prod-img-wrap" style="position:relative;width:100%;aspect-ratio:1;overflow:hidden;background:#f2eee6">
@@ -385,10 +494,10 @@
 
   <!-- PRODUCT MODAL -->
   <sc-if value="{{ selected }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ closeProduct }}" style="position:fixed;inset:0;z-index:100;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box">
-      <div onClick="{{ stopClick }}" style="background:#faf8f4;max-width:860px;width:100%;height:min(90vh,720px);display:flex;position:relative;box-sizing:border-box;overflow:hidden">
+    <div onClick="{{ closeProduct }}" class="modal-outer-pad" style="position:fixed;inset:0;z-index:100;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box">
+      <div onClick="{{ stopClick }}" class="modal-stack" style="background:#faf8f4;max-width:860px;width:100%;height:min(90vh,720px);display:flex;position:relative;box-sizing:border-box;overflow:hidden">
         <span class="modal-close" onClick="{{ closeProduct }}" style="position:absolute;top:16px;right:20px;font-size:24px;line-height:1;color:#14223d;cursor:pointer;font-family:'Jost',sans-serif;z-index:5">×</span>
-        <div style="width:34%;min-width:180px;max-width:300px;flex-shrink:0;background:#f2eee6">
+        <div class="modal-media" style="width:34%;min-width:180px;max-width:300px;flex-shrink:0;background:#f2eee6">
           <image-slot id="{{ selected.modalSlotId }}" shape="rect" fit="cover" src="{{ selected.imgSrc }}" placeholder="{{ selected.name }}" style="width:100%;height:100%"></image-slot>
         </div>
         <div style="flex:1;min-width:0;overflow-y:auto;padding:30px 32px 28px;box-sizing:border-box">
@@ -552,8 +661,8 @@
 
   <!-- PERSONALIZE MODAL -->
   <sc-if value="{{ personalizeOpen }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ closePersonalize }}" style="position:fixed;inset:0;z-index:200;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
-      <div onClick="{{ stopClick }}" style="background:#faf8f4;max-width:460px;width:100%;padding:40px;box-sizing:border-box;position:relative">
+    <div onClick="{{ closePersonalize }}" class="modal-outer-pad" style="position:fixed;inset:0;z-index:200;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
+      <div onClick="{{ stopClick }}" class="modal-pad-40" style="background:#faf8f4;max-width:460px;width:100%;padding:40px;box-sizing:border-box;position:relative">
         <span class="modal-close" onClick="{{ closePersonalize }}" style="position:absolute;top:18px;right:20px;font-size:24px;line-height:1;color:#14223d;cursor:pointer">×</span>
         <span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">Personalizar peça</span>
         <div style="font-family:'Marcellus',serif;font-size:24px;color:#14223d;margin-top:8px">{{ selected.name }}</div>
@@ -569,12 +678,12 @@
 
   <!-- SIZE GUIDE MODAL -->
   <sc-if value="{{ sizeGuideOpen }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ closeSizeGuide }}" style="position:fixed;inset:0;z-index:200;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
-      <div onClick="{{ stopClick }}" style="background:#faf8f4;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;padding:40px;box-sizing:border-box;position:relative">
+    <div onClick="{{ closeSizeGuide }}" class="modal-outer-pad" style="position:fixed;inset:0;z-index:200;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
+      <div onClick="{{ stopClick }}" class="modal-pad-40" style="background:#faf8f4;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;padding:40px;box-sizing:border-box;position:relative">
         <span class="modal-close" onClick="{{ closeSizeGuide }}" style="position:absolute;top:18px;right:20px;font-size:24px;line-height:1;color:#14223d;cursor:pointer">×</span>
         <span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">Guia de tamanhos</span>
         <div style="font-family:'Marcellus',serif;font-size:24px;color:#14223d;margin-top:8px">{{ selected.category }}</div>
-        <div style="margin-top:24px;display:flex;gap:18px">
+        <div class="size-guide-row" style="margin-top:24px;display:flex;gap:18px">
           <sc-for list="{{ selected.pmgOptions }}" as="sz" hint-placeholder-count="3">
             <div style="flex:1;text-align:center">
               <div style="width:100%;aspect-ratio:1;background:#f2eee6">
@@ -591,8 +700,8 @@
 
   <!-- PROCESS INFO MODAL -->
   <sc-if value="{{ processInfoOpen }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ closeProcessInfo }}" style="position:fixed;inset:0;z-index:200;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
-      <div onClick="{{ stopClick }}" style="background:#faf8f4;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;padding:44px;box-sizing:border-box;position:relative">
+    <div onClick="{{ closeProcessInfo }}" class="modal-outer-pad" style="position:fixed;inset:0;z-index:200;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
+      <div onClick="{{ stopClick }}" class="modal-pad-44" style="background:#faf8f4;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;padding:44px;box-sizing:border-box;position:relative">
         <span class="modal-close" onClick="{{ closeProcessInfo }}" style="position:absolute;top:18px;right:20px;font-size:24px;line-height:1;color:#14223d;cursor:pointer">×</span>
         <span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">Criar uma joia</span>
         <div style="font-family:'Marcellus',serif;font-size:26px;color:#14223d;margin-top:8px">Conte sua ideia pra gente</div>
@@ -667,7 +776,7 @@
           <sc-for list="{{ cart }}" as="c">
             <div style="display:flex;gap:14px;padding:18px 0;border-bottom:1px solid rgba(20,34,61,.08)">
               <div style="width:76px;height:76px;flex-shrink:0;background:#f2eee6">
-                <img src="{{ c.imgSrc }}" style="width:100%;height:100%;object-fit:cover;display:block" />
+                <img src="{{ c.imgSrc }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
               </div>
               <div style="flex:1;min-width:0">
                 <div style="font-family:'Marcellus',serif;font-size:15px;color:#14223d">{{ c.name }}</div>
@@ -720,7 +829,7 @@
           <sc-for list="{{ favoriteProducts }}" as="f">
             <div onClick="{{ f.onOpen }}" style="display:flex;gap:14px;padding:18px 0;border-bottom:1px solid rgba(20,34,61,.08);cursor:pointer">
               <div style="width:76px;height:76px;flex-shrink:0;background:#f2eee6">
-                <img src="{{ f.imgSrc }}" style="width:100%;height:100%;object-fit:cover;display:block" />
+                <img src="{{ f.imgSrc }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
               </div>
               <div style="flex:1;min-width:0">
                 <div style="font-family:'Marcellus',serif;font-size:15px;color:#14223d">{{ f.name }}</div>
@@ -736,8 +845,8 @@
 
   <!-- AUTH MODAL -->
   <sc-if value="{{ authOpen }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ closeAuth }}" style="position:fixed;inset:0;z-index:260;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
-      <div onClick="{{ stopClick }}" style="background:#faf8f4;max-width:400px;width:100%;padding:40px;box-sizing:border-box;position:relative">
+    <div onClick="{{ closeAuth }}" class="modal-outer-pad" style="position:fixed;inset:0;z-index:260;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
+      <div onClick="{{ stopClick }}" class="modal-pad-40" style="background:#faf8f4;max-width:400px;width:100%;padding:40px;box-sizing:border-box;position:relative">
         <span class="modal-close" onClick="{{ closeAuth }}" style="position:absolute;top:18px;right:20px;font-size:24px;line-height:1;color:#14223d;cursor:pointer">×</span>
         <div style="display:flex;margin-bottom:26px">
           <sc-for list="{{ authTabs }}" as="t" hint-placeholder-count="2">
@@ -761,11 +870,11 @@
 
   <!-- CHECKOUT MODAL -->
   <sc-if value="{{ checkoutOpen }}" hint-placeholder-val="{{ false }}">
-    <div style="position:fixed;inset:0;z-index:250;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
-      <div style="background:#faf8f4;max-width:840px;width:100%;max-height:90vh;overflow-y:auto;display:flex;position:relative">
+    <div class="modal-outer-pad" style="position:fixed;inset:0;z-index:250;background:rgba(10,16,28,.72);display:flex;align-items:center;justify-content:center;padding:40px">
+      <div class="checkout-stack" style="background:#faf8f4;max-width:840px;width:100%;max-height:90vh;overflow-y:auto;display:flex;position:relative">
 
         <sc-if value="{{ orderPlaced }}" hint-placeholder-val="{{ false }}">
-          <div style="padding:60px 44px;text-align:center;width:100%">
+          <div class="modal-pad-44" style="padding:60px 44px;text-align:center;width:100%">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#14223d" stroke-width="1.3" style="margin:0 auto"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9"/></svg>
             <div style="font-family:'Marcellus',serif;font-size:26px;color:#14223d;margin-top:18px">Pedido confirmado</div>
             <div style="font-size:16px;color:#5a6170;font-family:'Cormorant Garamond',serif;font-style:italic;margin-top:12px;line-height:1.5;max-width:420px;margin-left:auto;margin-right:auto">Você vai acompanhar a produção em tempo real na sua conta — vamos enviar fotos do processo por lá.</div>
@@ -779,7 +888,7 @@
         <sc-if value="{{ checkoutFormVisible }}" hint-placeholder-val="{{ true }}">
           <span class="modal-close" onClick="{{ closeCheckout }}" style="position:absolute;top:18px;right:20px;font-size:24px;line-height:1;color:#14223d;cursor:pointer;z-index:2">×</span>
 
-          <div style="flex:1;padding:44px;box-sizing:border-box;min-width:0">
+          <div class="modal-pad-44" style="flex:1;padding:44px;box-sizing:border-box;min-width:0">
             <span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">Finalizar compra</span>
             <div style="font-family:'Marcellus',serif;font-size:26px;color:#14223d;margin-top:8px">Entrega e pagamento</div>
 
@@ -846,13 +955,13 @@
           </div>
 
           <!-- ORDER SUMMARY SIDEBAR -->
-          <div style="width:300px;flex-shrink:0;background:#f2eee6;padding:44px 30px;box-sizing:border-box">
+          <div class="order-sidebar" style="width:300px;flex-shrink:0;background:#f2eee6;padding:44px 30px;box-sizing:border-box">
             <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Resumo do pedido</span>
             <div style="margin-top:16px;display:flex;flex-direction:column;gap:14px;max-height:280px;overflow-y:auto">
               <sc-for list="{{ cart }}" as="c">
                 <div style="display:flex;gap:10px">
                   <div style="width:48px;height:48px;flex-shrink:0;background:#e9e3d6">
-                    <img src="{{ c.imgSrc }}" style="width:100%;height:100%;object-fit:cover;display:block" />
+                    <img src="{{ c.imgSrc }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
                   </div>
                   <div style="flex:1;min-width:0">
                     <div style="font-size:13px;color:#14223d;line-height:1.3">{{ c.name }} {{ c.variantLabel }} × {{ c.qty }}</div>
@@ -881,7 +990,7 @@
   </sc-if>
 
   <!-- FOOTER -->
-  <div style="background:#14223d;padding:56px 64px;display:flex;justify-content:space-between;align-items:center">
+  <div class="footer-row pad-h" style="background:#14223d;padding:56px 64px;display:flex;justify-content:space-between;align-items:center">
     <span style="font-family:'Marcellus',serif;font-size:18px;letter-spacing:2px;color:#e3c77f">HAUQUÍMIA</span>
     <span style="font-size:13px;color:#cdd4df">Belo Horizonte, MG · @hauquimia</span>
   </div>
@@ -1021,6 +1130,7 @@ class Component extends DCLogic {
     couponApplied: false,
     searchOpen: false,
     searchQuery: '',
+    menuOpen: false,
     favorites: [],
     favoritesOpen: false,
     authOpen: false,
@@ -1041,6 +1151,10 @@ class Component extends DCLogic {
     const el = document.getElementById('vitrine-section');
     if (!el) return;
     window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
+  };
+  scrollToVitrineAndCloseMenu = () => {
+    this.scrollToVitrine();
+    this.setState({ menuOpen: false });
   };
 
   closeProduct = () => this.setState({ selectedId: null, personalizeOpen: false });
@@ -1247,6 +1361,9 @@ class Component extends DCLogic {
 
   toggleSearch = () => this.setState((s) => ({ searchOpen: !s.searchOpen, searchQuery: '' }));
   setSearchQuery = (e) => this.setState({ searchQuery: e.target.value });
+
+  toggleMenu = () => this.setState((s) => ({ menuOpen: !s.menuOpen }));
+  closeMenu = () => this.setState({ menuOpen: false });
 
   toggleFavorite = (id) =>
     this.setState((s) => ({
@@ -1575,6 +1692,12 @@ class Component extends DCLogic {
       searchQuery: this.state.searchQuery,
       toggleSearch: this.toggleSearch,
       setSearchQuery: this.setSearchQuery,
+
+      menuOpen: this.state.menuOpen,
+      isMenuClosed: !this.state.menuOpen,
+      toggleMenu: this.toggleMenu,
+      closeMenu: this.closeMenu,
+      scrollToVitrineAndCloseMenu: this.scrollToVitrineAndCloseMenu,
 
       favoritesCount: this.state.favorites.length,
       favoriteProducts,
