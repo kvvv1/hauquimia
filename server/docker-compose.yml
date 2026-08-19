@@ -1,0 +1,14 @@
+# Runs only the API. It connects to the Postgres that's already on the VPS
+# via DATABASE_URL in .env — it does not spin up its own Postgres container.
+#
+# If DATABASE_URL points at "localhost", set network_mode: host below (Linux
+# only) so the container can reach the host's Postgres; otherwise use the
+# VPS's LAN/Docker-bridge address in DATABASE_URL instead.
+services:
+  api:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "3001:3001"
+    # network_mode: host
