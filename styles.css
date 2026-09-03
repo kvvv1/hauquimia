@@ -4,6 +4,9 @@ html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; background:#faf8f4; font-family:'Jost',system-ui,sans-serif; }
 ::-webkit-scrollbar { width: 0; height: 0; }
 img, video { max-width: 100%; }
+[hidden] { display: none !important; }
+/* SVG elements don't reliably reflect the `hidden` IDL property in every engine — use this class for those instead. */
+.is-hidden { display: none !important; }
 
 #parallax-root { font-family:'Jost',system-ui,sans-serif; max-width:1440px; margin:0 auto; background:#faf8f4; overflow:hidden; }
 
@@ -165,6 +168,12 @@ img, video { max-width: 100%; }
 .order-sidebar-line { display:flex; gap:10px; }
 .order-sidebar-thumb { width:48px; height:48px; flex-shrink:0; background:#e9e3d6; }
 .order-sidebar-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+.ship-city-row { display:flex; gap:10px; flex-wrap:wrap; }
+@media (max-width: 480px) {
+  .ship-city-row input#input-ship-city { flex:1 1 100% !important; }
+  .ship-city-row input#input-ship-cep { flex:1 !important; width:auto !important; }
+  .ship-city-row [data-action="calc-frete"] { flex:1 !important; }
+}
 .step-indicator { display:flex; align-items:center; gap:8px; margin-top:24px; }
 .step-indicator span.line { flex:1; height:1px; background:rgba(20,34,61,.15); }
 .step-indicator span.label { font-size:11px; letter-spacing:1px; text-transform:uppercase; }

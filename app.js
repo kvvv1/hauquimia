@@ -278,8 +278,8 @@
     cartBadge.hidden = cartCount === 0;
     cartBadge.textContent = cartCount;
 
-    document.getElementById('icon-menu-close').hidden = !state.menuOpen;
-    document.getElementById('icon-menu-open').hidden = state.menuOpen;
+    document.getElementById('icon-menu-close').classList.toggle('is-hidden', !state.menuOpen);
+    document.getElementById('icon-menu-open').classList.toggle('is-hidden', state.menuOpen);
     document.getElementById('mobile-menu-panel').hidden = !state.menuOpen;
     var searchBar = document.getElementById('search-bar');
     searchBar.hidden = !state.searchOpen;
@@ -767,10 +767,10 @@
       stepHtml = '<div style="margin-top:28px;display:flex;flex-direction:column;gap:10px">' +
         '<input id="input-ship-name" data-bind="shipName" value="' + esc(state.shipName) + '" type="text" placeholder="Nome completo" class="field-input" />' +
         '<input id="input-ship-address" data-bind="shipAddress" value="' + esc(state.shipAddress) + '" type="text" placeholder="Endereço e número" class="field-input" />' +
-        '<div style="display:flex;gap:10px">' +
-          '<input id="input-ship-city" data-bind="shipCity" value="' + esc(state.shipCity) + '" type="text" placeholder="Cidade" class="field-input" style="flex:1" />' +
+        '<div class="ship-city-row">' +
+          '<input id="input-ship-city" data-bind="shipCity" value="' + esc(state.shipCity) + '" type="text" placeholder="Cidade" class="field-input" style="flex:1;min-width:0" />' +
           '<input id="input-ship-cep" data-bind="shipCep" value="' + esc(state.shipCep) + '" type="text" placeholder="CEP" class="field-input" style="width:140px" />' +
-          '<span style="white-space:nowrap;border:1px solid #14223d;color:#14223d;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:0 16px;display:flex;align-items:center;cursor:pointer" data-action="calc-frete">Calcular frete</span>' +
+          '<span class="outline-btn" style="white-space:nowrap;font-size:12px;padding:13px 16px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;cursor:pointer" data-action="calc-frete">Calcular frete</span>' +
         '</div>' +
         (state.freteCalculated ? '<div style="font-size:14px;color:#5a6170;font-family:\'Cormorant Garamond\',serif;font-style:italic">Frete: ' + formatBRL(freteValue) + ' · 5 a 8 dias úteis</div>' : '') +
         '</div>' +
@@ -799,7 +799,7 @@
       '<div class="modal-overlay" style="z-index:250">' +
         '<div class="checkout-modal-inner">' +
           '<button type="button" class="modal-close" style="z-index:2" data-action="close-checkout">×</button>' +
-          '<div class="modal-pad-44" style="flex:1;min-width:0">' +
+          '<div class="modal-pad-44" style="flex:1;min-width:0;max-height:none;overflow:visible">' +
             '<span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">Finalizar compra</span>' +
             '<div style="font-family:\'Marcellus\',serif;font-size:26px;color:#14223d;margin-top:8px">Entrega e pagamento</div>' +
             '<div class="step-indicator">' +
