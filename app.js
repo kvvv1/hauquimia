@@ -196,6 +196,7 @@
     authBusy: false,
 
     processInfoOpen: false,
+    leadIntent: null,
     leadStep: 'contato',
     leadName: '',
     leadPhone: '',
@@ -572,6 +573,30 @@
     var colors = { contato: '#14223d', descricao: '#14223d', enviar: '#14223d' };
     ['contato', 'descricao', 'enviar'].forEach(function (k) { colors[k] = state.leadStep === k ? '#14223d' : '#9aa4b8'; });
 
+    var intentCopy = {
+      fornecer: {
+        eyebrow: 'Second Hand & Upcycle',
+        title: 'Quero fornecer uma joia',
+        descPrompt: 'Descreva a joia que você quer nos enviar — metal, estado de conservação, se tem pedras, e o que você espera desse processo.',
+        descPlaceholder: 'Ex: um anel de prata que não uso mais, com uma pedra azul, meio riscado...',
+        waIntro: 'Olá, vim através do site, eu quero fornecer uma joia para o Second Hand / Upcycle.',
+      },
+      comprar: {
+        eyebrow: 'Second Hand & Upcycle',
+        title: 'Quero comprar uma joia',
+        descPrompt: 'Conte o que você procura — tipo de peça, estilo, faixa de preço — e avisamos quando algo assim estiver disponível.',
+        descPlaceholder: 'Ex: procuro um colar discreto em prata, até R$ 300...',
+        waIntro: 'Olá, vim através do site, eu quero comprar uma joia do Second Hand / Upcycle.',
+      },
+    };
+    var intent = intentCopy[state.leadIntent] || {
+      eyebrow: 'Criar uma joia',
+      title: 'Conte sua ideia pra gente',
+      descPrompt: 'Descreva a joia que você imagina — metal, tamanho, onde gravar, o que não pode faltar.',
+      descPlaceholder: 'Ex: um anel em prata com o nome da minha filha gravado por dentro...',
+      waIntro: 'Olá, vim através do site, eu quero criar uma joia.',
+    };
+
     var stepHtml = '';
     if (state.leadStep === 'contato') {
       stepHtml =
@@ -584,8 +609,8 @@
         '<span class="buy-btn" style="display:block;text-align:center;margin-top:22px;padding:15px;font-size:13px" data-action="lead-go-descricao">Continuar</span>';
     } else if (state.leadStep === 'descricao') {
       stepHtml =
-        '<div style="margin-top:26px;font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:16px;color:#5a6170">Descreva a joia que você imagina — metal, tamanho, onde gravar, o que não pode faltar.</div>' +
-        '<textarea id="input-lead-description" data-bind="leadDescription" placeholder="Ex: um anel em prata com o nome da minha filha gravado por dentro..." rows="4" class="field-textarea" style="margin-top:14px">' + esc(state.leadDescription) + '</textarea>' +
+        '<div style="margin-top:26px;font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:16px;color:#5a6170">' + esc(intent.descPrompt) + '</div>' +
+        '<textarea id="input-lead-description" data-bind="leadDescription" placeholder="' + esc(intent.descPlaceholder) + '" rows="4" class="field-textarea" style="margin-top:14px">' + esc(state.leadDescription) + '</textarea>' +
         '<div style="margin-top:22px;display:flex;gap:12px">' +
           '<span class="outline-btn" style="padding:15px 20px;font-size:13px" data-action="lead-back-contato">Voltar</span>' +
           '<span class="buy-btn" style="flex:1;text-align:center;padding:15px;font-size:13px" data-action="lead-go-enviar">Continuar</span>' +
@@ -608,8 +633,8 @@
       '<div class="modal-overlay" data-close="close-process-info" style="z-index:200">' +
         '<div class="modal-pad-44">' +
           '<button type="button" class="modal-close" data-action="close-process-info">×</button>' +
-          '<span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">Criar uma joia</span>' +
-          '<div style="font-family:\'Marcellus\',serif;font-size:26px;color:#14223d;margin-top:8px">Conte sua ideia pra gente</div>' +
+          '<span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">' + esc(intent.eyebrow) + '</span>' +
+          '<div style="font-family:\'Marcellus\',serif;font-size:26px;color:#14223d;margin-top:8px">' + esc(intent.title) + '</div>' +
           '<div class="step-indicator">' +
             '<span class="label" style="color:' + colors.contato + '">1. Contato</span><span class="line"></span>' +
             '<span class="label" style="color:' + colors.descricao + '">2. Descrição</span><span class="line"></span>' +
@@ -932,12 +957,18 @@
     move(startEvent);
   }
 
+  var LEAD_WA_INTRO = {
+    fornecer: 'Olá, vim através do site, eu quero fornecer uma joia para o Second Hand / Upcycle.',
+    comprar: 'Olá, vim através do site, eu quero comprar uma joia do Second Hand / Upcycle.',
+  };
+
   function submitLeadAndOpenWhatsapp() {
     var lead = {
       name: state.leadName || 'Sem nome',
       phone: state.leadPhone || '',
       email: state.leadEmail || '',
       description: state.leadDescription || '',
+      intent: state.leadIntent || null,
     };
     api.sendLead(lead).catch(function () {
       // Fallback: keep a local record so nothing is lost if the backend is unreachable.
@@ -946,12 +977,14 @@
       saveLocal('hauquimia_leads', existing);
     });
 
-    var msgParts = ['Olá, vim através do site, eu quero criar uma joia.', 'Nome: ' + lead.name];
-    if (lead.description) msgParts.push('Ideia: ' + lead.description);
+    var intro = LEAD_WA_INTRO[state.leadIntent] || 'Olá, vim através do site, eu quero criar uma joia.';
+    var msgParts = [intro, 'Nome: ' + lead.name];
+    if (lead.description) msgParts.push('Detalhes: ' + lead.description);
     var url = 'https://wa.me/' + CFG.whatsappNumber + '?text=' + encodeURIComponent(msgParts.join('\n'));
     window.open(url, '_blank', 'noopener');
 
     state.processInfoOpen = false;
+    state.leadIntent = null;
     state.leadStep = 'contato';
     state.leadName = '';
     state.leadPhone = '';
@@ -1128,8 +1161,8 @@
       render();
     },
 
-    'open-process-info': function () { state.processInfoOpen = true; state.leadStep = 'contato'; render(); },
-    'close-process-info': function () { state.processInfoOpen = false; render(); },
+    'open-process-info': function (el) { state.processInfoOpen = true; state.leadStep = 'contato'; state.leadIntent = (el && el.dataset.intent) || null; render(); },
+    'close-process-info': function () { state.processInfoOpen = false; state.leadIntent = null; render(); },
     'lead-go-descricao': function () { state.leadStep = 'descricao'; render(); },
     'lead-back-contato': function () { state.leadStep = 'contato'; render(); },
     'lead-go-enviar': function () { state.leadStep = 'enviar'; render(); },
