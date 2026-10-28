@@ -338,6 +338,37 @@ body.catalog-lock { overflow:hidden; }
 .buy-btn:hover, .btn-light:hover { transform:translateY(-2px); box-shadow:0 12px 24px -16px rgba(20,34,61,.6); }
 .outline-btn:hover { background:#14223d; color:#f5efe3; }
 
+/* ============ SECTION RHYTHM (visual review) ============ */
+/* Alternate sections a touch deeper so blocks read as distinct; same-colour
+   neighbours get a fine gold rule instead. */
+.page-section.alt { background:#efe7da; }
+.page-section:not(.alt) + .page-section:not(.alt) { border-top:1px solid rgba(154,123,52,.22); }
+.page-section.alt .value-card, .page-section.alt .service-card { background:#faf8f4; }
+
+/* Closing call-to-action: light sand with a gold rule, so the navy footer is the
+   only dark block at the end of each page. */
+#parallax-root .cta-band { background:#f2eee6; color:#14223d; border-top:1px solid rgba(154,123,52,.35); position:relative; }
+#parallax-root .cta-band::before { content:''; position:absolute; top:-1px; left:50%; width:72px; height:3px; margin-left:-36px; background:#9a7b34; }
+#parallax-root .cta-band .eyebrow { color:#7a5f22; }
+.cta-band .cta-band-text { color:#5a6170; }
+.cta-band .btn-light { background:#14223d; color:#f5efe3; }
+.cta-band .btn-light:hover { background:#0e1a30; }
+.cta-band .btn-ghost-light { border-color:rgba(20,34,61,.45); color:#14223d; }
+.cta-band .btn-ghost-light:hover { border-color:#14223d; background:rgba(20,34,61,.05); }
+.page-section.alt + .cta-band { background:#faf8f4; }
+
+/* Product rows get an editorial left-aligned header with the link on the right. */
+.section-head.split-head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; text-align:left; flex-wrap:wrap; }
+.section-head.split-head .editorial-text { margin-left:0; }
+.section-head.split-head .section-link { margin-bottom:6px; }
+
+/* Gallery as a mosaic: one large photo + two stacked. */
+@media (min-width: 561px) {
+  .gallery { grid-template-columns:1.35fr 1fr; grid-template-rows:1fr 1fr; }
+  .gallery figure { aspect-ratio:auto; }
+  .gallery figure:first-child { grid-row:1 / span 2; aspect-ratio:4/5; }
+}
+
 /* Off-screen sections skip layout/paint until they approach the viewport. */
 .page-section, .cta-band, .site-footer, #vitrine-section { content-visibility:auto; contain-intrinsic-size:auto 900px; }
 
