@@ -1,6 +1,13 @@
 [build]
   publish = "."
 
+# Every product URL (/produto/col1/) is served by the single product page,
+# which reads the id from the path.
+[[redirects]]
+  from = "/produto/:id"
+  to = "/produto/index.html"
+  status = 200
+
 # Internal files live in the repo but must not be served by the static site.
 [[redirects]]
   from = "/server/*"

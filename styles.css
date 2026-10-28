@@ -279,6 +279,65 @@ body.catalog-lock { overflow:hidden; }
 #parallax-root .cta-band .eyebrow { color:#e3c77f; }
 #parallax-root :is(.catalog-breadcrumb, .catalog-breadcrumb a, .filter-count, .catalog-kbd, .search-hint, .filter-price label) { color:#5f6779; }
 
+/* ============ PRODUCT PAGE ============ */
+.pp-top { padding-top:26px; padding-bottom:22px; }
+.pp-breadcrumb, .pp-breadcrumb a { color:#5f6779; }
+.pp-breadcrumb span { color:#14223d; }
+.pp-layout { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:clamp(32px,5vw,72px); align-items:start; padding-bottom:96px; }
+.pp-media { position:sticky; top:calc(var(--header-h, 100px) + 20px); animation:ppIn .7s cubic-bezier(.16,.8,.24,1) both; }
+.pp-zoom { aspect-ratio:1; overflow:hidden; background:#f2eee6; cursor:zoom-in; }
+.pp-zoom img { width:100%; height:100%; object-fit:cover; display:block; transform-origin:var(--zx,50%) var(--zy,50%); transition:transform .45s cubic-bezier(.16,.8,.24,1); }
+.pp-zoom.is-zooming img { transform:scale(1.9); }
+.pp-skeleton { background:linear-gradient(100deg,#f2eee6 30%,#f8f5ee 50%,#f2eee6 70%) 0 0/300% 100%; animation:shimmer 1.4s linear infinite; }
+@keyframes shimmer { to { background-position:-150% 0; } }
+.pp-badges { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+.pp-badges span { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#14223d; border:1px solid rgba(154,123,52,.55); padding:6px 12px; }
+.pp-info { animation:ppIn .7s .08s cubic-bezier(.16,.8,.24,1) both; }
+@keyframes ppIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+.pp-cat { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#7a5f22; }
+.pp-name { font-family:'Marcellus',serif; font-size:clamp(28px,3.2vw,40px); line-height:1.15; color:#14223d; margin:10px 0 0; font-weight:400; }
+.modal-body .pp-name { font-size:28px; }
+.pp-price { font-size:24px; font-weight:600; color:#14223d; margin-top:14px; }
+.pp-price-extras { font-size:13px; color:#7a5f22; margin-top:4px; }
+.pp-note { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:18px; color:#5a6170; line-height:1.5; margin:14px 0 0; }
+.pp-qty-row { margin-top:20px; display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+.pp-qty-hint { font-size:14px; color:#5a6170; font-family:'Cormorant Garamond',serif; font-style:italic; }
+.pp-actions { margin-top:18px; display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.pp-btn { text-align:center; padding:17px 20px; font-size:13px; transition:transform .2s, background .2s; }
+.pp-btn:active { transform:scale(.98); }
+.pill-option { transition:background .2s, color .2s, border-color .2s, transform .2s; }
+.pill-option:hover { border-color:#14223d; }
+.pill-option:active { transform:scale(.96); }
+.pp-sticky { display:none; }
+
+/* ============ MOTION ============ */
+.site-header { transition:box-shadow .3s; }
+.site-header.is-scrolled { box-shadow:0 8px 24px -18px rgba(20,34,61,.45); }
+.site-header .nav-bar { transition:padding .3s cubic-bezier(.16,.8,.24,1); }
+@media (min-width: 1101px) { .site-header.is-scrolled .nav-bar { padding-top:12px; padding-bottom:8px; } }
+/* Reading-progress hairline under the header (scroll-driven, no JS). */
+@supports (animation-timeline: scroll()) {
+  .site-header::after { content:''; position:absolute; left:0; right:0; bottom:-1px; height:2px; background:#9a7b34; transform-origin:0 50%; transform:scaleX(0); animation:readProgress linear both; animation-timeline:scroll(root); }
+  @keyframes readProgress { to { transform:scaleX(1); } }
+  /* Banner photo drifts slower than the page; banner text fades as it leaves. */
+  .page-banner img { animation:bannerDrift linear both; animation-timeline:scroll(root); animation-range:0 600px; }
+  @keyframes bannerDrift { to { transform:translateY(90px) scale(1.06); } }
+  .page-banner-content { animation:bannerFade linear both; animation-timeline:scroll(root); animation-range:0 380px; }
+  @keyframes bannerFade { to { opacity:.15; transform:translateY(-30px); } }
+  /* Product cards rise in as they enter the viewport. */
+  .grid-vitrine .prod-card, .catalog-grid .prod-card { animation:cardReveal linear both; animation-timeline:view(); animation-range:entry 0% entry 55%; }
+  @keyframes cardReveal { from { opacity:0; transform:translateY(34px) scale(.97); } to { opacity:1; transform:none; } }
+}
+.page-banner-content > * { animation:bannerIn .9s cubic-bezier(.16,.8,.24,1) both; }
+.page-banner-content > :nth-child(2) { animation-delay:.08s; }
+.page-banner-content > :nth-child(3) { animation-delay:.16s; }
+@keyframes bannerIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+.hero-media { animation:heroSettle 2.2s cubic-bezier(.16,.8,.24,1) both; }
+@keyframes heroSettle { from { transform:scale(1.07); filter:brightness(.6); } to { transform:none; filter:none; } }
+.buy-btn, .outline-btn, .btn-light, .btn-ghost-light, .hero-cta-ghost { transition:background .25s, color .25s, border-color .25s, transform .25s, box-shadow .25s; }
+.buy-btn:hover, .btn-light:hover { transform:translateY(-2px); box-shadow:0 12px 24px -16px rgba(20,34,61,.6); }
+.outline-btn:hover { background:#14223d; color:#f5efe3; }
+
 /* Off-screen sections skip layout/paint until they approach the viewport. */
 .page-section, .cta-band, .site-footer, #vitrine-section { content-visibility:auto; contain-intrinsic-size:auto 900px; }
 
@@ -305,7 +364,12 @@ body.catalog-lock { overflow:hidden; }
 .products-empty { text-align:center; padding:60px 0; font-size:17px; color:#5a6170; font-family:'Cormorant Garamond',serif; font-style:italic; }
 
 .grid-vitrine { display:grid; grid-template-columns:repeat(4,1fr); gap:26px; }
-.prod-card { cursor:pointer; animation:cardIn .5s cubic-bezier(.16,.8,.24,1) both; }
+.prod-card { display:block; color:inherit; text-decoration:none; cursor:pointer; animation:cardIn .5s cubic-bezier(.16,.8,.24,1) both; animation-delay:var(--d, 0ms); }
+.prod-card:focus-visible { outline:2px solid #9a7b34; outline-offset:4px; }
+.prod-img-wrap img { transition:transform .7s cubic-bezier(.16,.8,.24,1); }
+.prod-card:hover .prod-img-wrap img { transform:scale(1.06); }
+.prod-card .prod-name { transition:color .25s; }
+.prod-card:hover .prod-name { color:#7a5f22; }
 @keyframes cardIn { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: none; } }
 .prod-img-wrap { position:relative; width:100%; aspect-ratio:1; overflow:hidden; background:#f2eee6; transition: transform .4s ease; }
 .prod-card:hover .prod-img-wrap { transform: scale(1.02); }
@@ -512,9 +576,25 @@ body.catalog-lock { overflow:hidden; }
   .catalog-grid .prod-cat { font-size: 10px; letter-spacing: 1.5px; }
 }
 
+@media (max-width: 900px) {
+  .pp-layout { grid-template-columns: 1fr; padding-bottom: 64px; }
+  .pp-media { position: relative; top: auto; margin: 0 -20px; }
+  .pp-badges { padding: 0 20px; }
+  .pp-sticky { display: flex; align-items: center; gap: 14px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; background: #faf8f4; border-top: 1px solid rgba(20,34,61,.12); padding: 12px 20px calc(12px + env(safe-area-inset-bottom)); box-shadow: 0 -10px 30px -20px rgba(20,34,61,.45); transform: translateY(110%); transition: transform .35s cubic-bezier(.16,.8,.24,1); }
+  .pp-sticky.is-visible { transform: none; }
+  .pp-sticky-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .pp-sticky-text span { font-family: 'Marcellus', serif; font-size: 15px; color: #14223d; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pp-sticky-text strong { font-size: 14px; color: #14223d; }
+  .pp-sticky .buy-btn { padding: 14px 20px; font-size: 12px; }
+}
+@media (min-width: 641px) and (max-width: 900px) { .pp-media { margin: 0 -40px; } .pp-badges { padding: 0 40px; } }
+@media (max-width: 420px) { .pp-actions { grid-template-columns: 1fr; } }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
   .hero-video { transform: none !important; }
+  .page-banner img, .page-banner-content, .page-banner-content > *, .prod-card, .hero-media, .pp-media, .pp-info, .site-header::after { animation: none !important; }
+  .pp-zoom.is-zooming img { transform: none; }
 }
 
 @media (max-width: 640px) {

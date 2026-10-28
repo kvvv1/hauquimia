@@ -72,8 +72,9 @@
     document.documentElement.style.setProperty('--header-h', (navBar.offsetHeight + linksRow.offsetHeight + 1) + 'px');
   }
   setHeaderHeight();
-  window.addEventListener('resize', setHeaderHeight);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(setHeaderHeight);
+  // Re-measure whenever the bar's own size changes (fonts, auth button, breakpoints).
+  if ('ResizeObserver' in window) new ResizeObserver(setHeaderHeight).observe(navBar);
+  else window.addEventListener('resize', setHeaderHeight);
 
   // Instant page changes: Chromium prerenders same-site pages when a link is
   // hovered/pressed (eagerness "moderate"); other browsers get a hover prefetch.
