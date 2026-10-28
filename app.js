@@ -92,13 +92,32 @@
     Pingentes: 'Letras de A a Z e símbolos disponíveis sob consulta — semelhantes aos usados em colares e pingentes.',
   };
   PRODUCTS.forEach(function (p) {
+    // Optimized WebP (640w + 360w) generated from the original PNGs in assets/products/.
+    // Root-relative so images resolve from inner pages (/atelie/, /catalogo/...).
+    var base = p.imgSrc.replace(/^assets\/products\/(.+)\.png$/, '/assets/products/opt/$1');
+    p.imgSrc = base + '.webp';
+    p.imgSrcSet = base + '-sm.webp 360w, ' + base + '.webp 640w';
     if (p.category === 'Colares') p.personalizationFields = ['tamanho', 'caractere', 'corBanho'];
     if (p.category === 'Pulseiras') p.personalizationFields = ['tamanho', 'caractere'];
     if (p.category === 'Anéis') p.personalizationFields = ['tamanho', 'caractere'];
     if (GEM_PRODUCT_IDS.indexOf(p.id) !== -1) {
       p.personalizationFields = (p.personalizationFields || []).concat(['pedra']);
     }
+    // Characteristics used by the catalog filters.
+    var ready = /^Peça pronta/.test(p.customNote || '');
+    p.traits = {
+      pedra: GEM_PRODUCT_IDS.indexOf(p.id) !== -1,
+      personalizavel: !ready,
+      pronta: ready,
+      gravacao: /grava|inicia|nome|letra|caracter|monograma/i.test(p.name + ' ' + (p.specs || []).join(' ') + ' ' + p.customNote),
+      tamanhos: !!p.hasVariants || !!TAMANHO_RANGES[p.category],
+      corBanho: p.category === 'Colares',
+    };
   });
+
+  function assetUrl(src) {
+    return src && !/^(\/|https?:|data:)/.test(src) ? '/' + src : src;
+  }
 
   function formatBRL(n) {
     return 'R$ ' + n.toFixed(2).replace('.', ',').replace(/\d(?=(\d{3})+,)/g, '$&.');
@@ -194,6 +213,7 @@
     authedUser: null,
     authError: '',
     authBusy: false,
+    accountMenuOpen: false,
 
     processInfoOpen: false,
     leadIntent: null,
@@ -219,6 +239,7 @@
 
   // ============ RENDER (with focus preservation) ============
   var renderQueued = false;
+  var renderHooks = [];
   function render() {
     if (renderQueued) return;
     renderQueued = true;
@@ -237,6 +258,8 @@
     renderBadges();
     renderCategoryPills();
     renderProductsGrid();
+    renderProductLists();
+    renderHooks.forEach(function (fn) { fn(); });
     renderProductModal();
     renderPersonalizeModal();
     renderSizeGuideModal();
@@ -246,6 +269,7 @@
     renderAuthModal();
     renderCheckoutModal();
     persistGuestState();
+    makeActionsKeyboardFocusable();
 
     if (focusId) {
       var el = document.getElementById(focusId);
@@ -258,15 +282,75 @@
     }
   }
 
+  // Non-native clickable elements (span/div with data-action) get button semantics
+  // so they're reachable by Tab and announced by screen readers; Enter/Space is
+  // handled by the keydown listener below.
+  function makeActionsKeyboardFocusable() {
+    Array.prototype.forEach.call(document.querySelectorAll('span[data-action]:not([tabindex]), div[data-action]:not([tabindex])'), function (el) {
+      el.tabIndex = 0;
+      if (!el.getAttribute('role')) el.setAttribute('role', 'button');
+    });
+  }
+
   // ---------- Nav ----------
+  var USER_ICON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>';
+  function initials(name) {
+    var parts = String(name || '').trim().split(/\s+/).filter(Boolean);
+    return ((parts[0] || '?')[0] + (parts.length > 1 ? parts[parts.length - 1][0] : '')).toUpperCase();
+  }
+  function firstName(name) { return String(name || '').trim().split(/\s+/)[0] || 'cliente'; }
+
+  // Logged out: an outlined "Entrar" call to action. Logged in: initials avatar
+  // with an account menu (header) / a greeting card (mobile menu).
   function renderNavAuth() {
-    var slot = document.getElementById('nav-auth-slot');
-    if (!slot) return;
-    if (state.authedUser) {
-      slot.innerHTML = '<span data-action="logout" style="font-size:13px;color:#14223d;cursor:pointer;white-space:nowrap">Olá, ' + esc(state.authedUser.name) + '</span>';
+    var u = state.authedUser;
+    var desktop, mobile;
+    if (!u) {
+      desktop = '<button type="button" class="nav-login" data-action="open-login">' + USER_ICON + '<span>Entrar</span></button>';
+      mobile = '<button type="button" class="nav-login nav-login-block" data-action="open-login">' + USER_ICON + '<span>Entrar ou criar conta</span></button>';
     } else {
-      slot.innerHTML = '<span class="navlink" data-action="open-login">Entrar</span>';
+      var menu = state.accountMenuOpen
+        ? '<div class="account-menu" role="menu">' +
+            '<div class="account-menu-head"><div class="account-menu-name">Olá, ' + esc(firstName(u.name)) + '</div>' +
+            (u.email ? '<div class="account-menu-email">' + esc(u.email) + '</div>' : '') + '</div>' +
+            '<button type="button" role="menuitem" data-action="account-favorites">Meus favoritos</button>' +
+            '<button type="button" role="menuitem" data-action="account-cart">Minha sacola</button>' +
+            '<button type="button" role="menuitem" class="account-menu-logout" data-action="logout">Sair da conta</button>' +
+          '</div>'
+        : '';
+      desktop = '<div class="nav-account">' +
+          '<button type="button" class="nav-avatar" data-action="toggle-account-menu" aria-haspopup="menu" aria-expanded="' + state.accountMenuOpen + '" aria-label="Minha conta">' +
+            '<span class="nav-avatar-circle">' + esc(initials(u.name)) + '</span>' +
+            '<span class="nav-avatar-name">' + esc(firstName(u.name)) + '</span>' +
+          '</button>' + menu +
+        '</div>';
+      mobile = '<div class="nav-account-mobile">' +
+          '<span class="nav-avatar-circle">' + esc(initials(u.name)) + '</span>' +
+          '<div style="flex:1;min-width:0"><div class="account-menu-name">Olá, ' + esc(firstName(u.name)) + '</div>' +
+          (u.email ? '<div class="account-menu-email">' + esc(u.email) + '</div>' : '') + '</div>' +
+          '<button type="button" class="account-menu-logout" data-action="logout">Sair</button>' +
+        '</div>';
     }
+    Array.prototype.forEach.call(document.querySelectorAll('.js-auth-slot'), function (slot) {
+      var html = slot.classList.contains('nav-auth-mobile') ? mobile : desktop;
+      if (slot.innerHTML !== html) slot.innerHTML = html;
+    });
+  }
+
+  var toastTimer = null;
+  function showToast(msg) {
+    var t = document.getElementById('hq-toast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'hq-toast';
+      t.className = 'hq-toast';
+      t.setAttribute('role', 'status');
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.classList.add('is-visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove('is-visible'); }, 3200);
   }
   function renderBadges() {
     var favBadge = document.getElementById('favorites-badge');
@@ -292,43 +376,64 @@
   // ---------- Catalog ----------
   function renderCategoryPills() {
     var row = document.getElementById('cat-pills-row');
-    row.innerHTML = CATEGORIES.map(function (cat) {
+    if (!row) return;
+    var html = CATEGORIES.map(function (cat) {
       var active = cat === state.activeCategory;
       return '<span class="cat-pill' + (active ? ' is-active' : '') + '" data-action="select-category" data-cat="' + esc(cat) + '">' + esc(cat) + '</span>';
     }).join('');
+    if (row.innerHTML !== html) row.innerHTML = html;
+  }
+  function normalizeText(s) {
+    return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
   }
   function filteredProducts() {
-    var q = state.searchQuery.trim().toLowerCase();
+    var q = normalizeText(state.searchQuery.trim());
     return PRODUCTS.filter(function (p) {
       var inCat = state.activeCategory === 'Todos' || p.category === state.activeCategory;
-      var inSearch = !q || p.name.toLowerCase().indexOf(q) !== -1;
+      var inSearch = !q || normalizeText(p.name + ' ' + p.category).indexOf(q) !== -1;
       return inCat && inSearch;
     });
   }
+  function productCard(p, idx) {
+    var isFav = state.favorites.indexOf(p.id) !== -1;
+    var delay = Math.min(idx || 0, 11) * 35;
+    return (
+      '<a class="prod-card" href="' + productUrl(p.id) + '" style="--d:' + delay + 'ms">' +
+        '<div class="prod-img-wrap">' +
+          '<img src="' + esc(p.imgSrc) + '" srcset="' + esc(p.imgSrcSet) + '" sizes="(max-width: 560px) 50vw, (max-width: 1024px) 45vw, 330px" width="640" height="640" alt="' + esc(p.name) + '" loading="lazy" decoding="async">' +
+          '<button type="button" class="prod-fav-btn" data-action="toggle-favorite" data-id="' + p.id + '" aria-label="' + (isFav ? 'Remover dos favoritos' : 'Favoritar') + '">' +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="' + (isFav ? '#14223d' : 'none') + '" stroke="#14223d" stroke-width="1.6"><path d="M12 20s-7-4.5-9.5-9A5.5 5.5 0 0112 5a5.5 5.5 0 019.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>' +
+          '</button>' +
+        '</div>' +
+        '<div class="prod-meta">' +
+          '<span class="prod-cat">' + esc(p.category) + '</span>' +
+          '<div class="prod-name">' + esc(p.name) + '</div>' +
+          '<div class="prod-price">' + esc(p.priceLabel) + '</div>' +
+        '</div>' +
+      '</a>'
+    );
+  }
+  // Re-render a product grid only when its content actually changes, so the
+  // card entrance animation doesn't replay on every unrelated state update.
+  function setGridHtml(el, list) {
+    var key = list.map(function (p) { return p.id; }).join(',') + '|' + state.favorites.join(',');
+    if (el.dataset.renderKey === key) return;
+    el.dataset.renderKey = key;
+    el.innerHTML = list.map(productCard).join('');
+  }
   function renderProductsGrid() {
     var grid = document.getElementById('products-grid');
-    var empty = document.getElementById('products-empty');
+    if (!grid) return;
     var list = filteredProducts();
-    empty.hidden = list.length !== 0;
-    grid.innerHTML = list.map(function (p, idx) {
-      var isFav = state.favorites.indexOf(p.id) !== -1;
-      var delay = Math.min(idx, 11) * 35;
-      return (
-        '<div class="prod-card" data-action="open-product" data-id="' + p.id + '" style="animation-delay:' + delay + 'ms">' +
-          '<div class="prod-img-wrap">' +
-            '<img src="' + esc(p.imgSrc) + '" alt="' + esc(p.name) + '" loading="lazy">' +
-            '<button type="button" class="prod-fav-btn" data-action="toggle-favorite" data-id="' + p.id + '">' +
-              '<svg width="15" height="15" viewBox="0 0 24 24" fill="' + (isFav ? '#14223d' : 'none') + '" stroke="#14223d" stroke-width="1.6"><path d="M12 20s-7-4.5-9.5-9A5.5 5.5 0 0112 5a5.5 5.5 0 019.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>' +
-            '</button>' +
-          '</div>' +
-          '<div class="prod-meta">' +
-            '<span class="prod-cat">' + esc(p.category) + '</span>' +
-            '<div class="prod-name">' + esc(p.name) + '</div>' +
-            '<div class="prod-price">' + esc(p.priceLabel) + '</div>' +
-          '</div>' +
-        '</div>'
-      );
-    }).join('');
+    document.getElementById('products-empty').hidden = list.length !== 0;
+    setGridHtml(grid, list);
+  }
+  // <div data-product-list="col1,ane2,..."> blocks on inner pages.
+  function renderProductLists() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-product-list]'), function (el) {
+      var list = el.dataset.productList.split(',').map(function (id) { return byId(id.trim()); }).filter(Boolean);
+      setGridHtml(el, list);
+    });
   }
 
   // ---------- Product modal computed view-model ----------
@@ -420,20 +525,20 @@
     if (sel.hasStructuredPersonalization) {
       if (sel.tamanhoIsSlider) {
         personalizationHtml += '<div style="margin-top:12px">' +
-          '<span style="font-size:13px;color:#5a6170">Tamanho <span style="color:#9a7b34">· regulador 1: ' + sel.tamanho1Value + sel.range.unit + ' · regulador 2: ' + sel.tamanho2Value + sel.range.unit + '</span></span>' +
+          '<span style="font-size:13px;color:#5a6170">Tamanho <span style="color:#7a5f22">· regulador 1: ' + sel.tamanho1Value + sel.range.unit + ' · regulador 2: ' + sel.tamanho2Value + sel.range.unit + '</span></span>' +
           '<div id="tamanho-track" data-action="track-down" style="position:relative;margin-top:14px;cursor:pointer;padding:10px 0">' +
             '<div style="position:relative;height:4px;background:#e4dfd2;border-radius:2px">' +
               '<div data-action="handle1-down" style="position:absolute;top:50%;left:' + sel.tamanho1Pct + '%;width:18px;height:18px;border-radius:50%;background:#14223d;transform:translate(-50%,-50%);border:2px solid #faf8f4;box-shadow:0 0 0 1px rgba(20,34,61,.3);cursor:grab"></div>' +
               '<div data-action="handle2-down" style="position:absolute;top:50%;left:' + sel.tamanho2Pct + '%;width:18px;height:18px;border-radius:50%;background:#9a7b34;transform:translate(-50%,-50%);border:2px solid #faf8f4;box-shadow:0 0 0 1px rgba(154,123,52,.4);cursor:grab"></div>' +
             '</div></div>' +
-          '<div style="display:flex;justify-content:space-between;font-size:11px;color:#9aa4b8;margin-top:6px"><span>' + sel.range.min + sel.range.unit + '</span><span>' + sel.range.max + sel.range.unit + '</span></div>' +
+          '<div style="display:flex;justify-content:space-between;font-size:11px;color:#5f6779;margin-top:6px"><span>' + sel.range.min + sel.range.unit + '</span><span>' + sel.range.max + sel.range.unit + '</span></div>' +
         '</div>';
       }
       if (sel.tamanhoIsPMG) {
         personalizationHtml += '<div style="margin-top:12px">' +
           '<div style="display:flex;align-items:center;justify-content:space-between">' +
-            '<span style="font-size:13px;color:#5a6170">Tamanho <span style="color:#9a7b34">· ' + esc(sel.pmgRangeLabel) + '</span></span>' +
-            '<span data-action="open-size-guide" style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#9a7b34;cursor:pointer;text-decoration:underline">Guia de tamanhos</span>' +
+            '<span style="font-size:13px;color:#5a6170">Tamanho <span style="color:#7a5f22">· ' + esc(sel.pmgRangeLabel) + '</span></span>' +
+            '<span data-action="open-size-guide" style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#7a5f22;cursor:pointer;text-decoration:underline">Guia de tamanhos</span>' +
           '</div>' +
           '<div style="margin-top:10px;display:flex;gap:8px">' +
           sel.pmgGuide.options.map(function (o) {
@@ -445,10 +550,10 @@
           '<div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid rgba(20,34,61,.12)">' +
             '<span style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Aro</span>' +
             '<div style="display:flex;align-items:center;gap:8px">' +
-              '<span style="font-family:\'Marcellus\',serif;font-size:20px;color:#9a7b34">' + sel.aroValue + '</span>' +
+              '<span style="font-family:\'Marcellus\',serif;font-size:20px;color:#7a5f22">' + sel.aroValue + '</span>' +
               '<div style="display:flex;flex-direction:column;line-height:0">' +
-                '<span data-action="aro-up" style="cursor:pointer;font-size:11px;color:#9a7b34">▲</span>' +
-                '<span data-action="aro-down" style="cursor:pointer;font-size:11px;color:#9a7b34;margin-top:3px">▼</span>' +
+                '<span data-action="aro-up" style="cursor:pointer;font-size:11px;color:#7a5f22">▲</span>' +
+                '<span data-action="aro-down" style="cursor:pointer;font-size:11px;color:#7a5f22;margin-top:3px">▼</span>' +
               '</div></div></div>' +
           '<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">' +
           ARO_SIZES.map(function (n) {
@@ -457,9 +562,9 @@
       }
       if (sel.hasFieldCaractere) {
         personalizationHtml += '<div style="margin-top:12px">' +
-          '<span style="font-size:13px;color:#5a6170">Caracteres <span style="color:#9a7b34">· ' + esc(PERSONALIZATION_FIELD_DEFS.caractere.note) + '</span></span>' +
+          '<span style="font-size:13px;color:#5a6170">Caracteres <span style="color:#7a5f22">· ' + esc(PERSONALIZATION_FIELD_DEFS.caractere.note) + '</span></span>' +
           '<input id="input-caractere" data-bind="pCaractere" value="' + esc(state.pCaractere) + '" type="text" placeholder="Letras, bolinhas, estrelinhas..." class="field-input" style="margin-top:8px" />' +
-          (sel.characterSetText ? '<div style="margin-top:6px;font-size:12px;color:#9aa4b8;line-height:1.5">' + esc(sel.characterSetText) + '</div>' : '') +
+          (sel.characterSetText ? '<div style="margin-top:6px;font-size:12px;color:#5f6779;line-height:1.5">' + esc(sel.characterSetText) + '</div>' : '') +
           '</div>';
       }
       personalizationHtml += '<div style="margin-top:12px">' +
@@ -475,7 +580,7 @@
         personalizationHtml += '<div style="margin-top:12px">' +
           '<div data-action="toggle-pedra" style="display:flex;align-items:center;gap:10px;cursor:pointer">' +
             '<span style="width:22px;height:22px;flex-shrink:0;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;line-height:1;border:1px solid ' + (state.pPedraEnabled ? '#14223d' : 'rgba(20,34,61,.3)') + ';background:' + (state.pPedraEnabled ? '#14223d' : 'transparent') + ';color:' + (state.pPedraEnabled ? '#f5efe3' : 'transparent') + '">✓</span>' +
-            '<span style="font-size:13px;color:#5a6170">Adicionar pedra natural <span style="color:#9a7b34">· + ' + formatBRL(sel.unitValue / 2) + '</span></span>' +
+            '<span style="font-size:13px;color:#5a6170">Adicionar pedra natural <span style="color:#7a5f22">· + ' + formatBRL(sel.unitValue / 2) + '</span></span>' +
           '</div>';
         if (state.pPedraEnabled) {
           personalizationHtml += '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">' +
@@ -489,37 +594,94 @@
       if (state.customText) {
         personalizationHtml += '<div style="margin-top:10px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;background:#f2eee6;padding:12px 14px">' +
           '<span style="font-size:15px;color:#14223d;font-family:\'Cormorant Garamond\',serif;font-style:italic;line-height:1.4">“' + esc(state.customText) + '”</span>' +
-          '<span data-action="open-personalize" style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#9a7b34;cursor:pointer;white-space:nowrap">Editar</span></div>';
+          '<span data-action="open-personalize" style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#7a5f22;cursor:pointer;white-space:nowrap">Editar</span></div>';
       } else {
         personalizationHtml += '<div style="margin-top:12px"><span data-action="open-personalize" style="display:inline-block;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#14223d;border:1px solid rgba(20,34,61,.3);padding:11px 20px;cursor:pointer">+ Adicionar personalização</span></div>';
       }
     }
 
-    personalizationHtml += '<div style="margin-top:14px;font-size:12px;color:#9aa4b8;font-family:\'Cormorant Garamond\',serif;font-style:italic;line-height:1.5">Peças personalizadas não são alteradas após a confirmação do pedido. Em caso de erro na personalização, é necessário produzir uma nova peça; ajustes pontuais podem ser avaliados sob consulta, com custo à parte.</div>' +
-      '<div style="margin-top:8px;font-size:12px;color:#9aa4b8;font-family:\'Cormorant Garamond\',serif;font-style:italic;line-height:1.5">Em decorrência de cada monitor, a cor da pedra pode variar sutilmente da foto do site. Todas as medidas são aproximadas e podem variar de acordo com a produção.</div>' +
+    personalizationHtml += '<div style="margin-top:14px;font-size:12px;color:#5f6779;font-family:\'Cormorant Garamond\',serif;font-style:italic;line-height:1.5">Peças personalizadas não são alteradas após a confirmação do pedido. Em caso de erro na personalização, é necessário produzir uma nova peça; ajustes pontuais podem ser avaliados sob consulta, com custo à parte.</div>' +
+      '<div style="margin-top:8px;font-size:12px;color:#5f6779;font-family:\'Cormorant Garamond\',serif;font-style:italic;line-height:1.5">Em decorrência de cada monitor, a cor da pedra pode variar sutilmente da foto do site. Todas as medidas são aproximadas e podem variar de acordo com a produção.</div>' +
       '</div>';
+
+    var onPage = !!document.getElementById('product-page');
+    var infoHtml =
+      '<span class="pp-cat">' + esc(p.category) + '</span>' +
+      (onPage ? '<h1 class="pp-name">' + esc(p.name) + '</h1>' : '<div class="pp-name">' + esc(p.name) + '</div>') +
+      '<div class="pp-price">' + sel.currentPriceLabel + '</div>' +
+      (sel.hasPriceExtras ? '<div class="pp-price-extras">Inclui ' + sel.priceExtrasLabel + '</div>' : '') +
+      (onPage && p.customNote ? '<p class="pp-note">' + esc(p.customNote) + '</p>' : '') +
+      variantsHtml + specsHtml + personalizationHtml +
+      '<div class="pp-qty-row">' +
+        '<div class="qty-stepper"><button type="button" data-action="dec-qty" aria-label="Diminuir quantidade">−</button><span>' + state.qty + '</span><button type="button" data-action="inc-qty" aria-label="Aumentar quantidade">+</button></div>' +
+        '<span class="pp-qty-hint">Pagamento e envio direto pelo site</span>' +
+      '</div>' +
+      '<div class="pp-actions" id="pp-actions">' +
+        '<button type="button" class="outline-btn pp-btn" data-action="add-to-cart-now">Adicionar à sacola</button>' +
+        '<button type="button" class="buy-btn pp-btn" data-action="buy-now">Comprar agora</button>' +
+      '</div>';
+
+    if (onPage) { mount.innerHTML = ''; renderProductPage(sel, infoHtml); return; }
 
     mount.innerHTML =
       '<div class="modal-overlay modal-outer-pad" data-close="close-product" style="z-index:100">' +
         '<div class="modal-stack">' +
           '<button type="button" class="modal-close" data-action="close-product">×</button>' +
           '<div class="modal-media"><img src="' + esc(p.imgSrc) + '" alt="' + esc(p.name) + '"></div>' +
-          '<div class="modal-body">' +
-            '<span style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">' + esc(p.category) + '</span>' +
-            '<div style="font-family:\'Marcellus\',serif;font-size:28px;color:#14223d;margin-top:8px">' + esc(p.name) + '</div>' +
-            '<div style="font-size:22px;font-weight:600;color:#14223d;margin-top:14px">' + sel.currentPriceLabel + '</div>' +
-            (sel.hasPriceExtras ? '<div style="font-size:13px;color:#9a7b34;margin-top:4px">Inclui ' + sel.priceExtrasLabel + '</div>' : '') +
-            variantsHtml + specsHtml + personalizationHtml +
-            '<div style="margin-top:18px;display:flex;align-items:center;gap:18px">' +
-              '<div class="qty-stepper"><button type="button" data-action="dec-qty">−</button><span>' + state.qty + '</span><button type="button" data-action="inc-qty">+</button></div>' +
-              '<span style="font-size:13px;color:#5a6170;font-family:\'Cormorant Garamond\',serif;font-style:italic">Pagamento e envio direto pelo site</span>' +
-            '</div>' +
-            '<div style="margin-top:18px;display:flex;gap:12px">' +
-              '<span class="outline-btn" style="flex:1;text-align:center;padding:15px 20px;font-size:13px" data-action="add-to-cart-now">Adicionar à sacola</span>' +
-              '<span class="buy-btn" style="flex:1;text-align:center;padding:15px 20px;font-size:13px" data-action="buy-now">Comprar agora</span>' +
-            '</div>' +
-          '</div>' +
+          '<div class="modal-body">' + infoHtml + '</div>' +
         '</div>' +
+      '</div>';
+  }
+
+  // ---------- Product page (/produto/<id>/) ----------
+  // Media, breadcrumb and related products are written once per product; only the
+  // info column re-renders on state changes, so images never flicker while typing.
+  function productIdFromUrl() {
+    var m = location.pathname.match(/^\/produto\/([\w-]+)\/?$/);
+    return (m && m[1]) || new URLSearchParams(location.search).get('id');
+  }
+  function productUrl(id) { return '/produto/' + encodeURIComponent(id) + '/'; }
+
+  function renderProductPage(sel, infoHtml) {
+    var page = document.getElementById('product-page');
+    var p = sel.p;
+    if (page.dataset.productId !== p.id) {
+      page.dataset.productId = p.id;
+      document.title = p.name + ' — Hauquímia';
+      var desc = document.querySelector('meta[name="description"]');
+      if (desc) desc.setAttribute('content', p.name + ' em ' + p.category.toLowerCase() + ', feito à mão pela Hauquímia. ' + (p.customNote || ''));
+      document.getElementById('pp-breadcrumb').innerHTML =
+        '<a href="/">Início</a> / <a href="/catalogo/">Catálogo</a> / <a href="/catalogo/?cat=' + encodeURIComponent(p.category) + '">' + esc(p.category) + '</a> / <span>' + esc(p.name) + '</span>';
+      document.getElementById('pp-media').innerHTML =
+        '<div class="pp-zoom" data-zoom>' +
+          '<img src="' + esc(p.imgSrc) + '" srcset="' + esc(p.imgSrcSet) + '" sizes="(max-width: 900px) 100vw, 640px" width="640" height="640" alt="' + esc(p.name) + '" fetchpriority="high" decoding="async">' +
+        '</div>' +
+        '<div class="pp-badges">' +
+          '<span>Feito à mão</span>' +
+          (p.traits.pedra ? '<span>Pedra natural</span>' : '') +
+          (p.traits.personalizavel ? '<span>Personalizável</span>' : '<span>Peça pronta</span>') +
+        '</div>';
+      var related = PRODUCTS.filter(function (x) { return x.category === p.category && x.id !== p.id; }).slice(0, 4);
+      if (related.length < 4) related = related.concat(PRODUCTS.filter(function (x) { return x.category !== p.category; }).slice(0, 4 - related.length));
+      document.getElementById('pp-related-grid').dataset.productList = related.map(function (x) { return x.id; }).join(',');
+      document.getElementById('pp-related-link').href = '/catalogo/?cat=' + encodeURIComponent(p.category);
+      document.getElementById('pp-sticky-name').textContent = p.name;
+    }
+    var info = document.getElementById('pp-info');
+    if (info.innerHTML !== infoHtml) info.innerHTML = infoHtml;
+    document.getElementById('pp-sticky-price').textContent = sel.currentPriceLabel;
+  }
+
+  function renderProductNotFound() {
+    var page = document.getElementById('product-page');
+    if (!page || state.selectedId) return;
+    var sticky = document.getElementById('pp-sticky');
+    if (sticky) sticky.remove();
+    page.innerHTML =
+      '<div style="text-align:center;padding:80px 0">' +
+        '<span class="eyebrow">Peça não encontrada</span>' +
+        '<h1 class="section-title" style="margin:12px 0 0;font-weight:400">Esta peça não está mais no catálogo.</h1>' +
+        '<a class="buy-btn" href="/catalogo/" style="display:inline-block;margin-top:30px;padding:16px 32px;font-size:13px">Ver catálogo</a>' +
       '</div>';
   }
 
@@ -532,7 +694,7 @@
       '<div class="modal-overlay" data-close="close-personalize" style="z-index:200">' +
         '<div class="modal-pad-40">' +
           '<button type="button" class="modal-close" data-action="close-personalize">×</button>' +
-          '<span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">Personalizar peça</span>' +
+          '<span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#7a5f22">Personalizar peça</span>' +
           '<div style="font-family:\'Marcellus\',serif;font-size:24px;color:#14223d;margin-top:8px">' + esc(p.name) + '</div>' +
           '<div style="font-size:16px;color:#5a6170;font-family:\'Cormorant Garamond\',serif;font-style:italic;margin-top:14px;line-height:1.5">' + esc(p.customNote) + '</div>' +
           '<textarea id="input-personalize-draft" data-bind="personalizeDraft" placeholder="Escreva aqui o nome, iniciais ou detalhe desejado" rows="3" class="field-textarea" style="margin-top:16px">' + esc(state.personalizeDraft) + '</textarea>' +
@@ -554,13 +716,13 @@
       '<div class="modal-overlay" data-close="close-size-guide" style="z-index:200">' +
         '<div class="modal-pad-40">' +
           '<button type="button" class="modal-close" data-action="close-size-guide">×</button>' +
-          '<span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">Guia de tamanhos</span>' +
+          '<span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#7a5f22">Guia de tamanhos</span>' +
           '<div style="font-family:\'Marcellus\',serif;font-size:24px;color:#14223d;margin-top:8px">' + esc(p.category) + '</div>' +
           '<div class="size-guide-row">' +
           guide.options.map(function (o) {
             return '<div><div class="size-guide-thumb">' + o.label + '</div>' +
               '<div style="font-family:\'Marcellus\',serif;font-size:20px;color:#14223d;margin-top:10px">' + o.label + '</div>' +
-              '<div style="font-size:13px;color:#9a7b34;margin-top:2px">' + o.min + '–' + o.max + guide.unit + '</div></div>';
+              '<div style="font-size:13px;color:#7a5f22;margin-top:2px">' + o.min + '–' + o.max + guide.unit + '</div></div>';
           }).join('') +
           '</div>' +
         '</div>' +
@@ -587,6 +749,13 @@
         descPrompt: 'Conte o que você procura — tipo de peça, estilo, faixa de preço — e avisamos quando algo assim estiver disponível.',
         descPlaceholder: 'Ex: procuro um colar discreto em prata, até R$ 300...',
         waIntro: 'Olá, vim através do site, eu quero comprar uma joia do Second Hand / Upcycle.',
+      },
+      oficina: {
+        eyebrow: 'Oficina',
+        title: 'Cuidar da minha joia',
+        descPrompt: 'Conte o que sua joia precisa — ajuste, solda, troca de fecho, pedra, polimento — e, se puder, o metal e o estado da peça.',
+        descPlaceholder: 'Ex: corrente de ouro arrebentada perto do fecho, preciso soldar...',
+        waIntro: 'Olá, vim através do site, eu quero um orçamento para a oficina.',
       },
     };
     var intent = intentCopy[state.leadIntent] || {
@@ -633,7 +802,7 @@
       '<div class="modal-overlay" data-close="close-process-info" style="z-index:200">' +
         '<div class="modal-pad-44">' +
           '<button type="button" class="modal-close" data-action="close-process-info">×</button>' +
-          '<span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">' + esc(intent.eyebrow) + '</span>' +
+          '<span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#7a5f22">' + esc(intent.eyebrow) + '</span>' +
           '<div style="font-family:\'Marcellus\',serif;font-size:26px;color:#14223d;margin-top:8px">' + esc(intent.title) + '</div>' +
           '<div class="step-indicator">' +
             '<span class="label" style="color:' + colors.contato + '">1. Contato</span><span class="line"></span>' +
@@ -657,18 +826,18 @@
           (state.cart.length === 0 ? '<div class="drawer-empty">Sua sacola está vazia.</div>' :
             state.cart.map(function (c) {
               return '<div class="drawer-line">' +
-                '<div class="drawer-thumb"><img src="' + esc(c.imgSrc) + '" loading="lazy" alt="' + esc(c.name) + '"></div>' +
+                '<div class="drawer-thumb"><img src="' + esc(assetUrl(c.imgSrc)) + '" loading="lazy" alt="' + esc(c.name) + '"></div>' +
                 '<div style="flex:1;min-width:0">' +
                   '<div style="font-family:\'Marcellus\',serif;font-size:15px;color:#14223d">' + esc(c.name) + '</div>' +
                   (c.variantLabel ? '<div style="font-size:13px;color:#5a6170;margin-top:2px">' + esc(c.variantLabel) + '</div>' : '') +
                   (c.sizeLabel ? '<div style="font-size:13px;color:#5a6170;margin-top:2px">' + esc(c.sizeLabel) + '</div>' : '') +
-                  (c.customText ? '<div style="font-size:13px;color:#9a7b34;font-family:\'Cormorant Garamond\',serif;font-style:italic;margin-top:2px">“' + esc(c.customText) + '”</div>' : '') +
+                  (c.customText ? '<div style="font-size:13px;color:#7a5f22;font-family:\'Cormorant Garamond\',serif;font-style:italic;margin-top:2px">“' + esc(c.customText) + '”</div>' : '') +
                   '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px">' +
                     '<div class="qty-stepper" style="border:1px solid rgba(20,34,61,.25)"><button type="button" style="width:26px;height:28px;font-size:13px" data-action="cart-dec" data-key="' + esc(c.key) + '">−</button><span style="width:22px;font-size:13px">' + c.qty + '</span><button type="button" style="width:26px;height:28px;font-size:13px" data-action="cart-inc" data-key="' + esc(c.key) + '">+</button></div>' +
                     '<span style="font-size:14px;font-weight:600;color:#14223d">' + formatBRL(c.unitValue * c.qty) + '</span>' +
                   '</div>' +
                 '</div>' +
-                '<span style="font-size:18px;color:#9aa4b8;cursor:pointer;line-height:1;flex-shrink:0" data-action="cart-remove" data-key="' + esc(c.key) + '">×</span>' +
+                '<span style="font-size:18px;color:#5f6779;cursor:pointer;line-height:1;flex-shrink:0" data-action="cart-remove" data-key="' + esc(c.key) + '">×</span>' +
               '</div>';
             }).join('')) +
           '</div>' +
@@ -694,7 +863,7 @@
               return '<div class="drawer-line" style="cursor:pointer" data-action="open-favorite-product" data-id="' + p.id + '">' +
                 '<div class="drawer-thumb"><img src="' + esc(p.imgSrc) + '" loading="lazy" alt="' + esc(p.name) + '"></div>' +
                 '<div style="flex:1;min-width:0"><div style="font-family:\'Marcellus\',serif;font-size:15px;color:#14223d">' + esc(p.name) + '</div><div style="font-size:14px;font-weight:600;color:#14223d;margin-top:6px">' + esc(p.priceLabel) + '</div></div>' +
-                '<span style="font-size:18px;color:#9aa4b8;cursor:pointer;line-height:1;flex-shrink:0" data-action="remove-favorite" data-id="' + p.id + '">×</span>' +
+                '<span style="font-size:18px;color:#5f6779;cursor:pointer;line-height:1;flex-shrink:0" data-action="remove-favorite" data-id="' + p.id + '">×</span>' +
               '</div>';
             }).join('')) +
           '</div>' +
@@ -734,7 +903,7 @@
             '<div class="modal-pad-44" style="padding:60px 44px;text-align:center;width:100%">' +
               '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#14223d" stroke-width="1.3" style="margin:0 auto"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9"/></svg>' +
               '<div style="font-family:\'Marcellus\',serif;font-size:26px;color:#14223d;margin-top:18px">Pedido confirmado</div>' +
-              (state.orderNumber ? '<div style="font-size:14px;color:#9a7b34;margin-top:6px">Pedido #' + esc(state.orderNumber) + '</div>' : '') +
+              (state.orderNumber ? '<div style="font-size:14px;color:#7a5f22;margin-top:6px">Pedido #' + esc(state.orderNumber) + '</div>' : '') +
               '<div style="font-size:16px;color:#5a6170;font-family:\'Cormorant Garamond\',serif;font-style:italic;margin-top:12px;line-height:1.5;max-width:420px;margin-left:auto;margin-right:auto">Você vai acompanhar a produção em tempo real na sua conta — vamos enviar fotos do processo por lá.</div>' +
               '<div style="margin-top:26px;display:flex;gap:12px;justify-content:center">' +
                 '<span class="outline-btn" style="padding:15px 30px;font-size:13px" data-action="continue-shopping">Continuar comprando</span>' +
@@ -788,7 +957,7 @@
             return '<span class="pill-option' + (state.paymentMethod === opt.id ? ' active' : '') + '" style="flex:1;text-align:center;padding:14px 10px" data-action="select-payment" data-value="' + opt.id + '">' + opt.label + '</span>';
           }).join('') + '</div></div>' +
         (state.orderError ? '<div class="field-error">' + esc(state.orderError) + '</div>' : '') +
-        '<div style="margin-top:14px;font-size:12px;color:#9aa4b8;font-family:\'Cormorant Garamond\',serif;font-style:italic;line-height:1.5">Ao confirmar, a produção começa com as personalizações definidas — não fazemos alterações depois. Erros de personalização exigem uma nova peça; ajustes pontuais podem ter custo à parte.</div>' +
+        '<div style="margin-top:14px;font-size:12px;color:#5f6779;font-family:\'Cormorant Garamond\',serif;font-style:italic;line-height:1.5">Ao confirmar, a produção começa com as personalizações definidas — não fazemos alterações depois. Erros de personalização exigem uma nova peça; ajustes pontuais podem ter custo à parte.</div>' +
         '<div style="margin-top:16px;display:flex;gap:12px">' +
           '<span class="outline-btn" style="padding:15px 20px;font-size:13px" data-action="back-to-entrega">Voltar</span>' +
           '<span class="buy-btn" style="flex:1;text-align:center;padding:15px;font-size:13px" data-action="confirm-order">Confirmar pedido</span>' +
@@ -800,7 +969,7 @@
         '<div class="checkout-modal-inner">' +
           '<button type="button" class="modal-close" style="z-index:2" data-action="close-checkout">×</button>' +
           '<div class="modal-pad-44" style="flex:1;min-width:0;max-height:none;overflow:visible">' +
-            '<span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9a7b34">Finalizar compra</span>' +
+            '<span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#7a5f22">Finalizar compra</span>' +
             '<div style="font-family:\'Marcellus\',serif;font-size:26px;color:#14223d;margin-top:8px">Entrega e pagamento</div>' +
             '<div class="step-indicator">' +
               '<span class="label" style="color:' + stepColors.auth + '">1. Acesso</span><span class="line"></span>' +
@@ -813,7 +982,7 @@
             '<span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Resumo do pedido</span>' +
             '<div style="margin-top:16px;display:flex;flex-direction:column;gap:14px;max-height:280px;overflow-y:auto">' +
             state.cart.map(function (c) {
-              return '<div class="order-sidebar-line"><div class="order-sidebar-thumb"><img src="' + esc(c.imgSrc) + '" loading="lazy" alt=""></div>' +
+              return '<div class="order-sidebar-line"><div class="order-sidebar-thumb"><img src="' + esc(assetUrl(c.imgSrc)) + '" loading="lazy" alt=""></div>' +
                 '<div style="flex:1;min-width:0"><div style="font-size:13px;color:#14223d;line-height:1.3">' + esc(c.name) + ' ' + esc(c.variantLabel || '') + ' × ' + c.qty + '</div></div>' +
                 '<span style="font-size:13px;color:#14223d;white-space:nowrap">' + formatBRL(c.unitValue * c.qty) + '</span></div>';
             }).join('') +
@@ -875,15 +1044,35 @@
     var isAro = p.category === 'Anéis';
     var aroValue = isAro ? (state.pAro || ARO_SIZES[0]) : null;
     var sizeLabel = pmgOpt ? ('Tamanho ' + pmgOpt.label + ' (' + pmgOpt.min + '–' + pmgOpt.max + pmgGuide.unit + ')') : (isAro ? ('Aro ' + aroValue) : null);
+    // Structured personalization travels as readable text so the atelier receives it
+    // with the order. Extra costs are listed for the atelier to confirm; the server
+    // still validates unitValue against the catalog base price.
+    var fields = p.personalizationFields || [];
+    var parts = [];
+    if (fields.indexOf('tamanho') !== -1 && !pmgGuide && !isAro && state.pTamanho1 !== '') {
+      parts.push('Reguladores: ' + state.pTamanho1 + ' e ' + (state.pTamanho2 || state.pTamanho1) + TAMANHO_RANGES[p.category].unit);
+    }
+    if (state.pCaractere) {
+      var extra = Math.max(0, state.pCaractere.length - PERSONALIZATION_FIELD_DEFS.caractere.includedChars);
+      parts.push('Caracteres: ' + state.pCaractere + (extra ? ' (+' + extra + ' adicional, ' + formatBRL(extra * PERSONALIZATION_FIELD_DEFS.caractere.extraCharPrice) + ')' : ''));
+    }
+    if (state.pCorBanho) parts.push('Banho: ' + state.pCorBanho);
+    if (state.pPedraEnabled && state.pPedraColor) {
+      var stone = PEDRA_OPTIONS.filter(function (o) { return o.color === state.pPedraColor; })[0];
+      parts.push('Pedra: ' + state.pPedraColor + (stone ? ' (' + stone.stone + ')' : '') + ' + ' + formatBRL(unitValue / 2));
+    }
+    if (state.pDetalhesExtras) parts.push('Ajustes: ' + state.pDetalhesExtras);
+    if (state.customText) parts.push(state.customText);
+    var customText = parts.join(' · ');
     var item = {
-      key: p.id + '|' + (variant ? variant.label : '') + '|' + (sizeLabel || '') + '|' + state.customText,
+      key: p.id + '|' + (variant ? variant.label : '') + '|' + (sizeLabel || '') + '|' + customText,
       id: p.id,
       name: p.name,
       category: p.category,
       imgSrc: p.imgSrc,
       variantLabel: variant ? variant.label : null,
       sizeLabel: sizeLabel,
-      customText: state.customText,
+      customText: customText,
       unitValue: unitValue,
       qty: state.qty,
     };
@@ -895,10 +1084,13 @@
     }
     if (state.authedUser) api.addCartItem(item).catch(function () {});
 
-    state.selectedId = null;
+    // On the product page the piece stays open (fresh options); the modal closes.
+    if (document.getElementById('product-page')) resetProductSelectionFields();
+    else state.selectedId = null;
     state.personalizeOpen = false;
     state.qty = 1;
     state.customText = '';
+    if (!buyNow) showToast(p.name + ' foi para a sacola.');
     state.cartOpen = !buyNow;
     state.checkoutOpen = !!buyNow;
     if (buyNow) state.checkoutStep = state.authedUser ? 'entrega' : 'auth';
@@ -960,6 +1152,7 @@
   var LEAD_WA_INTRO = {
     fornecer: 'Olá, vim através do site, eu quero fornecer uma joia para o Second Hand / Upcycle.',
     comprar: 'Olá, vim através do site, eu quero comprar uma joia do Second Hand / Upcycle.',
+    oficina: 'Olá, vim através do site, eu quero um orçamento para a oficina.',
   };
 
   function submitLeadAndOpenWhatsapp() {
@@ -1017,6 +1210,7 @@
       return syncGuestStateToServer();
     }).then(function () {
       if (state.checkoutOpen && state.checkoutStep === 'auth') state.checkoutStep = 'entrega';
+      showToast('Bem-vindo(a), ' + firstName(state.authedUser.name) + '! Sua sacola e favoritos estão salvos na sua conta.');
       render();
     }).catch(function (err) {
       state.authBusy = false;
@@ -1040,6 +1234,9 @@
 
   function logout() {
     state.authedUser = null;
+    state.accountMenuOpen = false;
+    state.menuOpen = false;
+    showToast('Você saiu da sua conta.');
     api.token = null;
     try { localStorage.removeItem('hauquimia_token'); } catch (e) {}
     state.cart = loadLocal('hauquimia_cart', []);
@@ -1079,7 +1276,20 @@
       window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
     },
     'scroll-vitrine-close-menu': function () { state.menuOpen = false; render(); actionHandlers['scroll-vitrine'](); },
-    'toggle-search': function () { state.searchOpen = !state.searchOpen; state.searchQuery = ''; render(); },
+    'toggle-search': function () {
+      // The catalog page has its own search field; focus it instead of the header bar.
+      var catalogSearch = document.getElementById('catalog-search');
+      if (catalogSearch) {
+        catalogSearch.focus();
+        window.scrollTo({ top: catalogSearch.getBoundingClientRect().top + window.scrollY - 180, behavior: 'smooth' });
+        return;
+      }
+      state.searchOpen = !state.searchOpen; state.searchQuery = '';
+      // Show and focus synchronously so the first keystrokes aren't lost before the next frame.
+      document.getElementById('search-bar').hidden = !state.searchOpen;
+      if (state.searchOpen) { headerSearch.value = ''; headerSearch.focus(); }
+      render();
+    },
     'open-favorites': function () { state.favoritesOpen = true; render(); },
     'close-favorites': function () { state.favoritesOpen = false; render(); },
     'open-cart': function () { state.cartOpen = true; render(); },
@@ -1092,11 +1302,15 @@
     'set-auth-tab': function (el) { state.authTab = el.dataset.tab; state.authError = ''; render(); },
     'submit-auth': submitAuth,
     'logout': logout,
+    'toggle-account-menu': function () { state.accountMenuOpen = !state.accountMenuOpen; render(); },
+    'account-favorites': function () { state.accountMenuOpen = false; state.favoritesOpen = true; render(); },
+    'account-cart': function () { state.accountMenuOpen = false; state.cartOpen = true; render(); },
 
     'select-category': function (el) { state.activeCategory = el.dataset.cat; render(); },
-    'open-product': function (el) { openProduct(el.dataset.id); },
-    'open-favorite-product': function (el) { state.favoritesOpen = false; openProduct(el.dataset.id); },
-    'toggle-favorite': function (el, e) { e.stopPropagation(); toggleFavorite(el.dataset.id); },
+    'open-product': function (el) { location.href = productUrl(el.dataset.id); },
+    'open-favorite-product': function (el) { state.favoritesOpen = false; location.href = productUrl(el.dataset.id); },
+    // The heart sits inside the card link: don't navigate when it's tapped.
+    'toggle-favorite': function (el, e) { e.preventDefault(); e.stopPropagation(); toggleFavorite(el.dataset.id); },
     'remove-favorite': function (el, e) { e.stopPropagation(); toggleFavorite(el.dataset.id); },
     'close-product': function () { state.selectedId = null; state.personalizeOpen = false; render(); },
     'select-variant': function (el) { state.selectedVariantIndex = Number(el.dataset.index); render(); },
@@ -1186,6 +1400,8 @@
       closeHandlers[overlay.dataset.close] && closeHandlers[overlay.dataset.close]();
       return;
     }
+    // Click outside the account menu closes it.
+    if (state.accountMenuOpen && !e.target.closest('.nav-account')) { state.accountMenuOpen = false; render(); }
     var actionEl = e.target.closest('[data-action]');
     if (!actionEl) return;
     var handler = actionHandlers[actionEl.dataset.action];
@@ -1212,15 +1428,30 @@
     render();
   });
 
-  document.getElementById('search-input').addEventListener('input', function (e) {
+  var headerSearch = document.getElementById('search-input');
+  headerSearch.addEventListener('input', function (e) {
     state.searchQuery = e.target.value;
     render();
+  });
+  headerSearch.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter') return;
+    var q = e.target.value.trim();
+    location.href = '/catalogo/' + (q ? '?q=' + encodeURIComponent(q) : '');
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.getAttribute && e.target.getAttribute('role') === 'button' && e.target.dataset.action) {
+      e.preventDefault();
+      e.target.click();
+    }
   });
 
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
-    if (state.selectedId) { state.selectedId = null; state.personalizeOpen = false; }
+    var onProductPage = !!document.getElementById('product-page');
+    if (state.accountMenuOpen) state.accountMenuOpen = false;
     else if (state.personalizeOpen) state.personalizeOpen = false;
+    else if (state.selectedId && !onProductPage) { state.selectedId = null; }
     else if (state.sizeGuideOpen) state.sizeGuideOpen = false;
     else if (state.processInfoOpen) state.processInfoOpen = false;
     else if (state.authOpen) state.authOpen = false;
@@ -1248,19 +1479,85 @@
       revealEls.forEach(function (el) { el.classList.add('is-revealed'); });
     }
 
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    // Header condenses after the first scroll; on the product page the mobile buy bar
+    // shows once the main buttons have scrolled away. One rAF-throttled listener.
+    var header = document.querySelector('.site-header');
+    var sticky = document.getElementById('pp-sticky');
+    var scrollRaf = null;
+    var onPageScroll = function () {
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(function () {
+        scrollRaf = null;
+        if (header) header.classList.toggle('is-scrolled', window.scrollY > 12);
+        if (sticky) {
+          var actions = document.getElementById('pp-actions');
+          var show = !!actions && actions.getBoundingClientRect().bottom < 0;
+          if (sticky.classList.contains('is-visible') !== show) {
+            sticky.classList.toggle('is-visible', show);
+            sticky.setAttribute('aria-hidden', String(!show));
+            sticky.querySelector('button').tabIndex = show ? 0 : -1;
+          }
+        }
+      });
+    };
+    window.addEventListener('scroll', onPageScroll, { passive: true });
+    onPageScroll();
+
+    // Product photo zoom: follows the pointer on desktop (hover-capable devices only).
+    if (window.matchMedia('(hover: hover)').matches) {
+      document.addEventListener('pointermove', function (e) {
+        var z = e.target.closest && e.target.closest('[data-zoom]');
+        if (!z || reduceMotion.matches) return;
+        var r = z.getBoundingClientRect();
+        z.style.setProperty('--zx', ((e.clientX - r.left) / r.width * 100) + '%');
+        z.style.setProperty('--zy', ((e.clientY - r.top) / r.height * 100) + '%');
+        z.classList.add('is-zooming');
+      });
+      document.addEventListener('pointerout', function (e) {
+        var z = e.target.closest && e.target.closest('[data-zoom]');
+        if (z && !z.contains(e.relatedTarget)) z.classList.remove('is-zooming');
+      });
+    }
+
+    // Section videos: load on approach, play only while visible (saves data, CPU and battery).
+    var videos = document.querySelectorAll('video[data-autoplay], #hero-parallax-img');
+    if ('IntersectionObserver' in window) {
+      var vio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          var v = entry.target;
+          if (entry.isIntersecting) {
+            if (v.dataset.src && !v.getAttribute('src')) v.src = v.dataset.src;
+            v.muted = true;
+            var p = v.play();
+            if (p && p.catch) p.catch(function () { /* autoplay blocked: the poster stays */ });
+          } else if (!v.paused) {
+            v.pause();
+          }
+        });
+      }, { rootMargin: '200px 0px' });
+      videos.forEach(function (v) { vio.observe(v); });
+    } else {
+      videos.forEach(function (v) { if (v.dataset.src) v.src = v.dataset.src; v.muted = true; v.play(); });
+    }
+
     var heroVideo = document.getElementById('hero-parallax-img');
     if (heroVideo) {
       heroVideo.muted = true;
       heroVideo.defaultMuted = true;
+      // Parallax only where the video overlays the text (desktop/tablet) and motion is welcome.
+      var parallaxOn = window.matchMedia('(min-width: 701px) and (prefers-reduced-motion: no-preference)');
       var raf = null;
       var onScroll = function () {
         if (raf) return;
         raf = requestAnimationFrame(function () {
           raf = null;
-          var hero = heroVideo.parentElement;
-          var rect = hero.getBoundingClientRect();
+          if (!parallaxOn.matches) { heroVideo.style.transform = ''; return; }
+          var rect = heroVideo.parentElement.getBoundingClientRect();
           var p = Math.max(-1, Math.min(1, -rect.top / (rect.height || 1)));
-          heroVideo.style.transform = 'translateY(' + (p * 60) + 'px)';
+          // The video is 112% tall, so ±5% of the box keeps it fully covering.
+          heroVideo.style.transform = 'translateY(' + (p * rect.height * 0.05) + 'px)';
         });
       };
       window.addEventListener('scroll', onScroll, { passive: true });
@@ -1269,11 +1566,30 @@
     }
   }
 
+  // ============ PUBLIC API (used by catalogo.js) ============
+  window.Hauquimia = {
+    products: PRODUCTS,
+    categories: CATEGORIES.filter(function (c) { return c !== 'Todos'; }),
+    normalizeText: normalizeText,
+    formatBRL: formatBRL,
+    esc: esc,
+    setGridHtml: setGridHtml,
+    favorites: function () { return state.favorites; },
+    // Hooks run on every render after init (the first render happens on DOMContentLoaded,
+    // once shell.js has injected the modal mount points).
+    onRender: function (fn) { renderHooks.push(fn); },
+  };
+
   // ============ INIT ============
   function init() {
     state.cart = loadLocal('hauquimia_cart', []);
     state.favorites = loadLocal('hauquimia_favorites', []);
     api.token = loadLocal('hauquimia_token', null);
+
+    if (document.getElementById('product-page')) {
+      var pid = productIdFromUrl();
+      if (pid && byId(pid)) openProduct(pid); else renderProductNotFound();
+    }
 
     render();
     initScrollEffects();

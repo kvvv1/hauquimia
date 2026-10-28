@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peça — Hauquímia</title>
+<meta name="description" content="Joia feita à mão pela Hauquímia, ateliê e oficina de ourivesaria artesanal em Belo Horizonte.">
+<meta name="theme-color" content="#14223d">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="product">
+<link rel="preload" href="/fonts/jost.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/marcellus.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body data-page="catalogo">
+<div id="parallax-root">
+  <script src="/shell.js"></script>
+
+  <main>
+    <div class="pad-h pp-top">
+      <nav id="pp-breadcrumb" class="breadcrumb pp-breadcrumb" aria-label="Você está em"><a href="/">Início</a> / <a href="/catalogo/">Catálogo</a></nav>
+    </div>
+
+    <section id="product-page" class="pad-h pp-layout">
+      <div id="pp-media" class="pp-media"><div class="pp-zoom pp-skeleton"></div></div>
+      <div id="pp-info" class="pp-info"></div>
+    </section>
+
+    <section class="pad-h page-section alt">
+      <div class="container">
+        <div class="section-head split-head">
+          <div>
+            <span data-reveal class="eyebrow">Do ateliê para você</span>
+          <h2 data-reveal class="section-title" style="margin:10px 0 0;font-weight:400;transition-delay:.1s">Como sua joia é feita</h2>
+        </div>
+        <div class="values-grid">
+          <div data-reveal class="value-card">
+            <div class="value-num">01</div>
+            <div class="value-title">Escuta</div>
+            <div class="value-desc">Recebemos sua escolha e os detalhes da personalização — se algo precisar de ajuste, falamos com você antes de produzir.</div>
+          </div>
+          <div data-reveal class="value-card" style="transition-delay:.1s">
+            <div class="value-num">02</div>
+            <div class="value-title">Arte e produção</div>
+            <div class="value-desc">Cada peça é feita à mão na nossa bancada, com técnica e cuidado em cada acabamento.</div>
+          </div>
+          <div data-reveal class="value-card" style="transition-delay:.2s">
+            <div class="value-num">03</div>
+            <div class="value-title">Entrega</div>
+            <div class="value-desc">Sua joia sai pronta para continuar a sua história — pagamento e envio direto pelo site.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pad-h page-section">
+      <div class="container">
+        <div class="section-head">
+          <span data-reveal class="eyebrow">Combina com</span>
+          <h2 data-reveal class="section-title" style="margin:10px 0 0;font-weight:400;transition-delay:.1s">Você também pode gostar</h2>
+          </div>
+          <a id="pp-related-link" class="section-link" href="/catalogo/">Ver mais peças →</a>
+        </div>
+        <div id="pp-related-grid" class="grid-vitrine" data-product-list=""></div>
+      </div>
+    </section>
+
+    <section class="pad-h cta-band">
+      <span class="eyebrow">Sob medida</span>
+      <h2 class="cta-band-title" style="font-weight:400">Quer algo ainda mais seu?</h2>
+      <p class="cta-band-text">Toda peça pode ser o ponto de partida. Conte sua ideia e a gente desenha junto com você.</p>
+      <div class="cta-band-actions">
+        <span class="btn-light" data-action="open-process-info">Contar minha história</span>
+        <a class="btn-ghost-light" href="https://wa.me/5531990621354" target="_blank" rel="noopener">Falar no WhatsApp</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mobile buy bar: appears once the main buttons scroll out of view. -->
+  <div id="pp-sticky" class="pp-sticky" aria-hidden="true">
+    <div class="pp-sticky-text"><span id="pp-sticky-name"></span><strong id="pp-sticky-price"></strong></div>
+    <button type="button" class="buy-btn" data-action="add-to-cart-now" tabindex="-1">Adicionar</button>
+  </div>
+
+  <div id="site-footer"></div>
+</div>
+
+<script src="/config.js" defer></script>
+<script src="/app.js" defer></script>
+</body>
+</html>

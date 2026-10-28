@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catálogo — Hauquímia</title>
+<meta name="description" content="Catálogo completo da Hauquímia: colares, pulseiras, anéis, brincos e pingentes em prata e ouro, personalizáveis e feitos à mão.">
+<meta name="theme-color" content="#14223d">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Catálogo — Hauquímia">
+<meta property="og:description" content="Colares, pulseiras, anéis, brincos e pingentes feitos à mão, com gravação e pedras naturais.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://hauquimia.com.br/catalogo/">
+<link rel="preload" href="/fonts/jost.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/marcellus.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body data-page="catalogo">
+<div id="parallax-root">
+  <script src="/shell.js"></script>
+
+  <main id="catalog-root">
+    <section class="pad-h catalog-hero">
+      <nav class="breadcrumb catalog-breadcrumb" aria-label="Você está em"><a href="/">Início</a> / Catálogo</nav>
+      <h1 class="section-title catalog-title">Catálogo</h1>
+      <p class="editorial-text catalog-lede">Cada peça, arte feita à mão. Busque pelo nome, filtre pelo que importa para você e personalize do seu jeito.</p>
+
+      <label class="catalog-search" for="catalog-search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14223d" stroke-width="1.4" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+        <input id="catalog-search" type="search" enterkeyhint="search" autocomplete="off" placeholder="Buscar por nome, pedra, gravação, coração…" aria-label="Buscar no catálogo">
+        <button type="button" class="catalog-search-clear" data-cat-action="clear-search" aria-label="Limpar busca" hidden>×</button>
+        <kbd class="catalog-kbd">/</kbd>
+      </label>
+
+      <div id="catalog-cat-pills" class="catalog-cat-pills" role="group" aria-label="Categorias"></div>
+    </section>
+
+    <div class="catalog-toolbar pad-h">
+      <button type="button" class="catalog-filter-btn" data-cat-action="open-filters">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+        Filtros <span id="catalog-filter-count" class="catalog-filter-count" hidden></span>
+      </button>
+      <div id="catalog-result-count" class="catalog-result-count" aria-live="polite"></div>
+      <label class="catalog-sort">
+        <span>Ordenar</span>
+        <select id="catalog-sort" aria-label="Ordenar por">
+          <option value="relevancia">Relevância</option>
+          <option value="preco-asc">Menor preço</option>
+          <option value="preco-desc">Maior preço</option>
+          <option value="nome">Nome (A–Z)</option>
+        </select>
+      </label>
+    </div>
+
+    <section class="pad-h catalog-body">
+      <div id="catalog-filters-overlay" class="catalog-filters-overlay" data-cat-action="close-filters" hidden></div>
+      <aside id="catalog-filters" class="catalog-filters" aria-label="Filtros">
+        <div class="catalog-filters-head">
+          <span>Filtros</span>
+          <button type="button" class="modal-close" style="position:static" data-cat-action="close-filters" aria-label="Fechar filtros">×</button>
+        </div>
+        <div class="catalog-filters-scroll">
+          <fieldset class="filter-group">
+            <legend>Categoria</legend>
+            <div id="filter-categories" class="filter-options"></div>
+          </fieldset>
+
+          <fieldset class="filter-group">
+            <legend>Preço</legend>
+            <div class="filter-price">
+              <label><span>Mín.</span><input id="filter-price-min" type="number" inputmode="numeric" min="0" step="10" placeholder="R$ 0"></label>
+              <span class="filter-price-sep">—</span>
+              <label><span>Máx.</span><input id="filter-price-max" type="number" inputmode="numeric" min="0" step="10" placeholder="R$ 1.000"></label>
+            </div>
+            <div id="filter-price-presets" class="filter-chips"></div>
+          </fieldset>
+
+          <fieldset class="filter-group">
+            <legend>Características</legend>
+            <div id="filter-traits" class="filter-options"></div>
+          </fieldset>
+
+          <fieldset class="filter-group">
+            <legend>Minha lista</legend>
+            <div class="filter-options">
+              <label class="filter-check"><input type="checkbox" id="filter-favorites"><span class="filter-box"></span><span class="filter-label">Só meus favoritos</span></label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="catalog-filters-foot">
+          <button type="button" class="outline-btn" data-cat-action="clear-all" style="padding:13px 16px;font-size:12px">Limpar</button>
+          <button type="button" class="buy-btn" data-cat-action="close-filters" id="catalog-apply-btn" style="padding:13px 16px;font-size:12px;flex:1">Ver peças</button>
+        </div>
+      </aside>
+
+      <div class="catalog-results">
+        <div id="catalog-active-chips" class="catalog-active-chips"></div>
+        <div id="catalog-empty" class="catalog-empty" hidden>
+          <div class="catalog-empty-title">Nenhuma peça encontrada</div>
+          <p>Tente outra palavra ou remova alguns filtros. Não achou o que procura? A gente cria sob medida.</p>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px">
+            <button type="button" class="outline-btn" data-cat-action="clear-all" style="padding:14px 22px;font-size:12px">Limpar filtros</button>
+            <span class="buy-btn" data-action="open-process-info" style="padding:14px 22px;font-size:12px">Criar uma peça sob medida</span>
+          </div>
+        </div>
+        <div id="catalog-grid" class="catalog-grid"></div>
+      </div>
+    </section>
+
+    <section class="pad-h cta-band">
+      <span class="eyebrow">Sob medida</span>
+      <h2 class="cta-band-title" style="font-weight:400">Não encontrou a peça ideal?</h2>
+      <p class="cta-band-text">Toda peça do catálogo pode ser o ponto de partida. Conte sua ideia e a gente desenha junto com você.</p>
+      <div class="cta-band-actions">
+        <span class="btn-light" data-action="open-process-info">Contar minha história</span>
+        <a class="btn-ghost-light" href="/atelie/">Conhecer o ateliê</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+</div>
+
+<script src="/config.js" defer></script>
+<script src="/app.js" defer></script>
+<script src="/catalogo.js" defer></script>
+</body>
+</html>

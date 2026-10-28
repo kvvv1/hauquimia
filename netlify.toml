@@ -1,11 +1,73 @@
 [build]
   publish = "."
 
+# Every product URL (/produto/col1/) is served by the single product page,
+# which reads the id from the path.
+[[redirects]]
+  from = "/produto/:id"
+  to = "/produto/index.html"
+  status = 200
+
+# Internal files live in the repo but must not be served by the static site.
+[[redirects]]
+  from = "/server/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/support.js"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/image-slot.js"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/Hauquimia*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/netlify.toml"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# ---------- Caching ----------
+# Fonts and product images never change under the same name.
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
 [[headers]]
   for = "/assets/products/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+[[headers]]
+  for = "/assets/opt/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000, stale-while-revalidate=86400"
+
+[[headers]]
+  for = "/assets/*.mp4"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000, stale-while-revalidate=86400"
+
+[[headers]]
+  for = "/favicon.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Code and pages revalidate (cheap 304s) so a deploy is visible immediately.
 [[headers]]
   for = "/*.js"
   [headers.values]
@@ -16,6 +78,7 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
+# ---------- Security ----------
 [[headers]]
   for = "/*"
   [headers.values]
@@ -23,3 +86,4 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), camera=(), microphone=()"
+    Strict-Transport-Security = "max-age=31536000"
