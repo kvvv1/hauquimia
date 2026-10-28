@@ -92,13 +92,32 @@
     Pingentes: 'Letras de A a Z e símbolos disponíveis sob consulta — semelhantes aos usados em colares e pingentes.',
   };
   PRODUCTS.forEach(function (p) {
+    // Optimized WebP (640w + 360w) generated from the original PNGs in assets/products/.
+    // Root-relative so images resolve from inner pages (/atelie/, /catalogo/...).
+    var base = p.imgSrc.replace(/^assets\/products\/(.+)\.png$/, '/assets/products/opt/$1');
+    p.imgSrc = base + '.webp';
+    p.imgSrcSet = base + '-sm.webp 360w, ' + base + '.webp 640w';
     if (p.category === 'Colares') p.personalizationFields = ['tamanho', 'caractere', 'corBanho'];
     if (p.category === 'Pulseiras') p.personalizationFields = ['tamanho', 'caractere'];
     if (p.category === 'Anéis') p.personalizationFields = ['tamanho', 'caractere'];
     if (GEM_PRODUCT_IDS.indexOf(p.id) !== -1) {
       p.personalizationFields = (p.personalizationFields || []).concat(['pedra']);
     }
+    // Characteristics used by the catalog filters.
+    var ready = /^Peça pronta/.test(p.customNote || '');
+    p.traits = {
+      pedra: GEM_PRODUCT_IDS.indexOf(p.id) !== -1,
+      personalizavel: !ready,
+      pronta: ready,
+      gravacao: /grava|inicia|nome|letra|caracter|monograma/i.test(p.name + ' ' + (p.specs || []).join(' ') + ' ' + p.customNote),
+      tamanhos: !!p.hasVariants || !!TAMANHO_RANGES[p.category],
+      corBanho: p.category === 'Colares',
+    };
   });
+
+  function assetUrl(src) {
+    return src && !/^(\/|https?:|data:)/.test(src) ? '/' + src : src;
+  }
 
   function formatBRL(n) {
     return 'R$ ' + n.toFixed(2).replace('.', ',').replace(/\d(?=(\d{3})+,)/g, '$&.');
@@ -194,6 +213,7 @@
     authedUser: null,
     authError: '',
     authBusy: false,
+    accountMenuOpen: false,
 
     processInfoOpen: false,
     leadIntent: null,
@@ -219,6 +239,7 @@
 
   // ============ RENDER (with focus preservation) ============
   var renderQueued = false;
+  var renderHooks = [];
   function render() {
     if (renderQueued) return;
     renderQueued = true;
@@ -237,6 +258,8 @@
     renderBadges();
     renderCategoryPills();
     renderProductsGrid();
+    renderProductLists();
+    renderHooks.forEach(function (fn) { fn(); });
     renderProductModal();
     renderPersonalizeModal();
     renderSizeGuideModal();
@@ -246,6 +269,7 @@
     renderAuthModal();
     renderCheckoutModal();
     persistGuestState();
+    makeActionsKeyboardFocusable();
 
     if (focusId) {
       var el = document.getElementById(focusId);
@@ -258,15 +282,75 @@
     }
   }
 
+  // Non-native clickable elements (span/div with data-action) get button semantics
+  // so they're reachable by Tab and announced by screen readers; Enter/Space is
+  // handled by the keydown listener below.
+  function makeActionsKeyboardFocusable() {
+    Array.prototype.forEach.call(document.querySelectorAll('span[data-action]:not([tabindex]), div[data-action]:not([tabindex])'), function (el) {
+      el.tabIndex = 0;
+      if (!el.getAttribute('role')) el.setAttribute('role', 'button');
+    });
+  }
+
   // ---------- Nav ----------
+  var USER_ICON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>';
+  function initials(name) {
+    var parts = String(name || '').trim().split(/\s+/).filter(Boolean);
+    return ((parts[0] || '?')[0] + (parts.length > 1 ? parts[parts.length - 1][0] : '')).toUpperCase();
+  }
+  function firstName(name) { return String(name || '').trim().split(/\s+/)[0] || 'cliente'; }
+
+  // Logged out: an outlined "Entrar" call to action. Logged in: initials avatar
+  // with an account menu (header) / a greeting card (mobile menu).
   function renderNavAuth() {
-    var slot = document.getElementById('nav-auth-slot');
-    if (!slot) return;
-    if (state.authedUser) {
-      slot.innerHTML = '<span data-action="logout" style="font-size:13px;color:#14223d;cursor:pointer;white-space:nowrap">Olá, ' + esc(state.authedUser.name) + '</span>';
+    var u = state.authedUser;
+    var desktop, mobile;
+    if (!u) {
+      desktop = '<button type="button" class="nav-login" data-action="open-login">' + USER_ICON + '<span>Entrar</span></button>';
+      mobile = '<button type="button" class="nav-login nav-login-block" data-action="open-login">' + USER_ICON + '<span>Entrar ou criar conta</span></button>';
     } else {
-      slot.innerHTML = '<span class="navlink" data-action="open-login">Entrar</span>';
+      var menu = state.accountMenuOpen
+        ? '<div class="account-menu" role="menu">' +
+            '<div class="account-menu-head"><div class="account-menu-name">Olá, ' + esc(firstName(u.name)) + '</div>' +
+            (u.email ? '<div class="account-menu-email">' + esc(u.email) + '</div>' : '') + '</div>' +
+            '<button type="button" role="menuitem" data-action="account-favorites">Meus favoritos</button>' +
+            '<button type="button" role="menuitem" data-action="account-cart">Minha sacola</button>' +
+            '<button type="button" role="menuitem" class="account-menu-logout" data-action="logout">Sair da conta</button>' +
+          '</div>'
+        : '';
+      desktop = '<div class="nav-account">' +
+          '<button type="button" class="nav-avatar" data-action="toggle-account-menu" aria-haspopup="menu" aria-expanded="' + state.accountMenuOpen + '" aria-label="Minha conta">' +
+            '<span class="nav-avatar-circle">' + esc(initials(u.name)) + '</span>' +
+            '<span class="nav-avatar-name">' + esc(firstName(u.name)) + '</span>' +
+          '</button>' + menu +
+        '</div>';
+      mobile = '<div class="nav-account-mobile">' +
+          '<span class="nav-avatar-circle">' + esc(initials(u.name)) + '</span>' +
+          '<div style="flex:1;min-width:0"><div class="account-menu-name">Olá, ' + esc(firstName(u.name)) + '</div>' +
+          (u.email ? '<div class="account-menu-email">' + esc(u.email) + '</div>' : '') + '</div>' +
+          '<button type="button" class="account-menu-logout" data-action="logout">Sair</button>' +
+        '</div>';
     }
+    Array.prototype.forEach.call(document.querySelectorAll('.js-auth-slot'), function (slot) {
+      var html = slot.classList.contains('nav-auth-mobile') ? mobile : desktop;
+      if (slot.innerHTML !== html) slot.innerHTML = html;
+    });
+  }
+
+  var toastTimer = null;
+  function showToast(msg) {
+    var t = document.getElementById('hq-toast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'hq-toast';
+      t.className = 'hq-toast';
+      t.setAttribute('role', 'status');
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.classList.add('is-visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove('is-visible'); }, 3200);
   }
   function renderBadges() {
     var favBadge = document.getElementById('favorites-badge');
@@ -292,43 +376,64 @@
   // ---------- Catalog ----------
   function renderCategoryPills() {
     var row = document.getElementById('cat-pills-row');
-    row.innerHTML = CATEGORIES.map(function (cat) {
+    if (!row) return;
+    var html = CATEGORIES.map(function (cat) {
       var active = cat === state.activeCategory;
       return '<span class="cat-pill' + (active ? ' is-active' : '') + '" data-action="select-category" data-cat="' + esc(cat) + '">' + esc(cat) + '</span>';
     }).join('');
+    if (row.innerHTML !== html) row.innerHTML = html;
+  }
+  function normalizeText(s) {
+    return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
   }
   function filteredProducts() {
-    var q = state.searchQuery.trim().toLowerCase();
+    var q = normalizeText(state.searchQuery.trim());
     return PRODUCTS.filter(function (p) {
       var inCat = state.activeCategory === 'Todos' || p.category === state.activeCategory;
-      var inSearch = !q || p.name.toLowerCase().indexOf(q) !== -1;
+      var inSearch = !q || normalizeText(p.name + ' ' + p.category).indexOf(q) !== -1;
       return inCat && inSearch;
     });
   }
+  function productCard(p, idx) {
+    var isFav = state.favorites.indexOf(p.id) !== -1;
+    var delay = Math.min(idx || 0, 11) * 35;
+    return (
+      '<div class="prod-card" data-action="open-product" data-id="' + p.id + '" style="animation-delay:' + delay + 'ms">' +
+        '<div class="prod-img-wrap">' +
+          '<img src="' + esc(p.imgSrc) + '" srcset="' + esc(p.imgSrcSet) + '" sizes="(max-width: 560px) 50vw, (max-width: 1024px) 45vw, 330px" width="640" height="640" alt="' + esc(p.name) + '" loading="lazy" decoding="async">' +
+          '<button type="button" class="prod-fav-btn" data-action="toggle-favorite" data-id="' + p.id + '" aria-label="' + (isFav ? 'Remover dos favoritos' : 'Favoritar') + '">' +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="' + (isFav ? '#14223d' : 'none') + '" stroke="#14223d" stroke-width="1.6"><path d="M12 20s-7-4.5-9.5-9A5.5 5.5 0 0112 5a5.5 5.5 0 019.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>' +
+          '</button>' +
+        '</div>' +
+        '<div class="prod-meta">' +
+          '<span class="prod-cat">' + esc(p.category) + '</span>' +
+          '<div class="prod-name">' + esc(p.name) + '</div>' +
+          '<div class="prod-price">' + esc(p.priceLabel) + '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+  // Re-render a product grid only when its content actually changes, so the
+  // card entrance animation doesn't replay on every unrelated state update.
+  function setGridHtml(el, list) {
+    var key = list.map(function (p) { return p.id; }).join(',') + '|' + state.favorites.join(',');
+    if (el.dataset.renderKey === key) return;
+    el.dataset.renderKey = key;
+    el.innerHTML = list.map(productCard).join('');
+  }
   function renderProductsGrid() {
     var grid = document.getElementById('products-grid');
-    var empty = document.getElementById('products-empty');
+    if (!grid) return;
     var list = filteredProducts();
-    empty.hidden = list.length !== 0;
-    grid.innerHTML = list.map(function (p, idx) {
-      var isFav = state.favorites.indexOf(p.id) !== -1;
-      var delay = Math.min(idx, 11) * 35;
-      return (
-        '<div class="prod-card" data-action="open-product" data-id="' + p.id + '" style="animation-delay:' + delay + 'ms">' +
-          '<div class="prod-img-wrap">' +
-            '<img src="' + esc(p.imgSrc) + '" alt="' + esc(p.name) + '" loading="lazy">' +
-            '<button type="button" class="prod-fav-btn" data-action="toggle-favorite" data-id="' + p.id + '">' +
-              '<svg width="15" height="15" viewBox="0 0 24 24" fill="' + (isFav ? '#14223d' : 'none') + '" stroke="#14223d" stroke-width="1.6"><path d="M12 20s-7-4.5-9.5-9A5.5 5.5 0 0112 5a5.5 5.5 0 019.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>' +
-            '</button>' +
-          '</div>' +
-          '<div class="prod-meta">' +
-            '<span class="prod-cat">' + esc(p.category) + '</span>' +
-            '<div class="prod-name">' + esc(p.name) + '</div>' +
-            '<div class="prod-price">' + esc(p.priceLabel) + '</div>' +
-          '</div>' +
-        '</div>'
-      );
-    }).join('');
+    document.getElementById('products-empty').hidden = list.length !== 0;
+    setGridHtml(grid, list);
+  }
+  // <div data-product-list="col1,ane2,..."> blocks on inner pages.
+  function renderProductLists() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-product-list]'), function (el) {
+      var list = el.dataset.productList.split(',').map(function (id) { return byId(id.trim()); }).filter(Boolean);
+      setGridHtml(el, list);
+    });
   }
 
   // ---------- Product modal computed view-model ----------
@@ -588,6 +693,13 @@
         descPlaceholder: 'Ex: procuro um colar discreto em prata, até R$ 300...',
         waIntro: 'Olá, vim através do site, eu quero comprar uma joia do Second Hand / Upcycle.',
       },
+      oficina: {
+        eyebrow: 'Oficina',
+        title: 'Cuidar da minha joia',
+        descPrompt: 'Conte o que sua joia precisa — ajuste, solda, troca de fecho, pedra, polimento — e, se puder, o metal e o estado da peça.',
+        descPlaceholder: 'Ex: corrente de ouro arrebentada perto do fecho, preciso soldar...',
+        waIntro: 'Olá, vim através do site, eu quero um orçamento para a oficina.',
+      },
     };
     var intent = intentCopy[state.leadIntent] || {
       eyebrow: 'Criar uma joia',
@@ -657,7 +769,7 @@
           (state.cart.length === 0 ? '<div class="drawer-empty">Sua sacola está vazia.</div>' :
             state.cart.map(function (c) {
               return '<div class="drawer-line">' +
-                '<div class="drawer-thumb"><img src="' + esc(c.imgSrc) + '" loading="lazy" alt="' + esc(c.name) + '"></div>' +
+                '<div class="drawer-thumb"><img src="' + esc(assetUrl(c.imgSrc)) + '" loading="lazy" alt="' + esc(c.name) + '"></div>' +
                 '<div style="flex:1;min-width:0">' +
                   '<div style="font-family:\'Marcellus\',serif;font-size:15px;color:#14223d">' + esc(c.name) + '</div>' +
                   (c.variantLabel ? '<div style="font-size:13px;color:#5a6170;margin-top:2px">' + esc(c.variantLabel) + '</div>' : '') +
@@ -813,7 +925,7 @@
             '<span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#14223d">Resumo do pedido</span>' +
             '<div style="margin-top:16px;display:flex;flex-direction:column;gap:14px;max-height:280px;overflow-y:auto">' +
             state.cart.map(function (c) {
-              return '<div class="order-sidebar-line"><div class="order-sidebar-thumb"><img src="' + esc(c.imgSrc) + '" loading="lazy" alt=""></div>' +
+              return '<div class="order-sidebar-line"><div class="order-sidebar-thumb"><img src="' + esc(assetUrl(c.imgSrc)) + '" loading="lazy" alt=""></div>' +
                 '<div style="flex:1;min-width:0"><div style="font-size:13px;color:#14223d;line-height:1.3">' + esc(c.name) + ' ' + esc(c.variantLabel || '') + ' × ' + c.qty + '</div></div>' +
                 '<span style="font-size:13px;color:#14223d;white-space:nowrap">' + formatBRL(c.unitValue * c.qty) + '</span></div>';
             }).join('') +
@@ -960,6 +1072,7 @@
   var LEAD_WA_INTRO = {
     fornecer: 'Olá, vim através do site, eu quero fornecer uma joia para o Second Hand / Upcycle.',
     comprar: 'Olá, vim através do site, eu quero comprar uma joia do Second Hand / Upcycle.',
+    oficina: 'Olá, vim através do site, eu quero um orçamento para a oficina.',
   };
 
   function submitLeadAndOpenWhatsapp() {
@@ -1017,6 +1130,7 @@
       return syncGuestStateToServer();
     }).then(function () {
       if (state.checkoutOpen && state.checkoutStep === 'auth') state.checkoutStep = 'entrega';
+      showToast('Bem-vindo(a), ' + firstName(state.authedUser.name) + '! Sua sacola e favoritos estão salvos na sua conta.');
       render();
     }).catch(function (err) {
       state.authBusy = false;
@@ -1040,6 +1154,9 @@
 
   function logout() {
     state.authedUser = null;
+    state.accountMenuOpen = false;
+    state.menuOpen = false;
+    showToast('Você saiu da sua conta.');
     api.token = null;
     try { localStorage.removeItem('hauquimia_token'); } catch (e) {}
     state.cart = loadLocal('hauquimia_cart', []);
@@ -1079,7 +1196,16 @@
       window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
     },
     'scroll-vitrine-close-menu': function () { state.menuOpen = false; render(); actionHandlers['scroll-vitrine'](); },
-    'toggle-search': function () { state.searchOpen = !state.searchOpen; state.searchQuery = ''; render(); },
+    'toggle-search': function () {
+      // The catalog page has its own search field; focus it instead of the header bar.
+      var catalogSearch = document.getElementById('catalog-search');
+      if (catalogSearch) {
+        catalogSearch.focus();
+        window.scrollTo({ top: catalogSearch.getBoundingClientRect().top + window.scrollY - 180, behavior: 'smooth' });
+        return;
+      }
+      state.searchOpen = !state.searchOpen; state.searchQuery = ''; render();
+    },
     'open-favorites': function () { state.favoritesOpen = true; render(); },
     'close-favorites': function () { state.favoritesOpen = false; render(); },
     'open-cart': function () { state.cartOpen = true; render(); },
@@ -1092,6 +1218,9 @@
     'set-auth-tab': function (el) { state.authTab = el.dataset.tab; state.authError = ''; render(); },
     'submit-auth': submitAuth,
     'logout': logout,
+    'toggle-account-menu': function () { state.accountMenuOpen = !state.accountMenuOpen; render(); },
+    'account-favorites': function () { state.accountMenuOpen = false; state.favoritesOpen = true; render(); },
+    'account-cart': function () { state.accountMenuOpen = false; state.cartOpen = true; render(); },
 
     'select-category': function (el) { state.activeCategory = el.dataset.cat; render(); },
     'open-product': function (el) { openProduct(el.dataset.id); },
@@ -1186,6 +1315,8 @@
       closeHandlers[overlay.dataset.close] && closeHandlers[overlay.dataset.close]();
       return;
     }
+    // Click outside the account menu closes it.
+    if (state.accountMenuOpen && !e.target.closest('.nav-account')) { state.accountMenuOpen = false; render(); }
     var actionEl = e.target.closest('[data-action]');
     if (!actionEl) return;
     var handler = actionHandlers[actionEl.dataset.action];
@@ -1212,14 +1343,28 @@
     render();
   });
 
-  document.getElementById('search-input').addEventListener('input', function (e) {
+  var headerSearch = document.getElementById('search-input');
+  headerSearch.addEventListener('input', function (e) {
     state.searchQuery = e.target.value;
     render();
+  });
+  headerSearch.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter') return;
+    var q = e.target.value.trim();
+    location.href = '/catalogo/' + (q ? '?q=' + encodeURIComponent(q) : '');
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.getAttribute && e.target.getAttribute('role') === 'button' && e.target.dataset.action) {
+      e.preventDefault();
+      e.target.click();
+    }
   });
 
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
-    if (state.selectedId) { state.selectedId = null; state.personalizeOpen = false; }
+    if (state.accountMenuOpen) state.accountMenuOpen = false;
+    else if (state.selectedId) { state.selectedId = null; state.personalizeOpen = false; }
     else if (state.personalizeOpen) state.personalizeOpen = false;
     else if (state.sizeGuideOpen) state.sizeGuideOpen = false;
     else if (state.processInfoOpen) state.processInfoOpen = false;
@@ -1248,19 +1393,43 @@
       revealEls.forEach(function (el) { el.classList.add('is-revealed'); });
     }
 
+    // Section videos: load on approach, play only while visible (saves data, CPU and battery).
+    var videos = document.querySelectorAll('video[data-autoplay], #hero-parallax-img');
+    if ('IntersectionObserver' in window) {
+      var vio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          var v = entry.target;
+          if (entry.isIntersecting) {
+            if (v.dataset.src && !v.getAttribute('src')) v.src = v.dataset.src;
+            v.muted = true;
+            var p = v.play();
+            if (p && p.catch) p.catch(function () { /* autoplay blocked: the poster stays */ });
+          } else if (!v.paused) {
+            v.pause();
+          }
+        });
+      }, { rootMargin: '200px 0px' });
+      videos.forEach(function (v) { vio.observe(v); });
+    } else {
+      videos.forEach(function (v) { if (v.dataset.src) v.src = v.dataset.src; v.muted = true; v.play(); });
+    }
+
     var heroVideo = document.getElementById('hero-parallax-img');
     if (heroVideo) {
       heroVideo.muted = true;
       heroVideo.defaultMuted = true;
+      // Parallax only where the video overlays the text (desktop/tablet) and motion is welcome.
+      var parallaxOn = window.matchMedia('(min-width: 701px) and (prefers-reduced-motion: no-preference)');
       var raf = null;
       var onScroll = function () {
         if (raf) return;
         raf = requestAnimationFrame(function () {
           raf = null;
-          var hero = heroVideo.parentElement;
-          var rect = hero.getBoundingClientRect();
+          if (!parallaxOn.matches) { heroVideo.style.transform = ''; return; }
+          var rect = heroVideo.parentElement.getBoundingClientRect();
           var p = Math.max(-1, Math.min(1, -rect.top / (rect.height || 1)));
-          heroVideo.style.transform = 'translateY(' + (p * 60) + 'px)';
+          // The video is 112% tall, so ±5% of the box keeps it fully covering.
+          heroVideo.style.transform = 'translateY(' + (p * rect.height * 0.05) + 'px)';
         });
       };
       window.addEventListener('scroll', onScroll, { passive: true });
@@ -1268,6 +1437,20 @@
       onScroll();
     }
   }
+
+  // ============ PUBLIC API (used by catalogo.js) ============
+  window.Hauquimia = {
+    products: PRODUCTS,
+    categories: CATEGORIES.filter(function (c) { return c !== 'Todos'; }),
+    normalizeText: normalizeText,
+    formatBRL: formatBRL,
+    esc: esc,
+    setGridHtml: setGridHtml,
+    favorites: function () { return state.favorites; },
+    // Hooks run on every render after init (the first render happens on DOMContentLoaded,
+    // once shell.js has injected the modal mount points).
+    onRender: function (fn) { renderHooks.push(fn); },
+  };
 
   // ============ INIT ============
   function init() {

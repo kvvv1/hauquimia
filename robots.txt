@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hauquimia.com.br/sitemap.xml
