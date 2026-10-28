@@ -4,25 +4,30 @@
 (function () {
   'use strict';
 
+  // Story first, then the four pillars in their original order (01–04), then contact.
+  // The catalog is the shop's main call to action, so it gets its own highlighted slot.
   var NAV = [
     { page: 'nossa-historia', href: '/nossa-historia/', label: 'Nossa História' },
     { page: 'atelie', href: '/atelie/', label: 'Ateliê' },
     { page: 'oficina', href: '/oficina/', label: 'Oficina' },
     { page: 'personalizacao', href: '/personalizacao/', label: 'Personalização' },
     { page: 'second-hand-upcycle', href: '/second-hand-upcycle/', label: 'Second Hand & Upcycle' },
-    { page: 'catalogo', href: '/catalogo/', label: 'Catálogo' },
     { page: 'contato', href: '#contato', label: 'Contato' },
   ];
+  var CATALOG = { page: 'catalogo', href: '/catalogo/', label: 'Catálogo' };
+  var BAG_ICON = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>';
   var WHATSAPP = '5531990621354';
   var current = document.body.getAttribute('data-page') || '';
 
-  function links(extraAttrs) {
-    return NAV.map(function (l) {
-      var active = l.page === current;
-      return '<a class="navlink' + (active ? ' is-current' : '') + '" href="' + l.href + '"' +
-        (active ? ' aria-current="page"' : '') + (extraAttrs || '') + '>' + l.label + '</a>';
-    }).join('');
+  function link(l, extraAttrs, extraClass) {
+    var active = l.page === current;
+    return '<a class="navlink' + (extraClass || '') + (active ? ' is-current' : '') + '" href="' + l.href + '"' +
+      (active ? ' aria-current="page"' : '') + (extraAttrs || '') + '>' + (extraClass ? BAG_ICON : '') + l.label + '</a>';
   }
+  function links(extraAttrs) {
+    return NAV.map(function (l) { return link(l, extraAttrs); }).join('');
+  }
+  function catalogLink(extraAttrs) { return link(CATALOG, extraAttrs, ' navlink-cta'); }
 
   var header =
     '<header class="site-header">' +
@@ -50,8 +55,9 @@
           '</span>' +
         '</div>' +
       '</div>' +
-      '<nav class="pad-h nav-links-row" aria-label="Principal">' + links() + '</nav>' +
+      '<nav class="pad-h nav-links-row" aria-label="Principal">' + links() + '<span class="nav-sep" aria-hidden="true"></span>' + catalogLink() + '</nav>' +
       '<nav id="mobile-menu-panel" class="mobile-menu-panel pad-h" aria-label="Menu" hidden>' +
+        catalogLink(' data-action="close-menu"') +
         '<a class="navlink' + (current === 'home' ? ' is-current' : '') + '" href="/" data-action="close-menu">Início</a>' +
         links(' data-action="close-menu"') +
         '<span class="nav-auth-mobile js-auth-slot"></span>' +
@@ -118,7 +124,7 @@
         '<div>' +
           '<div class="footer-title">Navegue</div>' +
           '<div class="footer-links">' +
-            NAV.filter(function (l) { return l.page !== 'contato'; }).map(function (l) {
+            NAV.filter(function (l) { return l.page !== 'contato'; }).concat([CATALOG]).map(function (l) {
               return '<a href="' + l.href + '">' + l.label + '</a>';
             }).join('') +
           '</div>' +
